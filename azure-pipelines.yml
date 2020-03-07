@@ -58,14 +58,14 @@ steps:
     command: publish
     publishWebProjects: false
     projects: 'src/SampleProject/Client/*.csproj'
-    arguments: '-o dist'
+    arguments: '-o $(Build.ArtifactStagingDirectory)/dist'
     zipAfterPublish: false
     modifyOutputPath: true
 
-- task: AzureFileCopy@4
+- task: AzureCLI@2
   inputs:
-    SourcePath: 'dist'
     azureSubscription: 'Visual Studio Enterprise Subscription(c88875e6-420c-4b77-81f5-f3a23368e07a)'
-    Destination: 'AzureBlob'
-    storage: 'bxblazor'
-    ContainerName: '$web'
+    scriptType: 'pscore'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az storage blob upload-batch --account-name bxblazor --destination ‘$web’ --source ./'
+    workingDirectory: '$(Build.ArtifactStagingDirectory)/dist/Client/blazorwasm.Client/dist'
