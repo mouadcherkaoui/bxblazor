@@ -1,0 +1,11 @@
+﻿<legend class="bx--label">@Legend</legend>
+<!-- input + label -->
+<div class="bx--form-item bx--checkbox-wrapper">
+    <input id="bx--checkbox-new" class="bx--checkbox" type="checkbox" value="new"
+           name="checkbox" checked>
+    <label for="bx--checkbox-new" class="bx--checkbox-label">@Label</label>
+</div>
+@code {
+    public string Legend { get; set; }
+    public string Label { get; set; }
+}

@@ -1,0 +1,35 @@
+﻿@page "/components/bx-structuredlist"
+
+@using System.ComponentModel.DataAnnotations
+
+<h3>BxStructuredList</h3>
+<div class="bx--grid">
+    <div class="bx--row">
+        <div class="bx--offset-lg-2 bx--col-lg-10">
+            <BxStructuredList TItem="RepoItem" Items="items" IsSelectable="true">
+
+            </BxStructuredList>
+        </div>
+    </div>
+</div>
+@code {
+    public class RepoItem
+    {
+        public RepoItem(int id, string name, string description)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+        }
+        [Display(Name = "Identifier")]
+        public int Id { get; set; }
+        [Display(Name = "Repository Name")]
+        public string Name { get; set; }
+        public string Description { get; set; }
+    }
+    List<RepoItem> items = new List<RepoItem>()
+{
+        new RepoItem (0, "Carbon Design Components", "simple description"),
+        new RepoItem(1, "aspnetcore-blazor", "simple description")
+    };
+}

@@ -1,0 +1,75 @@
+﻿<!-- Copyright IBM Corp. 2016, 2018 This source code is licensed under the Apache-2.0 license found in the LICENSE file in the root directory of this source tree. -->
+@inject IJSRuntime js
+
+<div class="bx--grid">
+    <div class="bx--row">
+        <div class="bx--col-max-12">
+        <div data-modal id="@Id" class="@(modalClass)" role="dialog" aria-modal="true" aria-labelledby="modal-primary-label" aria-describedby="modal-primary-heading" tabindex="-1" style="position: absolute; width: 100%">
+            <div class="bx--modal-container">
+                <div class="bx--modal-header">
+                    <p class="bx--modal-header__label bx--type-delta" id="modal-primary-label">@Label</p>
+                    <p class="bx--modal-header__heading bx--type-beta" id="modal-primary-heading">@Heading</p>
+                    @if (!IsPersistent) { 
+                        <button class="bx--modal-close" type="button" data-modal-close aria-label="close modal" @onclick="(() => IsVisible = false)">
+                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--modal-close__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M12 4.7L11.3 4 8 7.3 4.7 4 4 4.7 7.3 8 4 11.3 4.7 12 8 8.7 11.3 12 12 11.3 8.7 8z"></path></svg>
+                        </button>
+                    }
+                </div>
+
+                <!-- Note: Modals with content that scrolls, at any viewport, requires `tabindex="0"` on the `bx--modal-content` element -->
+
+                <div class="bx--modal-content">
+                    @Content
+
+                </div>
+                <div class="bx--modal-content--overflow-indicator" style="@(IsModeless ? "display: none;" : "")"></div>
+
+                <div class="bx--modal-footer">
+                    @Actions
+                </div>
+            </div>
+            <!-- Note: focusable span allows for focus wrap feature within Modals -->
+            <span tabindex="0"></span>
+        </div>
+        </div>
+    </div>
+</div>
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    [Parameter]
+    public bool IsVisible { get; set; } = false;
+
+    [Parameter]
+    public bool IsPersistent { get; set; } = false;
+
+    [Parameter]
+    public bool IsModeless { get; set; } = false;
+
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public string Heading { get; set; }
+
+    [Parameter]
+    public RenderFragment Content { get; set; }
+
+    [Parameter]
+    public RenderFragment Actions { get; set; }
+
+    private string modalClass { get => IsVisible ? "bx--modal is-visible" : "bx--modal "; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("bxModal_Init");
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    public async Task show()
+    {
+        IsVisible = true;
+        await js.InvokeVoidAsync("bxModal_show", "modal-primary");
+    }
+}

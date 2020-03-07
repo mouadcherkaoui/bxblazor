@@ -1,0 +1,171 @@
+﻿<!--
+  Copyright IBM Corp. 2016, 2018
+
+  This source code is licensed under the Apache-2.0 license found in the
+  LICENSE file in the root directory of this source tree.
+-->
+<!-- v10 Data Table -->
+@typeparam TItem  
+@inject IJSRuntime js
+    
+<div class="bx--data-table-container" data-table>
+    <div class="bx--data-table-header">
+        <h4 class="bx--data-table-header__title">@Title</h4>
+        <p class="bx--data-table-header__description">@Description</p>
+    </div>
+    @if(BatchActionsToolbar != null)
+    {
+        @BatchActionsToolbar
+    }
+    <!-- Table -->
+    <table class="bx--data-table@(IsSortable ? " bx--data-table--sort" : "")">
+        <thead>
+            <tr>
+                @if(ItemDetails != null)
+                {
+                    <th>
+                    </th>
+                }
+                @if (IsSelectable)
+                {
+                    <th class="bx--table-column-checkbox">
+                        <!-- checkbox th -->
+                        <input data-event="select-all" id="bx--checkbox-20" class="bx--checkbox" type="checkbox" value="green" name="checkbox-20">
+                        <label for="bx--checkbox-20" class="bx--checkbox-label" aria-label="Label name"></label>
+                    </th>
+                }
+                @foreach (var header in headers)
+                {
+                    @if (IsSortable)
+                    {
+                        <th>
+                            <!-- checkbox th -->
+                            <!-- sortable th  -->
+                            <button class="bx--table-sort" data-event="sort" title="Name">
+                                <span class="bx--table-header-label">@header</span>
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--table-sort__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M12.3 9.3L8.5 13.1 8.5 1 7.5 1 7.5 13.1 3.7 9.3 3 10 8 15 13 10z"></path></svg>
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--table-sort__icon-unsorted" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.8 10.3L12 12.1 12 2 11 2 11 12.1 9.2 10.3 8.5 11 11.5 14 14.5 11zM4.5 2L1.5 5 2.2 5.7 4 3.9 4 14 5 14 5 3.9 6.8 5.7 7.5 5z"></path></svg>
+                            </button>
+                            <!-- no sort th -->
+                        </th>
+                    }
+                    else
+                    {
+                        <th><span class="bx--table-header-label">@header</span></th>
+                    }
+                }
+                @if (IsSelectable)
+                {
+                    <th class="bx--table-column-menu">
+                        <!-- checkbox th -->
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @{ var index = 0;}
+            @if (items != null)
+            @foreach (var item in items)
+            {
+                index++;
+            <tr class="bx--parent-row" @attributes="@(new Dictionary<string, object>{ { (ItemDetails != null ? "data-parent-row" : "data-row"), ""}})">
+                @if(ItemDetails != null)
+                {
+                    <td class="bx--table-expand" data-event="expand">
+                        <button class="bx--table-expand__button">
+                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--table-expand__svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"></path></svg>
+                        </button>
+                    </td>
+                }
+                @if (IsSelectable)
+                {
+                    <td class="bx--table-column-checkbox">
+                        <input data-event="select" id="bx--checkbox-@(index)" class="bx--checkbox" type="checkbox" value="green" name="checkbox-@(index)" @onselectionchange="OnSelectItemCallback">
+                        <label for="bx--checkbox-@(index)" class="bx--checkbox-label" aria-label="Label name"></label>
+                    </td>
+                }
+                @foreach(var header in headers)
+                {
+                    <td>
+                        @item[header]
+                    </td>
+                }
+                <td class="bx--table-column-menu">
+                    @if (ItemActionsMenu != null) {
+                            @ItemActionsMenu
+                    }
+                </td>                
+                <!-- inline edit tds -->
+            </tr>
+            @if (ItemDetails != null)
+            {
+                <tr class="bx--expandable-row bx--expandable-row--hidden" data-child-row="">
+                    <td colspan="@(headers.Count + 3)">
+                        @ItemDetails
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+</div>
+@code {
+    [Parameter]
+    public string Title { get; set; } = "";
+
+    [Parameter]
+    public string Description { get; set; } = "";
+
+    [Parameter]
+    public IEnumerable<TItem> Items { get; set; }
+
+    [Parameter]
+    public bool IsSortable { get; set; }
+
+    [Parameter]
+    public bool IsSelectable { get; set; }
+
+    [Parameter]
+    public RenderFragment ItemActionsMenu { get; set; }
+
+    [Parameter]
+    public RenderFragment BatchActionsToolbar { get; set; }
+
+    [Parameter]
+    public EventCallback OnSelectItemCallback { get; set; }
+
+    [Parameter]
+    public RenderFragment ItemDetails { get; set; }
+    public List<string> headers { get; }
+        = typeof(TItem).GetProperties().Select(p => p.Name).ToList();
+
+    [Parameter]
+    public EventCallback OnPrimaryButtonClick { get; set; }
+
+    public List<Dictionary<string, string>> items
+    {
+        get
+        {
+            return Items?.Select(i => i.GetType().GetProperties().ToDictionary(kv => kv.Name, kv => kv.GetValue(i)?.ToString() ?? "")).ToList();
+        }
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("bxDataTable_Init");
+        await js.InvokeVoidAsync("bxOverflowMenu_Init");
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    private bool actionMenuOpen = false;
+    private bool searchOpen = false;
+    private string actionMenuStateClass { get => actionMenuOpen ? "bx--overflow-menu--open" : ""; }
+    private string searchStateClass { get => searchOpen ? "bx--toolbar-search-container-active" : ""; }
+}

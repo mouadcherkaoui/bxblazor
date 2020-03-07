@@ -1,0 +1,87 @@
+﻿@inherits LayoutComponentBase
+
+@inject IJSRuntime jsRuntime
+
+<div id="root">
+    <Header>
+        <Content>
+            <LeftPanel Sections="NavigationSections"></LeftPanel>
+            <RightPanel></RightPanel>
+        </Content>
+    </Header>
+    <main class="bx--content">
+        @Body
+    </main>
+</div>
+@code {
+    private Dictionary<string, SidenavItem[]> NavigationSections = new Dictionary<string, SidenavItem[]>()
+    {
+        {
+            "Demos",
+            new SidenavItem[] {
+                new SidenavItem {
+                    DisplayText = "Home",
+                    Expanded = false,
+                    HasChilds = false,
+                    Link = "/"
+                },
+                new SidenavItem {
+                    DisplayText = "Fetch Data",
+                    Expanded = false,
+                    HasChilds = false,
+                    Link = "/fetchdata"
+                },
+                new SidenavItem {
+                    DisplayText = "Counter",
+                    Expanded = false,
+                    HasChilds = false,
+                    Link = "/counter"
+                },
+                new SidenavItem {
+                    DisplayText = "Components",
+                    Expanded = false,
+                    HasChilds = true,
+                    ChildItems = new SidenavItem[]
+                {
+                        new SidenavItem {
+                            DisplayText = "BxAccordion",
+                            Link = "components/bx-accordion"
+                        },
+                        new SidenavItem {
+                            DisplayText = "BxDataTable",
+                            Link = "components/bx-datatable"
+                        },
+                        new SidenavItem {
+                            DisplayText = "BxModal",
+                            Link = "components/bx-modal"
+                        },
+                        new SidenavItem {
+                            DisplayText = "BxTabs",
+                            Link = "components/bx-tabs"
+                        },
+                        new SidenavItem {
+                            DisplayText = "BxStructuredList",
+                            Link = "components/bx-structuredlist"
+                        },
+                        new SidenavItem {
+                            DisplayText = "BxCodeSnippet",
+                            Link = "components/bx-codesnippet"
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    private bool actionsPanelToggle = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    void toggleActionsPanelDisplay()
+    {
+        actionsPanelToggle = !actionsPanelToggle;
+    }
+}

@@ -1,0 +1,53 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+  branches:
+    include: 
+    - develop
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  Major: '0'
+  Minor: '0'
+  Patch: '1'
+  workingDir: "src/BxBlazor"
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet restore'
+  inputs:
+    projects: 'src/**/*.csproj'
+    command: restore
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet build'
+  inputs:
+    command: 'build'
+    projects: 'src/**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet pack'
+  inputs:
+    packagesToPack: 'src/BxBlazor/**/*.csproj'
+    command: pack
+    versioningScheme: byPrereleaseNumber
+    majorVersion: '$(Major)'
+    minorVersion: '$(Minor)'
+    patchVersion: '$(Patch)' 
+
+- task: DotNetCoreCLI@2
+  displayName: 'Nuget push to BxBlazor feed'
+  inputs:
+    workingDirectory: '$(workingDir)'
+    command: push
+    publishVstsFeed: '000f425a-ccb5-4b06-8458-0a352978d151/84a32888-ceea-438a-b74b-ea0998a1d69b'
