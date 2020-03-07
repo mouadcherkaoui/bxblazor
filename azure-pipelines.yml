@@ -51,3 +51,21 @@ steps:
     workingDirectory: '$(workingDir)'
     command: push
     publishVstsFeed: '000f425a-ccb5-4b06-8458-0a352978d151/84a32888-ceea-438a-b74b-ea0998a1d69b'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet publish'
+  inputs:
+    command: publish
+    publishWebProjects: false
+    projects: 'src/SampleProject/Client/*.csproj'
+    arguments: '-o dist'
+    zipAfterPublish: false
+    modifyOutputPath: true
+
+- task: AzureFileCopy@4
+  inputs:
+    SourcePath: 'dist'
+    azureSubscription: 'Visual Studio Enterprise Subscription(c88875e6-420c-4b77-81f5-f3a23368e07a)'
+    Destination: 'AzureBlob'
+    storage: 'bxblazor'
+    ContainerName: '$web'
