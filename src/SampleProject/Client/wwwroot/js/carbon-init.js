@@ -85,6 +85,10 @@ window.bxPagination_Init = function () {
     CarbonComponents.Pagination.init();
 };
 
+window.bxCodeSnippet_Init = function () {
+    CarbonComponents.CodeSnippet.init();
+};
+
 window.bxModal_show = function (id) {
     var element = document.getElementById(id);
     window.modal = CarbonComponents.Modal.create(element);

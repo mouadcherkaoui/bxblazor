@@ -1,0 +1,14 @@
+﻿<head>
+    @Head
+</head>
+
+<body>
+    @Body
+</body>
+
+@code {
+    [Parameter]
+    public RenderFragment Head { get; set; }
+    [Parameter]
+    public RenderFragment Body { get; set; }
+}

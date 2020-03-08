@@ -13,9 +13,17 @@
         @Body
     </main>
 </div>
+@*<LayoutWithHead>
+    <Head>
+
+    </Head>
+    <Body>
+    </Body>
+</LayoutWithHead>*@
+
 @code {
     private Dictionary<string, SidenavItem[]> NavigationSections = new Dictionary<string, SidenavItem[]>()
-    {
+{
         {
             "Demos",
             new SidenavItem[] {
@@ -42,7 +50,7 @@
                     Expanded = false,
                     HasChilds = true,
                     ChildItems = new SidenavItem[]
-                {
+            {
                         new SidenavItem {
                             DisplayText = "BxAccordion",
                             Link = "components/bx-accordion"
