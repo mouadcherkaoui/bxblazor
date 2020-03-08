@@ -1,11 +1,11 @@
 # BxBlazor (Carbon Design System) Components
 
-[![Build Status](https://dev.azure.com/cherkaouimouad/BxBlazor/_apis/build/status/BxBlazor?branchName=develop)](https://dev.azure.com/cherkaouimouad/BxBlazor/_build/latest?definitionId=50&branchName=develop)
+[![Build Status](https://dev.azure.com/cherkaouimouad/BxBlazor/_apis/build/status/BxBlazor?branchName=develop)](https://dev.azure.com/cherkaouimouad/BxBlazor/_build/latest?definitionId=53&branchName=master)
 
 Blazor components using IBM's Carbon Design System components
 <p align="center"><img src="img/carbon_design_system_white.png" width="250"></p>
 
-🔎 **you can use dotnet new template to generate a starter project [BxBlazor Wasm-Hosted](https://nx.dev)  *a starter project using the blazor hosted template, and implementing sample Mediatr commands and queries.***
+🔎 **you can use dotnet new template to generate a starter project [BxBlazor Wasm-Hosted](#)  *a starter project using the blazor hosted template, and implementing sample Mediatr commands and queries.***
 
 ## Getting Started
 
@@ -43,6 +43,7 @@ Next we add tags to our index.html in web assembly project or _Host.cshtml in a 
 <script src="_framework/blazor.server.js"></script>
 
 ```
+
 Finally adding the ```using``` sections to *_imports.razor*:
 
 ```csharp
@@ -70,6 +71,7 @@ the last step is to compose our layout page using header, navigation panel etc..
         </main>
     </div>
 ```
+
 ```cs 
 @code {
     private Dictionary<string, SidenavItem[]> NavigationSections = new Dictionary<string, SidenavItem[]>()
