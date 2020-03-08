@@ -26,9 +26,12 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: 'dotnet restore'
   inputs:
+    command: 'restore'
     projects: 'src/**/*.csproj'
-    command: restore
-
+    feedsToUse: 'config'
+    nugetConfigPath: 'src/Nuget.config'
+    includeNuGetOrg: true
+    
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build'
   inputs:
@@ -53,6 +56,33 @@ steps:
     publishVstsFeed: '000f425a-ccb5-4b06-8458-0a352978d151/84a32888-ceea-438a-b74b-ea0998a1d69b'
 
 - task: DotNetCoreCLI@2
+  inputs:
+    command: publish
+    arguments: '--configuration Release --output publish_output'
+    projects: 'src/BackendApi/*.csproj'
+    publishWebProjects: false
+    modifyOutputPath: true
+    zipAfterPublish: false
+- task: ArchiveFiles@2
+  displayName: "Archive files"
+  inputs:
+    rootFolderOrFile: "$(System.DefaultWorkingDirectory)/publish_output/BackendApi"
+    includeRootFolder: false
+    archiveFile: "$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip"
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip'
+    ArtifactName: 'drop'
+
+- task: AzureFunctionApp@1
+  displayName: 'publish to azure functions app'
+  inputs:
+    azureSubscription: 'Visual Studio Enterprise Subscription(c88875e6-420c-4b77-81f5-f3a23368e07a)'
+    appType: 'functionApp'
+    appName: 'backend-challenge'
+    deploymentMethod: 'auto'
+    
+- task: DotNetCoreCLI@2
   displayName: 'dotnet publish'
   inputs:
     command: publish
@@ -61,7 +91,6 @@ steps:
     arguments: '-o $(Build.ArtifactStagingDirectory)/dist'
     zipAfterPublish: false
     modifyOutputPath: true
-
 - task: AzureCLI@2
   inputs:
     azureSubscription: 'Visual Studio Enterprise Subscription(c88875e6-420c-4b77-81f5-f3a23368e07a)'
