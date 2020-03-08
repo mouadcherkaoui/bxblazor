@@ -1,0 +1,23 @@
+﻿
+
+<div id="@(Name)" class="tab-@(Name)-default" role="tabpanel" aria-labelledby="tab-link-@(Name)" @attributes="@(new Dictionary<string, object>() { {"aria-hidden", IsSelected ? "false" : "true"},  { IsSelected ? "aria-selected" : "hidden", IsSelected ? "true" : "hidden"} })">
+    @Content
+</div>
+
+@code {
+
+    [Parameter]
+    public RenderFragment Content { get; set; }
+
+    [Parameter]
+    public string Name { get; set; }
+
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public bool State { get; set; }
+
+    [Parameter]
+    public bool IsSelected { get; set; } = false;
+}

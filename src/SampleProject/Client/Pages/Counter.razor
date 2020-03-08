@@ -1,0 +1,22 @@
+﻿@page "/counter"
+
+<h3>Counter</h3>
+
+<div class="bx--grid">
+    <div class="bx--row">
+        <div class="bx--offset-lg-2 bx--col-lg-10">
+            <p>Current count: @currentCount</p>
+            <button class="bx--btn bx--btn--primary" @onclick="IncrementCount">Click me</button>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+}

@@ -1,0 +1,62 @@
+﻿.example-color::selection {
+    color: #8e44ad;
+}
+
+.example-background-color::selection {
+    background-color: #f1c40f;
+}
+
+.example-background::selection {
+    background: #e74c3c;
+}
+
+.example-both::selection {
+    background-color: #8e44ad;
+    color: white;
+}
+
+.example-shadow::selection {
+    text-shadow: 1px 1px 0 #27ae60;
+}
+
+.example-input::selection {
+    background: #2ecc71;
+}
+
+.example-textarea::selection {
+    background: #34495e;
+    color: white;
+}
+
+body {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    line-height: 1.45;
+    background: #E0DCCC;
+    color: #333;
+    padding: 1em;
+    font-size: 18px;
+}
+
+p, input, textarea {
+    margin-bottom: 1em;
+}
+
+input, textarea {
+    display: block;
+    font-size: 1em;
+    font-family: inherit;
+}
+
+
+.bx--snippet--website {
+    border: 2px solid red;
+}
+
+    .bx--snippet--website code {
+        outline: 1px solid yellow;
+        color: blue;
+    }
+
+        .bx--snippet--website code::selection {
+            background-color: red;
+        }

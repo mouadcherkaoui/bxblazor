@@ -1,0 +1,72 @@
+﻿@typeparam TItem
+@using System.Collections.Generic
+@using System.Reflection;
+
+<div>
+    <select type="text" @onchange=OnSelectedItemChanged value=@selectedItem>
+        @if (Items != null)
+        {
+            @foreach (var item in Items)
+            {
+                var bindingValue = valueMemberInfo.GetValue(item);
+
+                <option value=@bindingValue>
+                    @displayMemberInfo.GetValue(item)
+                </option>
+            }
+        }
+    </select>
+</div>
+
+@code
+{
+    string selectedItem;
+
+    PropertyInfo displayMemberInfo = null;
+    PropertyInfo valueMemberInfo = null;
+
+    [Parameter] public RenderFragment<TItem> ItemTemplate { get; set; }
+
+    [Parameter] public TItem SelectedItem { get; set; }
+
+    [Parameter] public IEnumerable<TItem> Items { get; set; }
+
+    [Parameter] public string DisplayMember { get; set; } = "Text";
+
+    [Parameter] public string ValueMember { get; set; } = "Value";
+
+    [Parameter] public Func<TItem, Task> OnChange { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        TypeInfo type = typeof(TItem).GetTypeInfo();
+
+        valueMemberInfo =
+            type.GetRuntimeProperty(ValueMember);
+
+        displayMemberInfo =
+            type.GetRuntimeProperty(DisplayMember);
+
+        if (Items != null)
+        {
+            SelectedItem = Items.FirstOrDefault();
+
+            selectedItem = valueMemberInfo
+                .GetValue(SelectedItem).ToString();
+        }
+    }
+
+    protected async Task OnSelectedItemChanged(ChangeEventArgs e)
+    {
+        if (Items == null)
+        {
+            return;
+        }
+
+        SelectedItem = Items
+            .FirstOrDefault(item => valueMemberInfo
+                .GetValue(item).ToString() == e.Value.ToString());
+
+        await OnChange?.Invoke(SelectedItem);
+    }
+}

@@ -1,0 +1,65 @@
+﻿@inject IJSRuntime jsRuntime
+
+<div class="card">
+    <div class="bx--row">
+        <div class="bx--col--auto">
+            <select multiple="multiple" name="@Name" class="form-control bx--list-box--expanded" style="height: 162px;">
+                @if(Options != null)
+                @foreach (var current in Options.Where(o => !o.Selected && (Predicate?.Invoke(o) ?? true)))
+                {
+                    <option value="@current.Value" @ondblclick="() => setSelected(current)">@current.DisplayName</option>
+                }
+            </select>
+        </div>
+        <div class="bx--col--auto">
+            <select multiple="multiple" name="@(Name)-selected" class="form-control bx--list-box--expanded" style="height: 162px;">
+                @if(Selection !=null )
+                @foreach (var current in Selection.Where(o => o.Selected))
+                {
+                    <option value="@current.Value" @ondblclick="() => unSelect(current)">@current.DisplayName</option>
+                }
+            </select>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Name { get; set; }
+
+    [Parameter]
+    public Func<SelectOption, bool> Predicate { get; set; }
+
+    public List<SelectOption> Selection { get; set; } = new List<SelectOption>();
+
+    [Parameter]
+    public IEnumerable<SelectOption> Options { get; set; } = new List<SelectOption> {
+        new SelectOption { DisplayName = "option1", Value = "option1", Selected = false },
+        new SelectOption { DisplayName = "option2", Value = "option2", Selected = false },
+        new SelectOption { DisplayName = "option3", Value = "option3", Selected = false },
+        new SelectOption { DisplayName = "option4", Value = "option4", Selected = false },
+        new SelectOption { DisplayName = "option5", Value = "option5", Selected = true },
+        new SelectOption { DisplayName = "option6", Value = "option6", Selected = true },
+        new SelectOption { DisplayName = "option7", Value = "option7", Selected = true },
+        new SelectOption { DisplayName = "option8", Value = "option8", Selected = true },
+        new SelectOption { DisplayName = "option9", Value = "option9", Selected = false },
+        new SelectOption { DisplayName = "option10", Value = "option10", Selected = false }
+    };
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    public void setSelected(SelectOption item)
+    {
+        item.Selected = true;
+        Selection.Add(item);
+    }
+
+    public void unSelect(SelectOption item)
+    {
+        item.Selected = false;
+        Selection.Remove(item);
+    }
+}

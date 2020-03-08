@@ -1,0 +1,149 @@
+﻿@inherits LayoutComponentBase
+@inject IJSRuntime jsRuntime
+
+    <div id="root">
+        <Header OnMenuOpen="toggleSidenavDisplay" OnActionsPanelOpen="toggleActionsPanelDisplay" SidenavToggle="sidenavToggle" ActionsPanelToggle="actionsPanelToggle">
+            <Content>
+                <LeftPanel @ref="leftPanel" Sections="NavigationSections" IsHidden="!sidenavToggle"></LeftPanel>
+                <RightPanel IsExpanded="actionsPanelToggle"></RightPanel>
+            </Content>
+        </Header>
+        <main class="bx--content" @onclick="(() => sidenavToggle = false)">
+            @Body
+        </main>
+    </div>
+
+@code {
+    private Dictionary<string, SidenavItem[]> NavigationSections = new Dictionary<string, SidenavItem[]>()
+    {
+        {
+            "Security", 
+            new SidenavItem[] {
+                new SidenavItem {
+                    DisplayText = "Permissions",
+                    Expanded = false,
+                    HasChilds = true,
+                    ChildItems = new SidenavItem[]
+                    {
+                        new SidenavItem {
+                            DisplayText = "List",
+                            Link = "account/permissions"
+                        },
+                        new SidenavItem { DisplayText = "Details" },
+                        new SidenavItem {
+                            DisplayText = "Users Permissions",
+                            Link = "account/permissions"
+                        }
+                    }
+                },
+                new SidenavItem {
+                    DisplayText = "Users",
+                    Expanded = false,
+                    HasChilds = true,
+                    ChildItems = new SidenavItem[]
+                    {
+                        new SidenavItem {
+                            DisplayText = "List",
+                            Link = "manage/users"
+                        },
+                        new SidenavItem {
+                            DisplayText = "Create",
+                            Link = "manage/users/new"
+                        },
+                        new SidenavItem { DisplayText = "link3" }
+                    }
+                },
+                new SidenavItem {
+                    DisplayText = "roles",
+                    Expanded = false,
+                    HasChilds = true,
+                    ChildItems = new SidenavItem[]
+                    {
+                        new SidenavItem { DisplayText = "tests", Link="/tests" },
+                        new SidenavItem { DisplayText = "link2" },
+                        new SidenavItem { DisplayText = "link3" }
+                    }
+                }
+                ,
+                new SidenavItem {
+                    DisplayText = "Applications",
+                    Expanded = false,
+                    HasChilds = true,
+                    ChildItems = new SidenavItem[]
+                    {
+                        new SidenavItem { DisplayText = "Tokens", Link="/manage/token" },
+                        new SidenavItem { DisplayText = "link2" },
+                        new SidenavItem { DisplayText = "link3" }
+                    }
+                }
+            }
+        },
+        { 
+            "Apis", 
+            new SidenavItem[] {
+                new SidenavItem {
+                    DisplayText = "Github",
+                    Expanded = false,
+                    HasChilds = true,
+                    ChildItems = new SidenavItem[]
+                    {
+                        new SidenavItem {
+                            DisplayText = "TopRepos",
+                            Link = "toprepos"
+                        },
+                        new SidenavItem {
+                            DisplayText = "MyRepos",
+                            Link = "myrepos"
+                        },
+                        new SidenavItem { DisplayText = "link3" }
+                    }
+                },
+                new SidenavItem {
+                    DisplayText = "Graph",
+                    Expanded = false,
+                    HasChilds = true,
+                    ChildItems = new SidenavItem[]
+                    {
+                        new SidenavItem { DisplayText = "Authorize" },
+                        new SidenavItem { DisplayText = "Get Profile" },
+                        new SidenavItem { DisplayText = "Queries" }
+                    }
+                },
+                new SidenavItem {
+                    DisplayText = "Azure AI Apis",
+                    Expanded = false,
+                    HasChilds = true,
+                    ChildItems = new SidenavItem[]
+                    {
+                        new SidenavItem { DisplayText = "Vision" },
+                        new SidenavItem { DisplayText = "Text To Speech" },
+                        new SidenavItem { DisplayText = "link3" }
+                    }
+                }
+            }
+        }
+
+    };
+
+    LeftPanel leftPanel;
+
+    private string toggleClass = "";
+    private bool sidenavToggle = false;
+    private bool actionsPanelToggle = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    void toggleSidenavDisplay()
+    {
+        toggleClass = !sidenavToggle ? "" : "bx--header__action--active";
+        sidenavToggle = !sidenavToggle;
+    }
+
+    void toggleActionsPanelDisplay()
+    {
+        actionsPanelToggle = !actionsPanelToggle;
+    }
+}

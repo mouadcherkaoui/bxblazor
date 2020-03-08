@@ -1,0 +1,40 @@
+﻿@page "/components/bx-datatable"
+@using blazorwasm.Shared
+@inject HttpClient Http
+
+<h3>BxDataTable</h3>
+
+<p>This component demonstrates fetching data from the server.</p>
+<div class="bx--grid">
+    <div class="bx--row">
+        <div class="bx--offset-lg-2 bx--col-lg-10">
+            @if (forecasts == null)
+            {
+                <p><em>Loading...</em></p>
+            }
+            else
+            {
+                <BxDataTableV2 TItem="WeatherForecast" Items="forecasts" IsSelectable="true">
+                    <BatchActionsToolbar>
+                        <BxDataTableV2_Toolbar OnPrimaryButtonClick="toolbar_click" />
+                    </BatchActionsToolbar>
+                </BxDataTableV2>
+            }
+        </div>
+    </div>
+</div>
+
+
+@code {
+    private WeatherForecast[] forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await Http.GetJsonAsync<WeatherForecast[]>("WeatherForecast");
+    }
+
+    void toolbar_click()
+    {
+
+    }
+}
