@@ -67,7 +67,7 @@ namespace BackendApi
 
             ActionResult result = (req.HttpContext.Request) switch
             {
-                { Method: "GET" } => handleGet(req),
+                { Method: "GET" } => await handleGet(req),
                 { Method: "POST" } => await handlePost(req),
                 { Method: "PUT" } => await handlePut(req, keyProperty),
                 _ => new ForbidResult()
@@ -75,16 +75,20 @@ namespace BackendApi
 
             return result;
 
-            ActionResult handleGet(HttpRequest req)
+            async Task<ActionResult> handleGet(HttpRequest req)
             {
-                var id = req.Query.ContainsKey("id") ? req.Query["id"].FirstOrDefault() : null;
+                var id = req.Query.ContainsKey("id")
+                    ? req.Query["id"].FirstOrDefault()
+                        .pipeTo(value => Convert.ChangeType(value, keyPropertyType))
+                    : null;
 
-                var result = !String.IsNullOrEmpty(id) ?
-                    _context.Set<TItem>()
-                        .Where(t => Convert.ChangeType(keyProperty.GetValue(t), keyPropertyType) == Convert.ChangeType(id, keyPropertyType))
-                    : (IQueryable<TItem>)_context.Set<TestModel>();
+                dynamic result = (id) switch
+                {
+                    null => await _context.Set<TItem>().ToListAsync(),
+                    _ => await _context.Set<TItem>().FindAsync(id)
+                };
 
-                return (ActionResult)new OkObjectResult(result.ToArray());
+                return (ActionResult)new OkObjectResult(result);
             }
 
             async Task<ActionResult> handlePost(HttpRequest req)
