@@ -1,6 +1,9 @@
 ﻿@inherits LayoutComponentBase
 
+@using System.Linq
+
 @inject IJSRuntime jsRuntime
+@inject HttpClient http
 
 <div id="root">
     <Header>
@@ -22,8 +25,25 @@
 </LayoutWithHead>*@
 
 @code {
+    protected override async Task OnInitializedAsync()
+    {
+        http.BaseAddress= new Uri("https://backend-challenge.azurewebsites.net/api/");
+
+        var pages = await http.GetJsonAsync<Page[]>("pages");
+        pages.Select(p => {
+            return new SidenavItem
+            {
+                Link = p.Route,
+                DisplayText = p.Title
+            };
+        })
+        .ToList()
+        .ForEach(p => Console.WriteLine($"{p.DisplayText}: {p.Link}"));
+        //Console.WriteLine()
+    }
+
     private Dictionary<string, SidenavItem[]> NavigationSections = new Dictionary<string, SidenavItem[]>()
-{
+    {
         {
             "Demos",
             new SidenavItem[] {

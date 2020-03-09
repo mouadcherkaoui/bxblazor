@@ -1,7 +1,37 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<div class="bx--grid">
+    <div class="bx--row">
+        <div class="bx--col">
+            <Section>
+                <Widget Title="Hello World!">
 
-Welcome to your new app.
+                    <CarbonLogoWidget></CarbonLogoWidget>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+                    <SurveyPrompt Title="How is Blazor working for you?" />
+                </Widget>
+            </Section>
+        </div>
+    </div>
+    <div class="bx--row">
+        <div class="bx--col">
+            <Section>
+                <StructuredListWidget></StructuredListWidget>
+            </Section>
+        </div>
+    </div>
+    <div class="bx--row">
+        <div class="bx--col">
+            <Section>
+                <SkeletonWidget></SkeletonWidget>
+            </Section>
+        </div>
+    </div>
+    <div class="bx--row">
+        <div class="bx--col">
+            <Section>
+                <AccordionWidget></AccordionWidget>
+            </Section>
+        </div>
+    </div>
+</div>
