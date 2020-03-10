@@ -7,6 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="carbon-components\src\**" />
+    <Content Remove="carbon-components\src\**" />
+    <EmbeddedResource Remove="carbon-components\src\**" />
+    <None Remove="carbon-components\src\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="compilerconfig.json" />
+    <Content Remove="Components\BxUIShell.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="compilerconfig.json" />
+    <None Include="Components\UIShell\BxUIShell.razor" />
     <None Include="wwwroot\img\undraw_posting_photo.svg" />
     <None Include="wwwroot\js\carbon-components.min.js" />
     <None Include="wwwroot\js\carbon-components.min.js.map" />
