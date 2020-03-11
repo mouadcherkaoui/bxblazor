@@ -13,7 +13,7 @@ namespace blazorwasm.Client.Models
         public string Description { get; set; }
         public string RawHtml { get; set; }
 
-        public IEnumerable<Section> Sections { get; set; }
+        public IEnumerable<_Section> Sections { get; set; }
         public string CsRegions { get; set; }
     }
 

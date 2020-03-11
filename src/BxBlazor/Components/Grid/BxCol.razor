@@ -1,0 +1,17 @@
+﻿<div class="@(String.IsNullOrEmpty(lg)  && String.IsNullOrEmpty(md) && String.IsNullOrEmpty(sm) ? "bx--col" : "") @(String.IsNullOrEmpty(lg) ? "": $"bx--col-lg-{lg}") @(String.IsNullOrEmpty(md) ? "": $"bx--col-lg-{md}") @(String.IsNullOrEmpty(sm) ? "": $"bx--col-lg-{sm}")">
+    @ChildContent
+</div>
+@code {
+    [Parameter]
+    public string lg { get; set; }
+    [Parameter]
+    public string md { get; set; }
+    [Parameter]
+    public string sm { get; set; }
+    [Parameter]
+    public string cols { get; set; }
+    [Parameter]
+    public string overflow { get; set; }
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

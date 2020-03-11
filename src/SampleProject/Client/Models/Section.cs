@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace blazorwasm.Client.Models
 {
-    public class Section
+    public class _Section
     {
         public int Id { get; set; }
         public string Name { get; set; }

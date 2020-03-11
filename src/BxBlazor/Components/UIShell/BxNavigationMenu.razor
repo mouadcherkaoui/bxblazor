@@ -4,6 +4,7 @@
   This source code is licensed under the Apache-2.0 license found in the
   LICENSE file in the root directory of this source tree.
 -->
+@using Microsoft.AspNetCore.Components.Routing
 
 <div class="@(prefix)--navigation" id="navigation-menu-@NavMenuIdSuffix" @attributes="@(!IsExpanded ? new Dictionary<string, object>{{"hidden", "hidden" }} : new Dictionary<string, object>())" data-navigation-menu>
     @if(NavMenuSections != null){
@@ -19,7 +20,7 @@
 
                             <li class="@(prefix)--navigation-item @(classToApply)">
                                     @if(item.Type == "link"){
-                                        <a class="@(prefix)--navigation-link" href="@(item.Uri)">
+                                        <NavLink ActiveClass="@($"{prefix}--navigation__category-item--active")" @attributes="@(getAttributesDict("class", $"{prefix}--navigation-link"))" href="@(item.Uri)">
                                             @if (item.HasIcon) {
                                                 <div class="@(prefix)--navigation-icon">
                                                     <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
@@ -28,7 +29,7 @@
                                                 </div>                        
                                             }
                                             @item.Title
-                                        </a>
+                                        </NavLink>
                                     } 
                                     else if(item.Type == "category") {
                                         var isExpandedClass = item.IsExpanded ? $" {prefix}--navigation__category--expanded" : "";
@@ -55,9 +56,9 @@
                                                 @foreach (var link in item.SubMenuItems)
                                                 {
                                                     <li class="@(prefix)--navigation__category-item @(link.IsActive ? $"{prefix}--navigation__category-item--active" : "")">
-                                                        <a class="@(prefix)--navigation-link" href="@(link.Uri)">
+                                                        <NavLink ActiveClass="@($"{prefix}--navigation__category-item--active")" @attributes="@(getAttributesDict("class", $"{prefix}--navigation-link"))" href="@(link.Uri)">
                                                             @(link.Title)
-                                                        </a>
+                                                        </NavLink>
                                                     </li>
                                                 }               
                                             </ul>
@@ -85,5 +86,6 @@
     [Parameter]
     public IEnumerable<NavMenuSection> NavMenuSections { get; set; }
 
-
+    public Dictionary<string, object> getAttributesDict(string key, string value)
+        => new Dictionary<string, object>() { { key, value} };
 }

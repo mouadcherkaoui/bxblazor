@@ -1,8 +1,8 @@
 ﻿@page "/"
 
-<div class="bx--grid">
-    <div class="bx--row">
-        <div class="bx--col-lg-4">
+<BxGrid>
+    <BxRow>
+        <BxCol lg="4">
             <Section>
                 <Widget Title="Hello World!">
 
@@ -11,16 +11,16 @@
                     <SurveyPrompt Title="How is Blazor working for you?" />
                 </Widget>
             </Section>
-        </div>
-    </div>
-    <div class="bx--row"></div>
-    <div class="bx--row">
-        <div class="bx--col-lg-4">
+        </BxCol>
+    </BxRow>
+    <BxRow></BxRow>
+    <BxRow>
+        <BxCol lg="4">
             <Section>
                 <StructuredListWidget></StructuredListWidget>
             </Section>
-        </div>
-        <div class="bx--col">
+        </BxCol>
+        <BxCol>
             <BxCodeSnippet 
                         Code="@(@"
 @using System.ComponentModel.DataAnnotations
@@ -54,15 +54,15 @@
 ")" >
 
             </BxCodeSnippet>
-        </div>
-    </div>
-    <div class="bx--row">
-        <div class="bx--col-lg-4">
+        </BxCol>
+    </BxRow>
+    <BxRow>
+        <BxCol lg="4">
             <Section>
                 <SkeletonWidget></SkeletonWidget>
             </Section>
-        </div>
-        <div class="bx--col">
+        </BxCol>
+        <BxCol>
             <BxCodeSnippet Code="@(@"
 <Widget Title=\""BxSkeleton\"">
     <div class=\""bx--card bx--card--skeleton\"">
@@ -78,13 +78,13 @@
         </div>
     </div>
 </Widget>")"></BxCodeSnippet>
-        </div>
-    </div>
-    <div class="bx--row">
-        <div class="bx--col">
+        </BxCol>
+    </BxRow>
+    <BxRow>
+        <BxCol>
             <Section>
                 <AccordionWidget></AccordionWidget>
             </Section>
-        </div>
-    </div>
-</div>
+        </BxCol>
+    </BxRow>
+</BxGrid>

@@ -7,7 +7,7 @@ namespace blazorwasm.Client
 {
     public class Globals
     {
-        public static string UIShellStructure =
+        public static string uishell_json =
             @"{
             ""Sections"":[   
                 {""NavMenuItems"": [
@@ -31,5 +31,38 @@ namespace blazorwasm.Client
                         {""Title"":""switcher"", ""SwitchIdSuffix"":""products""}
                 ]
             }";
+
+        public static string UIShellStructure =
+            @"{
+        ""Sections"":[
+            {""NavMenuItems"": [
+                {""Title"":""Home"",""Uri"":""/"",""HasIcon"":false,""Type"":""link"",""IsActive"":true,""IsExpanded"":false,""SubMenuItems"":null},
+                {""Title"":""UiShell"",""Uri"":""/uishell"",""HasIcon"":false,""Type"":""link"",""IsActive"":false,""IsExpanded"":false,""SubMenuItems"":null},
+                {""Title"":""IBM Security-UIShell"", ""Uri"": ""/security-shell"",""HasIcon"":false,""Type"":""link"",""IsActive"":false,""IsExpanded"":false,""SubMenuItems"":null},
+                {""Title"":""Components"",""Uri"":null,""HasIcon"":false,""Type"":""category"",""IsActive"":false,""IsExpanded"":true,
+                    ""SubMenuItems"":[
+                        {""Title"":""BxAccordion"",""Uri"":""/components/bx-accordion"",""HasIcon"":false,""Type"":""link"",""IsActive"":false,""IsExpanded"":false,""SubMenuItems"":null},
+                        {""Title"":""BxButton"",""Uri"":""/components/bx-button"",""HasIcon"":false,""Type"":""link"",""IsActive"":false,""IsExpanded"":false,""SubMenuItems"":null},
+                        {""Title"":""BxCheckbox"",""Uri"":""/components/bx-checkbox"",""HasIcon"":false,""Type"":""link"",""IsActive"":false,""IsExpanded"":false,""SubMenuItems"":null},
+                        {""Title"":""BxDataTable"",""Uri"":""/components/bx-datatable"",""HasIcon"":false,""Type"":""link"",""IsActive"":false,""IsExpanded"":false,""SubMenuItems"":null},
+                        {""Title"":""BxModal"",""Uri"":""/components/bx-modal"",""HasIcon"":false,""Type"":""link"",""IsActive"":false,""IsExpanded"":false,""SubMenuItems"":null},
+                        {""Title"":""BxStructuredList"",""Uri"":""/components/bx-structuredlist"",""HasIcon"":false,""Type"":""link"",""IsActive"":false,""IsExpanded"":false,""SubMenuItems"":null}
+
+                    ]}
+                ]}
+            ],
+            ""SwitcherLinks"":[
+                {""Title"":""switcher01""},
+                {""Title"":""switcher02""}],
+            ""HeaderNavLinks"":[
+                {""Title"":""test00"", ""ChildItems"":[
+                    {""Title"":""test01"",""Uri"":""/components/bx-accordion""},
+                    {""Title"":""test02"",""Uri"":""/components/bx-accordion""},
+                    {""Title"":""test03"",""Uri"":""/components/bx-accordion""}
+                ]}],
+            ""HeaderActions"":[
+                    {""Title"":""switcher"", ""SwitchIdSuffix"":""products""}
+            ]
+        }";
     }
 }
