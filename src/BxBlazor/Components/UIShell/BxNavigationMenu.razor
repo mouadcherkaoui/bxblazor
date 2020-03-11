@@ -5,11 +5,11 @@
   LICENSE file in the root directory of this source tree.
 -->
 
-<div class="@(prefix)--navigation" id="navigation-menu-@NavigationMenuIdSuffix" @attributes="@(IsExpanded ? new Dictionary<string, object>{{"hidden", "hidden" }} : new Dictionary<string, object>())" data-navigation-menu>
-    @foreach(var section in NavigationSections) { 
+<div class="@(prefix)--navigation" id="navigation-menu-@NavMenuIdSuffix" @attributes="@(!IsExpanded ? new Dictionary<string, object>{{"hidden", "hidden" }} : new Dictionary<string, object>())" data-navigation-menu>
+    @foreach(var section in NavMenuSections) { 
         <div class="@(prefix)--navigation-section">
             <ul class="@(prefix)--navigation-items">
-                @foreach (var item in section.ChildItems) {
+                @foreach (var item in section.NavMenuItems) {
                     var classToApply = item.IsActive 
                         ? $" {prefix}--navigation-item--active" 
                         : (item.HasIcon ? $" {prefix}--navigation-item--icon" : "");
@@ -30,7 +30,7 @@
                             else if(item.Type == "category") {
                                 var isExpandedClass = item.IsExpanded ? $" {prefix}--navigation__category--expanded" : "";
                                 <div class="@(prefix)--navigation__category@(isExpandedClass)">
-                                    <button class="@(prefix)--navigation__category-toggle" aria-haspopup="true" aria-expanded="false"
+                                    <button class="@(prefix)--navigation__category-toggle" aria-haspopup="true" aria-expanded="@(item.IsExpanded.ToString().ToLower())"
                                             aria-controls="category-1-menu">
                                         @if (item.HasIcon)
                                         {
@@ -49,7 +49,7 @@
                                         </div>
                                     </button>
                                     <ul id="category-1-menu" class="@(prefix)--navigation__category-items">
-                                        @foreach (var link in item.ChildItems)
+                                        @foreach (var link in item.SubMenuItems)
                                         {
                                             <li class="@(prefix)--navigation__category-item @(link.IsActive ? $"{prefix}--navigation__category-item--active" : "")">
                                                 <a class="@(prefix)--navigation-link" href="@(link.Uri)">
@@ -68,26 +68,15 @@
 </div>
 
 @code {
-    public class NavigationItem
-    {
-        public string Title { get; set; }
-        public string Uri { get; set; }
-        public bool HasIcon { get; set; }
-        public string Type { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsExpanded { get; set; }
-        public IEnumerable<NavigationItem> ChildItems { get; set; }
-    }
-    public class NavigationSection
-    {
-        public IEnumerable<NavigationItem> ChildItems { get; set; }
-    }
-    [CascadingParameter]
+    [Parameter]
     public string prefix { get; set; }
+
     [Parameter]
-    public string NavigationMenuIdSuffix { get; set; }
+    public string NavMenuIdSuffix { get; set; }
+
     [Parameter]
-    public bool IsExpanded { get; set; }
+    public bool IsExpanded { get; set; } = false;
+
     [Parameter]
-    public IEnumerable<NavigationSection> NavigationSections { get; set; }
+    public IEnumerable<NavMenuSection> NavMenuSections { get; set; }
 }

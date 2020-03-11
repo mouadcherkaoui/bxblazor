@@ -10,12 +10,8 @@
     <button class="@(prefix)--header__menu-trigger @(prefix)--header__action" aria-label="Open menu" title="Open menu"
             data-navigation-menu-panel-label-expand="Open menu" data-navigation-menu-panel-label-collapse="Close menu"
             data-navigation-menu-target="#navigation-menu-@(NavigationMenuIdSuffix)">
-        <icon name='carbon-Close20'
-            class="@prefix--navigation-menu-panel-collapse-icon"
-            aria-hidden="true"/>
-        <icon name='carbon-Menu20'
-            class="@prefix--navigation-menu-panel-expand-icon"
-            aria-hidden="true"/>
+        @(SvgIcons.Close20("bx--navigation-menu-panel-collapse-icon"))
+        @(SvgIcons.Menu20("bx--navigation-menu-panel-expand-icon"))
     </button>
     <a class="@(prefix)--header__name" href="javascript:void(0)" title="@(HeaderName)">
         <span class="bx--header__name--prefix">
@@ -25,20 +21,23 @@
         @(HeaderPlatform)
     </a>
 
-    <BxHeaderNav></BxHeaderNav>
+    <BxHeaderNav HeaderNavLinks="HeaderNavLinks" prefix="@prefix" ></BxHeaderNav>
 
     <div class="@(prefix)--header__global">
-        @foreach(var action in HeaderActions){
-            <button class="@(prefix)--header__menu-trigger @(prefix)--header__action" aria-label="@(action.Title)"
-                    title="@(action.Title)" data-navigation-menu-panel-label-expand="@(action.Title)"
-                    data-navigation-menu-panel-label-collapse="Close menu" data-product-switcher-target="#switcher-@(action.SwitchIdSuffix)">
-                <carbon-icon 'Fade20'
-                class="@prefix--navigation-menu-panel-expand-icon"
-                aria-hidden="true"/>
-                <carbon-icon 'Close20'
-                class="@prefix--navigation-menu-panel-collapse-icon"
-                aria-hidden="true"/>
-            </button>
+        @if(HeaderActions != null)
+        {
+            @foreach(var action in HeaderActions){
+                <button class="@(prefix)--header__menu-trigger @(prefix)--header__action" aria-label="@(action.Title)"
+                        title="@(action.Title)" data-navigation-menu-panel-label-expand="@(action.Title)"
+                        data-navigation-menu-panel-label-collapse="Close menu" data-product-switcher-target="#switcher-@(action.SwitchIdSuffix)">
+                    <carbon-icon 'Fade20'
+                    class="@prefix--navigation-menu-panel-expand-icon"
+                    aria-hidden="true"/>
+                    <carbon-icon 'Close20'
+                    class="@prefix--navigation-menu-panel-collapse-icon"
+                    aria-hidden="true"/>
+                </button>
+            }
         }
     </div>
 </header>
@@ -48,19 +47,28 @@
         public string Title {get;set;}
         public string SwitchIdSuffix {get;set;}
     }
-    [CascadingParameter]
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+    }
+
+    [Parameter]
     public string prefix { get; set; }
-    
+
     [Parameter]
     public IEnumerable<HeaderAction> HeaderActions { get; set; }
     [Parameter]
-    public string HeaderCompany { get; set; }
+    public string HeaderCompany { get; set; } = "IBM";
     [Parameter]
     public string HeaderName { get; set; }
     [Parameter]
-    public string HeaderPlatform { get; set; }
+    public string HeaderPlatform { get; set; } = "Platform";
     [Parameter]
     public string NavigationMenuIdSuffix { get; set; }
     [Parameter]
     public string Title { get; set; }
+
+    [Parameter]
+    public IEnumerable<HeaderNavLink> HeaderNavLinks { get; set; }
 }

@@ -1,0 +1,31 @@
+﻿@layout EmptyLayout
+@page "/uishell"
+<BxBlazor.Components.UIShell.BxUIShell prefix="bx" HeaderNavLinks="HeaderNavLinks" SwitcherLinks="SwitcherLinks" NavSections="Sections">
+
+</BxBlazor.Components.UIShell.BxUIShell>
+@code {
+    IEnumerable<HeaderNavLink> HeaderNavLinks
+        = new List<HeaderNavLink> {
+            new HeaderNavLink{ Title="test01", Uri="/components/bx-accordion"}
+        };
+    IEnumerable<SwitcherLink> SwitcherLinks
+        = new List<SwitcherLink> {
+            new SwitcherLink { Title = "switcher01" }
+        };
+    IEnumerable<NavMenuSection> Sections
+        = new List<NavMenuSection> {
+            new NavMenuSection{
+                NavMenuItems = new List<NavMenuItem>
+                {
+                    new NavMenuItem { Type="link", Title = "navmenu01", HasIcon=false, IsActive=true},
+                    new NavMenuItem { Type="category", Title = "navmenu01", HasIcon=false, IsActive=false, IsExpanded=true,
+                        SubMenuItems = new List<NavMenuItem> {
+                            new NavMenuItem { Type="link", Title = "submenu01", IsActive = true },
+                            new NavMenuItem { Type="link", Title = "submenu01", IsActive = false }
+                        }
+                    },
+                }
+            }
+    };
+
+}

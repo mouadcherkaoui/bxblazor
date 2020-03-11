@@ -6,15 +6,17 @@
 -->
 
 <nav class="@prefix--header__nav" aria-label="Platform Name" data-header-nav>
-    <ul class="@prefix--header__menu-bar" aria-label="Platform Name">
+    <ul class="@prefix--header__menu-bar" aria-label="Platform Name" role="menubar">
         @foreach (var navlink in HeaderNavLinks)
         {
 
             @if (navlink.Uri != null)
             {
-                <li>
-                    <a class="@prefix--header__menu-item" href="@(navlink.Uri)" tabindex="0">
-                        @navlink.Title}}
+                <li class="@prefix--header__menu-item">
+                    <a class="@prefix--header__menu-item" href="@(navlink.Uri)" tabindex="0" role="menuitem">
+                        <span class="bx--text-truncate--end">
+                              @navlink.Title
+                        </span>
                     </a>
                 </li>
             }
@@ -46,15 +48,8 @@
     </ul>
 </nav>
 @code {
-    public class HeaderNavLink
-    {
-        public string Title { get; set; }
-        public string Uri { get; set; }
-        public bool Expanded { get; set; }
-        public IEnumerable<HeaderNavLink> ChildItems { get; set; }
-    }
 
-    [CascadingParameter]
+    [Parameter]
     public string prefix { get; set; }
 
     [Parameter]
