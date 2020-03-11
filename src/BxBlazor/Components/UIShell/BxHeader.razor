@@ -30,12 +30,8 @@
                 <button class="@(prefix)--header__menu-trigger @(prefix)--header__action" aria-label="@(action.Title)"
                         title="@(action.Title)" data-navigation-menu-panel-label-expand="@(action.Title)"
                         data-navigation-menu-panel-label-collapse="Close menu" data-product-switcher-target="#switcher-@(action.SwitchIdSuffix)">
-                    <carbon-icon 'Fade20'
-                    class="@prefix--navigation-menu-panel-expand-icon"
-                    aria-hidden="true"/>
-                    <carbon-icon 'Close20'
-                    class="@prefix--navigation-menu-panel-collapse-icon"
-                    aria-hidden="true"/>
+                    @(SvgIcons.Menu20($"{prefix}--navigation-menu-panel-expand-icon"))
+                    @(SvgIcons.Close20($"{prefix}--navigation-menu-panel-collapse-icon"))
                 </button>
             }
         }
@@ -43,11 +39,6 @@
 </header>
 
 @code {
-    public class HeaderAction {
-        public string Title {get;set;}
-        public string SwitchIdSuffix {get;set;}
-    }
-
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();

@@ -4,7 +4,7 @@
   This source code is licensed under the Apache-2.0 license found in the
   LICENSE file in the root directory of this source tree.
 -->
-<BxHeader prefix="bx" NavigationMenuIdSuffix="primary" HeaderNavLinks="HeaderNavLinks"></BxHeader>
+<BxHeader prefix="bx" NavigationMenuIdSuffix="primary" HeaderNavLinks="HeaderNavLinks" HeaderActions="HeaderActions"></BxHeader>
 @*{{#if sidenav.state.fixed}}
 {{> side-nav-fixed }}
 {{else}}
@@ -46,4 +46,7 @@
 
     [Parameter]
     public IEnumerable<NavMenuSection> NavSections { get; set; }
+
+    [Parameter]
+    public IEnumerable<HeaderAction> HeaderActions { get; set; }
 }

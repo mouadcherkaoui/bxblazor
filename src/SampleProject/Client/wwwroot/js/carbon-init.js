@@ -1,3 +1,5 @@
+CarbonComponents.settings.disableAutoInit = false;
+
 window.leftPanelFocus = function () {
     var panel = document.getElementById("navigation-menu");
     panel.focus();

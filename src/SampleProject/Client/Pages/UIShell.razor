@@ -1,31 +1,36 @@
-﻿@layout EmptyLayout
+﻿@using System.IO;
+@layout EmptyLayout
 @page "/uishell"
-<BxBlazor.Components.UIShell.BxUIShell prefix="bx" HeaderNavLinks="HeaderNavLinks" SwitcherLinks="SwitcherLinks" NavSections="Sections">
+<BxBlazor.Components.UIShell.BxUIShell prefix="bx" HeaderNavLinks="HeaderNavLinks" HeaderActions="HeaderActions" SwitcherLinks="SwitcherLinks" NavSections="Sections">
 
 </BxBlazor.Components.UIShell.BxUIShell>
 @code {
-    IEnumerable<HeaderNavLink> HeaderNavLinks
-        = new List<HeaderNavLink> {
-            new HeaderNavLink{ Title="test01", Uri="/components/bx-accordion"}
-        };
-    IEnumerable<SwitcherLink> SwitcherLinks
-        = new List<SwitcherLink> {
-            new SwitcherLink { Title = "switcher01" }
-        };
-    IEnumerable<NavMenuSection> Sections
-        = new List<NavMenuSection> {
-            new NavMenuSection{
-                NavMenuItems = new List<NavMenuItem>
-                {
-                    new NavMenuItem { Type="link", Title = "navmenu01", HasIcon=false, IsActive=true},
-                    new NavMenuItem { Type="category", Title = "navmenu01", HasIcon=false, IsActive=false, IsExpanded=true,
-                        SubMenuItems = new List<NavMenuItem> {
-                            new NavMenuItem { Type="link", Title = "submenu01", IsActive = true },
-                            new NavMenuItem { Type="link", Title = "submenu01", IsActive = false }
-                        }
-                    },
-                }
-            }
-    };
 
+    IEnumerable<HeaderNavLink> HeaderNavLinks;
+    IEnumerable<SwitcherLink> SwitcherLinks;
+    IEnumerable<NavMenuSection> Sections;
+    IEnumerable<HeaderAction> HeaderActions;
+    protected override async Task OnInitializedAsync()
+    {
+        var shell_structure = new { Sections = Sections, SwitcherLinks = SwitcherLinks, HeaderNavLinks = HeaderNavLinks, HeaderActions = HeaderActions };
+        var result = Newtonsoft.Json.JsonConvert.DeserializeAnonymousType(Globals.UIShellStructure, shell_structure);
+
+        Sections = result.Sections;
+        HeaderNavLinks = result.HeaderNavLinks;
+        SwitcherLinks = result.SwitcherLinks;
+        HeaderActions = result.HeaderActions;
+
+        using FileStream filestream = new FileStream("./uishell.json", FileMode.OpenOrCreate);
+        var writer = new System.IO.StreamWriter(filestream);
+        await writer.WriteAsync(Globals.UIShellStructure);
+        writer.Close();
+        filestream.Close();
+
+        using FileStream filestream1 = new FileStream("./uishell.json", FileMode.Open);
+
+        var json = File.ReadAllText("./uishell.json");
+
+        Console.WriteLine(json);
+        await base.OnInitializedAsync();
+    }
 }
