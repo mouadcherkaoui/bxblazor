@@ -1,0 +1,33 @@
+﻿<div class="bx--content">
+    <BxGrid>
+        <BxRow>
+            <BxCol lg="6">
+                <div class="info-card">
+                    <h3>@Title</h3>
+                    <Widget>
+                        @Description
+                    </Widget>
+                </div>
+            </BxCol>
+            <BxCol lg="6">
+                @Component
+            </BxCol>
+        </BxRow>
+        <BxRow>
+            <BxCol>
+                @Code
+            </BxCol>
+        </BxRow>
+    </BxGrid>
+</div>
+@code {
+    [Parameter]
+    public string Title { get; set; }
+    [Parameter]
+    public RenderFragment Description { get; set; }
+    [Parameter]
+    public RenderFragment Component { get; set; }
+
+    [Parameter]
+    public RenderFragment Code { get; set; }
+}

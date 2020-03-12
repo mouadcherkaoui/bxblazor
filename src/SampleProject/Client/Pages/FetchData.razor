@@ -6,9 +6,9 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
-<div class="bx--grid">
-    <div class="bx--row">
-        <div class="bx--offset-lg-2 bx--col-lg-10">
+<BxGrid>
+    <BxRow>
+        <BxCol offset="lg-2" lg="10">
             @if (forecasts == null)
             {
                 <p><em>Loading...</em></p>
@@ -42,9 +42,9 @@
                     </tbody>
                 </table>
             }
-        </div>
-    </div>
-</div>
+        </BxCol>
+    </BxRow>
+</BxGrid>
 
 
 @code {

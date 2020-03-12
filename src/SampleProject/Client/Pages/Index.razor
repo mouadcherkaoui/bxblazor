@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/home"
     <style>
 			@@media screen {
 
@@ -63,7 +63,7 @@
 <main id="main-content" class="bx--content">
     <BxGrid>
         <BxRow>
-            <BxCol overflow="lg-3" lg="13">
+            <BxCol lg="3">
                 <Section>
                     <Widget Title="Hello World!">
 
@@ -76,7 +76,7 @@
         </BxRow>
         <BxRow></BxRow>
         <BxRow>
-            <BxCol overflow="lg-3" lg="13">
+            <BxCol lg="10">
                 <Section>
                     <StructuredListWidget></StructuredListWidget>
                 </Section>
@@ -117,11 +117,13 @@ List<RepoItem> items = new List<RepoItem>()
             </BxCol>
         </BxRow>
         <BxRow>
-            <BxCol overflow="lg-3" lg="13">
+            <BxCol lg="10">
                 <Section>
                     <SkeletonWidget></SkeletonWidget>
                 </Section>
             </BxCol>
+        </BxRow>
+        <BxRow>
             <BxCol>
                 <BxCodeSnippet CodeStyle="language-html" Code="@(@"
 <Widget Title=""BxSkeleton"">

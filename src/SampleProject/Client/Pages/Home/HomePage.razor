@@ -1,0 +1,223 @@
+﻿@namespace blazorwasm.Client.Pages
+@page "/"
+<style>
+    @@media screen {
+
+        .token.comment,
+        .token.prolog,
+        .token.doctype,
+        .token.cdata {
+            color: slategray;
+        }
+
+        .token.punctuation {
+            color: #999;
+        }
+
+        .token.property,
+        .token.tag,
+        .token.boolean,
+        .token.number,
+        .token.constant,
+        .token.symbol {
+            color: #905;
+        }
+
+        .token.selector,
+        .token.attr-name,
+        .token.string,
+        .token.builtin {
+            color: #690;
+        }
+
+        .token.operator,
+        .token.entity,
+        .token.url,
+        .language-css .token.string,
+        .style .token.string,
+        .token.variable {
+            color: #a67f59;
+        }
+
+        .token.atrule,
+        .token.attr-value,
+        .token.keyword {
+            color: #07a;
+        }
+
+
+        .token.regex,
+        .token.important {
+            color: #e90;
+        }
+
+        .token.important {
+            font-weight: bold;
+        }
+
+        .token.entity {
+            cursor: help;
+        }
+    }
+</style>
+<main id="main-content" class="bx--content">
+    <BxGrid>
+        <BxRow>
+            <BxCol offset="lg-1" lg="3">
+                <Section>
+                    <Widget Title="">
+                        <CarbonLogoWidget></CarbonLogoWidget>
+                    </Widget>
+                </Section>
+            </BxCol>
+            <BxCol>
+                <div class="bx--content">
+                    <div class="info-card">
+                        <Widget>
+                            <h3>BxBlazor</h3> 
+                            <small>
+                                <strong>
+                                    Powered By IBM Carbon Design System components
+                                </strong>                             
+                            </small>
+                            <p>BxBlazor is a set of blazor components based Carbon Design System framework used and released by IBM, a set of enterprise oriented html components, the purpose of the project is to offer a set off well designed components that join simplicity and enterprise grade style, the project is simply a wrapper around the original html, css and js IBM's components, it just encapsulate their functionality in aspnet blazor components, I invite you to clone/fork the project on github and simply start exploring and customizing yours! <br/>
+                            <strong><small>Good Coding!</small></strong></p>
+                        </Widget>
+                    </div>
+                </div>
+            </BxCol>
+        </BxRow>
+        <BxRow></BxRow>
+        <BxRow>
+            <BxCol>
+                <ComponentInfos Title="BxStructuredList">
+                    <Description>
+                        <Widget>
+                            <p>to use the skeleton component simply you use the tag and pass the required parameters.</p>
+                        </Widget>
+                    </Description>
+                    <Component>
+                        <StructuredListWidget></StructuredListWidget>
+                    </Component>
+                    <Code>
+                        <BxCodeSnippet CodeStyle="language-aspnet" Code="@(@"
+@using System.ComponentModel.DataAnnotations
+<Widget Title=""BxStructuredList"">
+<BxStructuredList TItem=""RepoItem"" Items=""items"" IsSelectable=""true"">
+
+</BxStructuredList>
+</Widget>
+@@code {
+public class RepoItem
+{
+    public RepoItem(int id, string name, string description)
+    {
+        Id = id;
+        Name = name;
+        Description = description;
+    }
+    [Display(Name = ""Id"")]
+    public int Id { get; set; }
+    [Display(Name = ""Repository Name"")]
+    public string Name { get; set; }
+    public string Description { get; set; }
+}
+List<RepoItem> items = new List<RepoItem>()
+{
+    new RepoItem (0, ""Carbon Design Components"", ""simple description""),
+    new RepoItem(1, ""aspnetcore-blazor"", ""simple description"")
+};
+
+}
+")">
+
+                </BxCodeSnippet>
+                    </Code>
+                </ComponentInfos>
+
+            </BxCol>
+        </BxRow>
+        <BxRow>
+            <BxCol>
+                <ComponentInfos Title="BxSkeleton">
+                    <Description>
+                        <Widget>
+                            <p>to use the skeleton component simply you use the tag and pass the required parameters.</p>
+                        </Widget>
+                    </Description>
+                    <Component>
+                        <SkeletonWidget></SkeletonWidget>
+                    </Component>
+                    <Code>
+                        <BxCodeSnippet CodeStyle="language-aspnet" Code="@(@"
+            <Widget Title=""BxSkeleton"">
+            <div class=""bx--card bx--card--skeleton"">
+            <p class=""bx--skeleton__text"" style=""width: 25%;""></p>
+            <p class=""bx--skeleton__text bx--skeleton__heading"" style=""width: 25%;""></p>
+            <p class=""bx--skeleton__text"" style=""width: 50%;""></p>
+            <p class=""bx--skeleton__text"" style=""width: 50%;""></p>
+            <p class=""bx--skeleton__text"" style=""width: 75%;""></p>
+            <div class=""security--card--skeleton__wrapper"">
+                <p class=""bx--skeleton__text security--card--skeleton__text--inline"" style=""width: 25%;""></p>
+                <p class=""bx--skeleton__text"" style=""width: 25%;"">
+                </p>
+            </div>
+            </div>
+            </Widget>")"></BxCodeSnippet>
+                    </Code>
+                </ComponentInfos>
+            </BxCol>
+        </BxRow>
+        <BxRow>
+            <BxCol>
+            </BxCol>
+        </BxRow>
+        <BxRow>
+            <BxCol>
+                <ComponentInfos Title="BxAccordion">
+                    <Description>
+                        <Widget>
+                            <p>to use the accordion component simply you use the tag and pass the required parameters.</p>
+                        </Widget>
+                    </Description>
+                    <Component>
+                        <AccordionWidget></AccordionWidget>
+                    </Component>
+                    <Code>
+                        <BxCodeSnippet CodeStyle="language-aspnet" Code="@(@"
+        <Widget Title=""BxAccordion"">
+            <BxAccordion Items=""Items"" />
+        </Widget>
+
+
+        @code {
+            public IEnumerable<AccordionItem>
+                Items { get; set; }
+                    = new List<AccordionItem>
+                    {
+                        new AccordionItem
+                        {
+                            Title = ""first pane"",
+                            Content = (tree) => tree.AddMarkupContent(0, ""<p>a sample content with some tags in it, <strong>First item!</strong></p>"")
+                        },
+                        new AccordionItem
+                        {
+                            Title = ""second pane"",
+                            Content = (tree) => tree.AddMarkupContent(0, ""<p>a sample content with some tags in it, <strong>First item!</strong></p>"")
+                        },
+                        new AccordionItem
+                        {
+                            Title = ""third pane"",
+                            Content = (tree) => tree.AddMarkupContent(0, ""<p>a sample content with some tags in it, <strong>First item!</strong></p>"")
+                        }
+                };
+
+        }
+
+        ")"></BxCodeSnippet>
+                    </Code>
+                </ComponentInfos>                
+            </BxCol>
+        </BxRow>
+    </BxGrid>
+</main>
