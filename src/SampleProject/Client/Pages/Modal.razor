@@ -3,10 +3,10 @@
 @inject IJSRuntime js
 
 <div class="bx--content">
-    <h3>BxModal</h3>
     <BxGrid>
         <BxRow>
-            <BxCol offset="lg-2" lg="10">
+            <BxCol lg="10">
+                <h3>BxModal</h3>
                 <button class="bx--btn bx--btn--primary" type="button" @onclick="OpenModal" data-target="#modal-primary">Submit</button>
                 <BxModal Id="modal-primary" Label="modal label" Heading="modal heading" IsModeless="true">
                     <Content>

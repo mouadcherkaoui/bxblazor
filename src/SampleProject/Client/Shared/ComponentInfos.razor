@@ -1,24 +1,25 @@
-﻿<div class="bx--content">
-    <BxGrid>
-        <BxRow>
-            <BxCol lg="6">
-                <div class="info-card">
+﻿
+<div class="bx--content">
+    <div class="bx--resource-card">
+        <BxGrid>
+            <BxRow>
+                <BxCol lg="6">
                     <h3>@Title</h3>
                     <Widget>
                         @Description
                     </Widget>
-                </div>
-            </BxCol>
-            <BxCol lg="6">
-                @Component
-            </BxCol>
-        </BxRow>
-        <BxRow>
-            <BxCol>
-                @Code
-            </BxCol>
-        </BxRow>
-    </BxGrid>
+                </BxCol>
+                <BxCol lg="6">
+                    @Component
+                </BxCol>
+            </BxRow>
+            <BxRow>
+                <BxCol>
+                    @Code
+                </BxCol>
+            </BxRow>
+        </BxGrid>
+    </div>
 </div>
 @code {
     [Parameter]

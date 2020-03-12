@@ -46,8 +46,8 @@ namespace blazorwasm.Client
                         {""Title"":""BxCheckbox"",""Uri"":""/components/bx-checkbox"",""HasIcon"":false,""Type"":""link"",""IsActive"":false,""IsExpanded"":false,""SubMenuItems"":null},
                         {""Title"":""BxDataTable"",""Uri"":""/components/bx-datatable"",""HasIcon"":false,""Type"":""link"",""IsActive"":false,""IsExpanded"":false,""SubMenuItems"":null},
                         {""Title"":""BxModal"",""Uri"":""/components/bx-modal"",""HasIcon"":false,""Type"":""link"",""IsActive"":false,""IsExpanded"":false,""SubMenuItems"":null},
+                        {""Title"":""BxTabs"",""Uri"":""/components/bx-tabs"",""HasIcon"":false,""Type"":""link"",""IsActive"":false,""IsExpanded"":false,""SubMenuItems"":null},
                         {""Title"":""BxStructuredList"",""Uri"":""/components/bx-structuredlist"",""HasIcon"":false,""Type"":""link"",""IsActive"":false,""IsExpanded"":false,""SubMenuItems"":null}
-
                     ]}
                 ]}
             ],
