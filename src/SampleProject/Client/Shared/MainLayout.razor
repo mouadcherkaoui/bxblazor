@@ -1,14 +1,20 @@
 ﻿@inherits LayoutComponentBase
 
 @using System.Linq
+@using System.IO
 
 @inject IJSRuntime jsRuntime
 @inject HttpClient http
 
-
-<BxBlazor.Components.UIShell.BxUIShell prefix="bx" HeaderNavLinks="HeaderNavLinks" HeaderActions="HeaderActions" SwitcherLinks="SwitcherLinks" NavSections="Sections">
-    @Body
-</BxBlazor.Components.UIShell.BxUIShell>
+<div id="root">
+    <BxUIShell prefix="bx" 
+               HeaderNavLinks="HeaderNavLinks" 
+               HeaderActions="HeaderActions" 
+               SwitcherLinks="SwitcherLinks" 
+               NavSections="Sections">
+        @Body
+    </BxUIShell>
+</div>
 
 @code {
     IEnumerable<HeaderNavLink> HeaderNavLinks;
@@ -18,14 +24,32 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var shell_structure = new { Sections = Sections, SwitcherLinks = SwitcherLinks, HeaderNavLinks = HeaderNavLinks, HeaderActions = HeaderActions };
 
-        var result = Newtonsoft.Json.JsonConvert.DeserializeAnonymousType(Globals.UIShellStructure, shell_structure);
+        // we create an announymous object that will hold the deserialized json to do so
+        // we will use an extension method through which we will act on the result
 
-        Sections = result.Sections;
-        HeaderNavLinks = result.HeaderNavLinks;
-        SwitcherLinks = result.SwitcherLinks;
-        HeaderActions = result.HeaderActions;
+        (new
+        {
+            Sections = Sections,
+            SwitcherLinks = SwitcherLinks,
+            HeaderNavLinks = HeaderNavLinks,
+            HeaderActions = HeaderActions
+        })
+        // next step is to deserialize the json to the type of the announymous object
+            .pipeTo(anonymousObject =>
+                Newtonsoft.Json.JsonConvert.DeserializeAnonymousType(Globals.UIShellStructure, anonymousObject))
+        // the we pipe the result to extract the shell structure as IEnumerables             
+            .pipeTo(result =>
+            {
+                Sections = result.Sections;
+                HeaderNavLinks = result.HeaderNavLinks;
+                SwitcherLinks = result.SwitcherLinks;
+                HeaderActions = result.HeaderActions;
+            });
+        // we can continue f
+        //.pipeTo(toFile => {
+        //});
+
 
         await base.OnInitializedAsync();
     }

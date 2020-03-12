@@ -1,6 +1,11 @@
-﻿<div class="@(String.IsNullOrEmpty(lg)  && String.IsNullOrEmpty(md) && String.IsNullOrEmpty(sm) ? "bx--col" : "") @(String.IsNullOrEmpty(lg) ? "": $"bx--col-lg-{lg}") @(String.IsNullOrEmpty(md) ? "": $"bx--col-lg-{md}") @(String.IsNullOrEmpty(sm) ? "": $"bx--col-lg-{sm}")">
+﻿@{ 
+    var cssClass = $"{(String.IsNullOrEmpty(lg) && String.IsNullOrEmpty(md) && String.IsNullOrEmpty(sm) ? "bx--col" : "")} {(String.IsNullOrEmpty(lg) ? "" : $"bx--col-lg-{lg}")} {(String.IsNullOrEmpty(md) ? "" : $"bx--col-lg-{md}")} {(String.IsNullOrEmpty(sm) ? "" : $"bx--col-lg-{sm}")}";
+    cssClass = $"{(String.IsNullOrEmpty(overflow) ? cssClass : $"bx--overflow-{overflow} {cssClass}")}";
+}
+<div class="@(cssClass)">
     @ChildContent
 </div>
+
 @code {
     [Parameter]
     public string lg { get; set; }

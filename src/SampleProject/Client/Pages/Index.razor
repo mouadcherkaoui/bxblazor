@@ -1,90 +1,151 @@
 ﻿@page "/"
+    <style>
+			@@media screen {
 
-<BxGrid>
-    <BxRow>
-        <BxCol lg="4">
-            <Section>
-                <Widget Title="Hello World!">
+				.token.comment,
+				.token.prolog,
+				.token.doctype,
+				.token.cdata {
+					color: slategray;
+				}
 
-                    <CarbonLogoWidget></CarbonLogoWidget>
+				.token.punctuation {
+					color: #999;
+				}
 
-                    <SurveyPrompt Title="How is Blazor working for you?" />
-                </Widget>
-            </Section>
-        </BxCol>
-    </BxRow>
-    <BxRow></BxRow>
-    <BxRow>
-        <BxCol lg="4">
-            <Section>
-                <StructuredListWidget></StructuredListWidget>
-            </Section>
-        </BxCol>
-        <BxCol>
-            <BxCodeSnippet 
-                        Code="@(@"
+				.token.property,
+				.token.tag,
+				.token.boolean,
+				.token.number,
+				.token.constant,
+				.token.symbol {
+					color: #905;
+				}
+
+				.token.selector,
+				.token.attr-name,
+				.token.string,
+				.token.builtin {
+					color: #690;
+				}
+
+				.token.operator,
+				.token.entity,
+				.token.url,
+				.language-css .token.string,
+				.style .token.string,
+				.token.variable {
+					color: #a67f59;
+				}
+
+				.token.atrule,
+				.token.attr-value,
+				.token.keyword {
+					color: #07a;
+				}
+
+
+				.token.regex,
+				.token.important {
+					color: #e90;
+				}
+
+				.token.important {
+					font-weight: bold;
+				}
+
+				.token.entity {
+					cursor: help;
+				}
+
+			}
+    </style>
+<main id="main-content" class="bx--content">
+    <BxGrid>
+        <BxRow>
+            <BxCol overflow="lg-3" lg="13">
+                <Section>
+                    <Widget Title="Hello World!">
+
+                        <CarbonLogoWidget></CarbonLogoWidget>
+
+                        <SurveyPrompt Title="How is Blazor working for you?" />
+                    </Widget>
+                </Section>
+            </BxCol>
+        </BxRow>
+        <BxRow></BxRow>
+        <BxRow>
+            <BxCol overflow="lg-3" lg="13">
+                <Section>
+                    <StructuredListWidget></StructuredListWidget>
+                </Section>
+            </BxCol>
+            <BxCol>
+                <BxCodeSnippet CodeStyle="language-aspnet" Code="@(@"
 @using System.ComponentModel.DataAnnotations
 <Widget Title=\""BxStructuredList\"">
-    <BxStructuredList TItem=\""RepoItem\"" Items=\""items\"" IsSelectable=\""true\"">
+<BxStructuredList TItem=\""RepoItem\"" Items=\""items\"" IsSelectable=\""true\"">
 
-    </BxStructuredList>
+</BxStructuredList>
 </Widget>
 @@code {
-    public class RepoItem
+public class RepoItem
+{
+    public RepoItem(int id, string name, string description)
     {
-        public RepoItem(int id, string name, string description)
-        {
-            Id = id;
-            Name = name;
-            Description = description;
-        }
-        [Display(Name = \""Id\"")]
-        public int Id { get; set; }
-        [Display(Name = \""Repository Name\"")]
-        public string Name { get; set; }
-        public string Description { get; set; }
+        Id = id;
+        Name = name;
+        Description = description;
     }
-    List<RepoItem> items = new List<RepoItem>()
-    {
-        new RepoItem (0, \""Carbon Design Components\"", \""simple description\""),
-        new RepoItem(1, \""aspnetcore-blazor\"", \""simple description\"")
-    };
+    [Display(Name = \""Id\"")]
+    public int Id { get; set; }
+    [Display(Name = \""Repository Name\"")]
+    public string Name { get; set; }
+    public string Description { get; set; }
+}
+List<RepoItem> items = new List<RepoItem>()
+{
+    new RepoItem (0, \""Carbon Design Components\"", \""simple description\""),
+    new RepoItem(1, \""aspnetcore-blazor\"", \""simple description\"")
+};
 
 }
-")" >
+")">
 
-            </BxCodeSnippet>
-        </BxCol>
-    </BxRow>
-    <BxRow>
-        <BxCol lg="4">
-            <Section>
-                <SkeletonWidget></SkeletonWidget>
-            </Section>
-        </BxCol>
-        <BxCol>
-            <BxCodeSnippet Code="@(@"
+                </BxCodeSnippet>
+            </BxCol>
+        </BxRow>
+        <BxRow>
+            <BxCol overflow="lg-3" lg="13">
+                <Section>
+                    <SkeletonWidget></SkeletonWidget>
+                </Section>
+            </BxCol>
+            <BxCol>
+                <BxCodeSnippet CodeStyle="language-html" Code="@(@"
 <Widget Title=\""BxSkeleton\"">
-    <div class=\""bx--card bx--card--skeleton\"">
-        <p class=\""bx--skeleton__text\"" style=\""width: 25%;\""></p>
-        <p class=\""bx--skeleton__text bx--skeleton__heading\"" style=\""width: 25%;\""></p>
-        <p class=\""bx--skeleton__text\"" style=\""width: 50%;\""></p>
-        <p class=\""bx--skeleton__text\"" style=\""width: 50%;\""></p>
-        <p class=\""bx--skeleton__text\"" style=\""width: 75%;\""></p>
-        <div class=\""security--card--skeleton__wrapper\"">
-            <p class=\""bx--skeleton__text security--card--skeleton__text--inline\"" style=\""width: 25%;\""></p>
-            <p class=\""bx--skeleton__text\"" style=\""width: 25%;\"">
-            </p>
-        </div>
+<div class=\""bx--card bx--card--skeleton\"">
+    <p class=\""bx--skeleton__text\"" style=\""width: 25%;\""></p>
+    <p class=\""bx--skeleton__text bx--skeleton__heading\"" style=\""width: 25%;\""></p>
+    <p class=\""bx--skeleton__text\"" style=\""width: 50%;\""></p>
+    <p class=\""bx--skeleton__text\"" style=\""width: 50%;\""></p>
+    <p class=\""bx--skeleton__text\"" style=\""width: 75%;\""></p>
+    <div class=\""security--card--skeleton__wrapper\"">
+        <p class=\""bx--skeleton__text security--card--skeleton__text--inline\"" style=\""width: 25%;\""></p>
+        <p class=\""bx--skeleton__text\"" style=\""width: 25%;\"">
+        </p>
     </div>
+</div>
 </Widget>")"></BxCodeSnippet>
-        </BxCol>
-    </BxRow>
-    <BxRow>
-        <BxCol>
-            <Section>
-                <AccordionWidget></AccordionWidget>
-            </Section>
-        </BxCol>
-    </BxRow>
-</BxGrid>
+            </BxCol>
+        </BxRow>
+        <BxRow>
+            <BxCol>
+                <Section>
+                    <AccordionWidget></AccordionWidget>
+                </Section>
+            </BxCol>
+        </BxRow>
+    </BxGrid>
+</main>

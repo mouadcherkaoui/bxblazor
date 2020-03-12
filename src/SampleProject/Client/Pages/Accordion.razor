@@ -1,12 +1,21 @@
 ﻿@page "/components/bx-accordion"
 
-<h3>Accordion</h3>
-<div class="bx--grid">
-    <div class="bx--row">
-        <div class="bx--offset-lg-2 bx--col-lg-10">
-            <AccordionWidget></AccordionWidget>
-        </div>
-    </div>
+<div class="bx--content">
+    <h3>BxAccordion</h3>
+    <BxGrid>
+        <BxRow>
+            <BxCol overflow="lg-2" lg="10">
+                <h3>Accordion</h3>
+                <BxGrid>
+                    <BxRow>
+                        <BxCol lg="10">
+                            <AccordionWidget></AccordionWidget>
+                        </BxCol>
+                    </BxRow>
+                </BxGrid>
+            </BxCol>
+        </BxRow>
+    </BxGrid>
 </div>
 @code {
 }
