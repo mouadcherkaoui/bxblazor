@@ -1,5 +1,10 @@
 CarbonComponents.settings.disableAutoInit = false;
 
+window.highlightAll = function () {
+    Prism.highlightAll();
+};
+
+
 window.leftPanelFocus = function () {
     var panel = document.getElementById("navigation-menu");
     panel.focus();

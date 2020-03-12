@@ -84,8 +84,8 @@
             <BxCol>
                 <BxCodeSnippet CodeStyle="language-aspnet" Code="@(@"
 @using System.ComponentModel.DataAnnotations
-<Widget Title=\""BxStructuredList\"">
-<BxStructuredList TItem=\""RepoItem\"" Items=\""items\"" IsSelectable=\""true\"">
+<Widget Title=""BxStructuredList"">
+<BxStructuredList TItem=""RepoItem"" Items=""items"" IsSelectable=""true"">
 
 </BxStructuredList>
 </Widget>
@@ -98,16 +98,16 @@ public class RepoItem
         Name = name;
         Description = description;
     }
-    [Display(Name = \""Id\"")]
+    [Display(Name = ""Id"")]
     public int Id { get; set; }
-    [Display(Name = \""Repository Name\"")]
+    [Display(Name = ""Repository Name"")]
     public string Name { get; set; }
     public string Description { get; set; }
 }
 List<RepoItem> items = new List<RepoItem>()
 {
-    new RepoItem (0, \""Carbon Design Components\"", \""simple description\""),
-    new RepoItem(1, \""aspnetcore-blazor\"", \""simple description\"")
+    new RepoItem (0, ""Carbon Design Components"", ""simple description""),
+    new RepoItem(1, ""aspnetcore-blazor"", ""simple description"")
 };
 
 }
@@ -124,16 +124,16 @@ List<RepoItem> items = new List<RepoItem>()
             </BxCol>
             <BxCol>
                 <BxCodeSnippet CodeStyle="language-html" Code="@(@"
-<Widget Title=\""BxSkeleton\"">
-<div class=\""bx--card bx--card--skeleton\"">
-    <p class=\""bx--skeleton__text\"" style=\""width: 25%;\""></p>
-    <p class=\""bx--skeleton__text bx--skeleton__heading\"" style=\""width: 25%;\""></p>
-    <p class=\""bx--skeleton__text\"" style=\""width: 50%;\""></p>
-    <p class=\""bx--skeleton__text\"" style=\""width: 50%;\""></p>
-    <p class=\""bx--skeleton__text\"" style=\""width: 75%;\""></p>
-    <div class=\""security--card--skeleton__wrapper\"">
-        <p class=\""bx--skeleton__text security--card--skeleton__text--inline\"" style=\""width: 25%;\""></p>
-        <p class=\""bx--skeleton__text\"" style=\""width: 25%;\"">
+<Widget Title=""BxSkeleton"">
+<div class=""bx--card bx--card--skeleton"">
+    <p class=""bx--skeleton__text"" style=""width: 25%;""></p>
+    <p class=""bx--skeleton__text bx--skeleton__heading"" style=""width: 25%;""></p>
+    <p class=""bx--skeleton__text"" style=""width: 50%;""></p>
+    <p class=""bx--skeleton__text"" style=""width: 50%;""></p>
+    <p class=""bx--skeleton__text"" style=""width: 75%;""></p>
+    <div class=""security--card--skeleton__wrapper"">
+        <p class=""bx--skeleton__text security--card--skeleton__text--inline"" style=""width: 25%;""></p>
+        <p class=""bx--skeleton__text"" style=""width: 25%;"">
         </p>
     </div>
 </div>
