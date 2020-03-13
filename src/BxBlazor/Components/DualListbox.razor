@@ -3,7 +3,7 @@
 <div class="card">
     <div class="bx--row">
         <div class="bx--col--auto">
-            <select multiple="multiple" name="@Name" class="form-control bx--list-box--expanded" style="height: 162px; width: 100%;">
+            <select multiple="multiple" name="@Name" class="bx--list-box--expanded" style="height: 162px; width: 100%;">
                 @if(Options != null)
                 @foreach (var current in Options.Where(o => !o.Selected && (Predicate?.Invoke(o) ?? true)))
                 {

@@ -36,6 +36,7 @@
             }
         }
     </div>
+    <BxSidenav prefix="@prefix" IsFixed="SideNavFixed" IsUiFixed="UiSideNavFixed" NavigationSections="SideNavSections"></BxSidenav>
 </header>
 
 @code {
@@ -49,16 +50,30 @@
 
     [Parameter]
     public IEnumerable<HeaderAction> HeaderActions { get; set; }
+    
     [Parameter]
     public string HeaderCompany { get; set; } = "IBM";
+    
     [Parameter]
     public string HeaderName { get; set; }
+    
     [Parameter]
     public string HeaderPlatform { get; set; } = "Platform";
+    
     [Parameter]
     public string NavigationMenuIdSuffix { get; set; }
+    
     [Parameter]
     public string Title { get; set; }
+    
+    [Parameter]
+    public bool SideNavFixed { get; set; }
+
+    [Parameter]
+    public bool UiSideNavFixed { get; set; }
+    
+    [Parameter]
+    public IEnumerable<NavMenuSection> SideNavSections { get; set; }
 
     [Parameter]
     public IEnumerable<HeaderNavLink> HeaderNavLinks { get; set; }

@@ -89,6 +89,10 @@ window.bxCodeSnippet_Init = function () {
     CarbonComponents.CodeSnippet.init();
 };
 
+window.bxSideNav_Init = function () {
+    CarbonComponents.SideNav.init();
+};
+
 window.bxModal_show = function (id) {
     var element = document.getElementById(id);
     window.modal = CarbonComponents.Modal.create(element);
