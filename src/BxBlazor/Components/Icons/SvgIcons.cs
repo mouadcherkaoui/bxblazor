@@ -7,6 +7,9 @@ namespace BxBlazor.Components.Icons
 {
     public class SvgIcons
     {
+		public static RenderFragment IconWithStyle(MarkupString icon, string cssClass = "") =>
+			((t) => t.AddMarkupContent(0, String.Format(icon.Value, cssClass)));
+
 		public static MarkupString Menu20(string cssClass = "") =>
 			((MarkupString)
 			@$"<svg version=""1.1"" id=""icon"" xmlns=""http://www.w3.org/2000/svg"" xmlns:xlink=""http://www.w3.org/1999/xlink"" x=""0px"" y=""0px""
