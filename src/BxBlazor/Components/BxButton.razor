@@ -38,11 +38,21 @@
     {{/if}}*@
 
 @code {
+
+    public enum ButtonType
+    {
+        Primary,
+        Secondary,
+        Tertiary,
+        Danger,
+        Ghost
+    }
+
     [Parameter]
     public string prefix { get; set; }
 
     [Parameter]
-    public string type { get; set; }
+    public ButtonType Type { get; set; }
 
     [Parameter]
     public bool IsSmall { get; set; }
@@ -58,4 +68,15 @@
 
     [Parameter]
     public RenderFragment Icon { get; set; }
+
+    public string type { get =>            
+            (Type) switch
+            {
+                ButtonType.Primary => nameof(ButtonType.Primary).ToLower(),
+                ButtonType.Secondary => nameof(ButtonType.Secondary).ToLower(),
+                ButtonType.Tertiary => nameof(ButtonType.Tertiary).ToLower(),
+                ButtonType.Ghost => nameof(ButtonType.Ghost).ToLower(),
+                ButtonType.Danger => nameof(ButtonType.Danger).ToLower()
+            };        
+    }
 }
