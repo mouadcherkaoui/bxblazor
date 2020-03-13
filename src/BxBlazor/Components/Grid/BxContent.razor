@@ -1,0 +1,9 @@
+﻿<div class="@prefix--content">
+    @ChildContent
+</div>
+@code {
+    [Parameter]
+    public string prefix { get; set; }
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}
