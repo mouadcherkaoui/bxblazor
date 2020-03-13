@@ -32,7 +32,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await js.InvokeVoidAsync("@prefixTab_Init");
+        await js.InvokeVoidAsync("bxTab_Init");
         await base.OnAfterRenderAsync(firstRender);
     }
 }

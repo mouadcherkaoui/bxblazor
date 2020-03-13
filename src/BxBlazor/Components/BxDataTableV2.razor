@@ -18,7 +18,7 @@
         @BatchActionsToolbar
     }
     <!-- Table -->
-    <table class="@prefix--data-table@(IsSortable ? " @prefix--data-table--sort" : "")">
+    <table class="@prefix--data-table@(IsSortable ? $" {prefix}--data-table--sort" : "")">
         <thead>
             <tr>
                 @if(ItemDetails != null)
@@ -109,7 +109,7 @@
         </tbody>
         }else
         {
-            <tr><@prefixLoading prefix="@prefix" IsSmall="true" WithOverlay="true"></@prefixLoading></tr>
+            <tr><BxLoading prefix="@prefix" IsSmall="true" WithOverlay="true"></BxLoading></tr>
         }
     </table>
 
@@ -166,13 +166,13 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await js.InvokeVoidAsync("@prefixDataTable_Init");
-        await js.InvokeVoidAsync("@prefixOverflowMenu_Init");
+        await js.InvokeVoidAsync("bxDataTable_Init");
+        await js.InvokeVoidAsync("bxOverflowMenu_Init");
         await base.OnAfterRenderAsync(firstRender);
     }
 
     private bool actionMenuOpen = false;
     private bool searchOpen = false;
-    private string actionMenuStateClass { get => actionMenuOpen ? "@prefix--overflow-menu--open" : ""; }
-    private string searchStateClass { get => searchOpen ? "@prefix--toolbar-search-container-active" : ""; }
+    private string actionMenuStateClass { get => actionMenuOpen ? $"{prefix}--overflow-menu--open" : ""; }
+    private string searchStateClass { get => searchOpen ? $"{prefix}--toolbar-search-container-active" : ""; }
 }

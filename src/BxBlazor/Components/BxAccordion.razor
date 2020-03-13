@@ -21,7 +21,7 @@
 @code {      
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await js.InvokeVoidAsync("@prefixAccordion_Init");
+        await js.InvokeVoidAsync("bxAccordion_Init");
         await base.OnAfterRenderAsync(firstRender);
     }
     [Parameter]

@@ -18,7 +18,7 @@
                                 ? $" {prefix}--navigation-item--active" 
                                 : (item.HasIcon ? $" {prefix}--navigation-item--icon" : "");
 
-                            <li class="@(prefix)--navigation-item @(classToApply)">
+                            <li class="@(prefix)--navigation-item @(item.HasIcon ? $" {prefix}--navigation-item--icon" : "")">
                                     @if(item.Type == "link"){
                                         <NavLink ActiveClass="@($"{prefix}--navigation__category-item--active")" @attributes="@(getAttributesDict("class", $"{prefix}--navigation-link"))" href="@(item.Uri)">
                                             @if (item.HasIcon) {
@@ -55,7 +55,8 @@
                                             <ul id="category-1-menu" class="@(prefix)--navigation__category-items">
                                                 @foreach (var link in item.SubMenuItems)
                                                 {
-                                                    <li class="@(prefix)--navigation__category-item @(link.IsActive ? $"{prefix}--navigation__category-item--active" : "")">
+                                                    <li class="@(prefix)--navigation__category-item"> 
+                                                        @*@(link.IsActive ? $"{prefix}--navigation__category-item--active" : "")">*@
                                                         <NavLink ActiveClass="@($"{prefix}--navigation__category-item--active")" @attributes="@(getAttributesDict("class", $"{prefix}--navigation-link"))" href="@(link.Uri)">
                                                             @(link.Title)
                                                         </NavLink>

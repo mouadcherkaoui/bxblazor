@@ -89,7 +89,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await js.InvokeVoidAsync("@prefixStructuredList_Init");
+        await js.InvokeVoidAsync("bxStructuredList_Init");
         await base.OnAfterRenderAsync(firstRender);
     }
 }
