@@ -7,7 +7,7 @@
 @inject IJSRuntime js
 
 <nav class="@prefix--header__nav" aria-label="Platform Name" data-header-nav>
-    <ul class="@prefix--header__menu-bar" aria-label="Platform Name" role="menubar">
+    <ul class="@prefix--header__menu-bar" aria-label="Platform Name" role="menubar" style="z-index:10;">
         @if(HeaderNavLinks != null) {
             @foreach (var navlink in HeaderNavLinks)
             {

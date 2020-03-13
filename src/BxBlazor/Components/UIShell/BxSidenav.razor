@@ -5,7 +5,7 @@
   LICENSE file in the root directory of this source tree.
 -->
 @inject IJSRuntime js
-<aside class="@prefix--side-nav@((IsFixed || IsUiFixed) ? $" {prefix}--side-nav--fixed" : "") @(IsUiFixed ? $"{prefix}--side-nav--ux" : "")" data-side-nav>
+<aside class="@prefix--side-nav@((IsFixed || IsUiFixed) ? $" {prefix}--side-nav--fixed" : "") @(IsUiFixed ? $"{prefix}--side-nav--ux" : "")" style="z-index: 5;" data-side-nav>
     <nav class="@prefix--side-nav__navigation" role="navigation" aria-label="Side navigation">
         @*
             <BxSidenavHeader></BxSidenavHeader>
