@@ -62,10 +62,10 @@
                 }
             </tr>
         </thead>
+        @{ var index = 0;}
+        @if (items != null) { 
         <tbody>
-            @{ var index = 0;}
-            @if (items != null)
-            @foreach (var item in items)
+                @foreach (var item in items)
             {
                 index++;
             <tr class="bx--parent-row" @attributes="@(new Dictionary<string, object>{ { (ItemDetails != null ? "data-parent-row" : "data-row"), ""}})">
@@ -105,8 +105,12 @@
                     </td>
                 </tr>
             }
-        }
+        }            
         </tbody>
+        }else
+        {
+            <tr><BxLoading prefix="bx" IsSmall="true" WithOverlay="true"></BxLoading></tr>
+        }
     </table>
 
     <!-- Pagination -->

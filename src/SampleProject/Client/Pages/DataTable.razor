@@ -8,18 +8,11 @@
             <BxCol offset="lg-1" lg="10">
                 <h3>BxDataTable</h3>
                 <p>This component demonstrates fetching data from the server.</p>
-                @if (forecasts == null)
-                {
-                    <p><em>Loading...</em></p>
-                }
-                else
-                {
                     <BxDataTableV2 TItem="WeatherForecast" Items="forecasts" IsSelectable="true">
                         <BatchActionsToolbar>
                             <BxDataTableV2_Toolbar OnPrimaryButtonClick="toolbar_click" />
                         </BatchActionsToolbar>
                     </BxDataTableV2>
-                }
             </BxCol>
         </BxRow>
     </BxGrid>
