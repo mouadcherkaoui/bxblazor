@@ -1,25 +1,34 @@
-﻿@inherits LayoutComponentBase
-
-@using System.Linq
-@using System.IO
+﻿@inherits BlazorStateComponent
 @using BlazorState
-@using BlazorState.Services
 @using MediatR
 
 @inject IJSRuntime jsRuntime
 @inject HttpClient http
 
-<div id="root">
-    <ShellLayout>
-        @Body
-    </ShellLayout>
-</div>
-
+<BxUIShell prefix="bx"
+            HeaderNavLinks="HeaderNavLinks"
+            HeaderActions="HeaderActions"
+            SwitcherLinks="SwitcherLinks"
+            NavSections="Sections">
+    @ChildContent
+</BxUIShell>
 @code {
+
+    public class ShellState
+    {
+        public IEnumerable<HeaderNavLink> HeaderNavLinks { get; set; }
+        public IEnumerable<SwitcherLink> SwitcherLinks { get; set; }
+        public IEnumerable<NavMenuSection> Sections { get; set; }
+        public IEnumerable<HeaderAction> HeaderActions { get; set; }
+
+    }
     IEnumerable<HeaderNavLink> HeaderNavLinks;
     IEnumerable<SwitcherLink> SwitcherLinks;
     IEnumerable<NavMenuSection> Sections;
     IEnumerable<HeaderAction> HeaderActions;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -34,10 +43,10 @@
             HeaderNavLinks = HeaderNavLinks,
             HeaderActions = HeaderActions
         })
-        // next step is to deserialize the json to the type of the announymous object
+            // next step is to deserialize the json to the type of the announymous object
             .pipeTo(anonymousObject =>
                 Newtonsoft.Json.JsonConvert.DeserializeAnonymousType(Globals.UIShellStructure, anonymousObject))
-        // the we pipe the result to extract the shell structure as IEnumerables             
+            // the we pipe the result to extract the shell structure as IEnumerables
             .pipeTo(result =>
             {
                 Sections = result.Sections;
@@ -57,5 +66,21 @@
     {
 
         await base.OnAfterRenderAsync(firstRender);
+    }
+    protected new T GetState<T>()
+    {
+        Type stateType = typeof(T);
+        Subscriptions.Add(stateType, this);
+
+        return base.GetState<T>();
+        //return Store.GetState<T>();
+    }
+
+    new IMediator Mediator { get => base.Mediator; set => base.Mediator = value; }
+    new IStore Store { get => base.Store; set => base.Store = value; }
+
+    new void ReRender()
+    {
+        base.ReRender();
     }
 }
