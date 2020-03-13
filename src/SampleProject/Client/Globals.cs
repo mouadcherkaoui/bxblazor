@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BxBlazor.Components.Icons;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,9 +24,9 @@ namespace blazorwasm.Client
                     {""Title"":""switcher01""}],
                 ""HeaderNavLinks"":[
                     {""Title"":""test00"", ""ChildItems"":[
-                        {""Title"":""test01"",""Uri"":""/components/bx-accordion""},
-                        {""Title"":""test02"",""Uri"":""/components/bx-accordion""},
-                        {""Title"":""test03"",""Uri"":""/components/bx-accordion""}
+                        {""Title"":""LinkedIn"",""Uri"":""https://linkedin.com/in/cherkaoui-mouad""},
+                        {""Title"":""Github"",""Uri"":""https://github.com/mouadcherkaoui""},
+                        {""Title"":""test03"",""Uri"":""https://facebook.com/cherkaoui.mouad""}
                     ]}],
                 ""HeaderActions"":[
                         {""Title"":""switcher"", ""SwitchIdSuffix"":""products""}
@@ -56,9 +57,9 @@ namespace blazorwasm.Client
                 {""Title"":""switcher02""}],
             ""HeaderNavLinks"":[
                 {""Title"":""test00"", ""ChildItems"":[
-                    {""Title"":""test01"",""Uri"":""/components/bx-accordion""},
-                    {""Title"":""test02"",""Uri"":""/components/bx-accordion""},
-                    {""Title"":""test03"",""Uri"":""/components/bx-accordion""}
+                    {""Title"":""LinkedIn"",""Uri"":""https://linkedin.com/in/cherkaoui-mouad""},
+                    {""Title"":""Github"",""Uri"":""https://github.com/mouadcherkaoui""},
+                    {""Title"":""test03"",""Uri"":""https://facebook.com/cherkaoui.mouad""}
                 ]}],
             ""HeaderActions"":[
                     {""Title"":""switcher"", ""SwitchIdSuffix"":""products""}
