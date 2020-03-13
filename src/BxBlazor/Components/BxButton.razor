@@ -1,0 +1,61 @@
+﻿<!--
+  Copyright IBM Corp. 2016, 2018
+
+  This source code is licensed under the Apache-2.0 license found in the
+  LICENSE file in the root directory of this source tree.
+-->
+
+<button class="@prefix--btn @prefix--btn--@type @(IsSmall ? $"{prefix}--btn--sm" : "") @(IsField ? $"{prefix}--btn--field" : "")"
+        type="button" @onclick="OnClick">
+        @*{{#if danger}} aria-label="danger" {{/if}}*@ 
+    @Text
+    @Icon
+</button>
+
+@*{{#if hasIconOnly}}
+    <button class="@prefix--btn @prefix--btn--{{variant}} @prefix--btn--icon-only @prefix--tooltip__trigger @prefix--tooltip--a11y @prefix--tooltip--bottom @prefix--tooltip--align-center {{#if small}} @prefix--btn--sm{{/if}}{{#if field}} @prefix--btn--field{{/if}}">
+        <span class="@prefix--assistive-text">Add</span>
+        {{ carbon-icon 'Add16' class=(add @root.prefix '--btn__icon') }}
+    </button>
+    {{/if}}
+    {{#if field}}
+    <!-- The markup below is for demonstration purposes only -->
+    <div class="example-input-button-pairing">
+        <div class="@prefix--form-item">
+            <label for="text-input-3" class="@prefix--label">Text Input label</label>
+            <input id="text-input-3" type="text"
+                   class="@prefix--text-input{{#if light}} @prefix--text-input--light{{/if}}"
+                   placeholder="Optional placeholder text">
+        </div>
+        <div class="example-button-wrapper">
+            <button class=" @prefix--btn @prefix--btn--{{variant}}{{#if small}}
+          @prefix--btn--sm{{/if}}{{#if field}} @prefix--btn--field{{/if}}" {{#if danger}}
+                    aria-label="danger" {{/if}} type="button">
+                Button
+            </button>
+        </div>
+    </div>
+    {{/if}}*@
+
+@code {
+    [Parameter]
+    public string prefix { get; set; }
+
+    [Parameter]
+    public string type { get; set; }
+
+    [Parameter]
+    public bool IsSmall { get; set; }
+
+    [Parameter]
+    public bool IsField { get; set; }
+
+    [Parameter]
+    public string Text { get; set; }
+
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+
+    [Parameter]
+    public RenderFragment Icon { get; set; }
+}
