@@ -9,53 +9,51 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using NLayersApp.Persistence.Abstractions;
 using NLayersApp.Persistence;
-using NLayersApp.CQRS;
+using NLayersApp.CQRS.Requests;
 using BackendApi.Models;
 using System.Threading;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using MediatR;
 
 namespace BackendApi
 {
     public class BackendFunction
     {
 
-        private IContext _context;
-        private ITypesResolver _resolver;
-
-        public BackendFunction(IContext context, ITypesResolver resolver)
+        private IMediator _mediator;
+        public BackendFunction(IContext context, ITypesResolver resolver, IMediator mediator)
         {
-            _resolver = resolver;
-            _context = context;
+            _mediator = mediator;
         }
         [FunctionName(nameof(TestModelAPI))]
         public async Task<IActionResult> TestModelAPI(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "testmodels")] HttpRequest req,
-            ILogger log) => await GenericHandler<TestModel>(req, log);
+            ILogger log) => await GenericHandler<TestModel, int>(req, log);
 
         [FunctionName(nameof(PagesAPI))]
         public async Task<IActionResult> PagesAPI(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "pages")] HttpRequest req,
-            ILogger log) => await GenericHandler<Page>(req, log);
+            ILogger log) => await GenericHandler<Page, object>(req, log);
 
         [FunctionName(nameof(SectionsAPI))]
         public async Task<IActionResult> SectionsAPI(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "sections")] HttpRequest req,
-            ILogger log) => await GenericHandler<Section>(req, log);
+            ILogger log) => await GenericHandler<Section, object>(req, log);
 
         [FunctionName(nameof(ComponentsAPI))]
         public async Task<IActionResult> ComponentsAPI(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "components")] HttpRequest req,
-            ILogger log) => await GenericHandler<Component>(req, log);
+            ILogger log) => await GenericHandler<Component, object>(req, log);
 
         [FunctionName(nameof(MembersAPI))]
         public async Task<IActionResult> MembersAPI(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "members")] HttpRequest req,
-            ILogger log) => await GenericHandler<Member>(req, log);
+            ILogger log) => await GenericHandler<Member, object>(req, log);
 
-        public async Task<IActionResult> GenericHandler<TItem>(HttpRequest req, ILogger log)
+        public async Task<IActionResult> GenericHandler<TItem, TKey>(HttpRequest req, ILogger log)
             where TItem : class
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
@@ -69,7 +67,7 @@ namespace BackendApi
             {
                 { Method: "GET" } => await handleGet(req),
                 { Method: "POST" } => await handlePost(req),
-                { Method: "PUT" } => await handlePut(req, keyProperty),
+                { Method: "PUT" } => await handlePut(req),
                 _ => new ForbidResult()
             };
 
@@ -84,8 +82,8 @@ namespace BackendApi
 
                 dynamic result = (id) switch
                 {
-                    null => await _context.Set<TItem>().ToListAsync(),
-                    _ => await _context.Set<TItem>().FindAsync(id)
+                    null => await _mediator.Send(new ReadEntitiesRequest<TItem>(new string[0])),//  _context.Set<TItem>().ToListAsync(),
+                    _ => await _mediator.Send(new ReadEntityRequest<TKey, TItem>((TKey)id)) //_context.Set<TItem>().FindAsync(id)
                 };
 
                 return (ActionResult)new OkObjectResult(result);
@@ -95,23 +93,20 @@ namespace BackendApi
             {
 
                 var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                TestModel data = JsonConvert.DeserializeObject<TestModel>(requestBody);
-                await _context.Set<TestModel>().AddAsync(data);
-                await _context.SaveChangesAsync(CancellationToken.None);
+                TItem data = JsonConvert.DeserializeObject<TItem>(requestBody);
 
-                return (ActionResult)new AcceptedResult();
+                var result = await _mediator.Send(new CreateEntityRequest<TItem>(data));
+                return (ActionResult)new CreatedResult($"/{((dynamic)result).Id}", result);
             }
-            async Task<ActionResult> handlePut(HttpRequest req, PropertyInfo keyProperty)
+
+            async Task<ActionResult> handlePut(HttpRequest req)
             {
 
                 var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 TItem data = JsonConvert.DeserializeObject<TItem>(requestBody);
+                TKey id = ((dynamic)data).Id;
 
-                var currentRecord = await _context.Set<TItem>().FindAsync(keyProperty.GetValue(data));
-
-                ((DbContext)_context).Entry(currentRecord).CurrentValues.SetValues(data);
-
-                await _context.SaveChangesAsync(CancellationToken.None);
+                await _mediator.Send(new UpdateEntityRequest<TKey, TItem>(id, data));
 
                 return (ActionResult)new AcceptedResult();
             }
