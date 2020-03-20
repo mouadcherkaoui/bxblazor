@@ -1,4 +1,5 @@
-﻿<!--
+﻿@inject IJSRuntime  js
+<!--
   Copyright IBM Corp. 2016, 2018
 
   This source code is licensed under the Apache-2.0 license found in the
@@ -39,4 +40,10 @@
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("InitComponent", "NavigationMenu");
+        await base.OnAfterRenderAsync(firstRender);
+    }
 }
