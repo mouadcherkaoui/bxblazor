@@ -75,28 +75,42 @@ Finally add the ```using``` sections to *_imports.razor*:
 @using BxBlazor.Models
 ```
 
-the next step is to use the UIShell in the main layout, since the components are using Carbon Design System components styles we should respect the layout structure: 
+the next step is to use the UIShell in the main layout, since the components are using Carbon Design System components styles we should respect the layout structure, also to keep navigation state we will add a component that will hold the UIShell and in it we will add the ```@Body``` fragment to load views a kind of donut disposition: 
+
+MainLayout.razor
 
 ```html
 @inherits LayoutComponentBase
 
-@using BxBlazor.Components.UIShell
-<div class="root">
-    <BxUIShell
-        HeaderNavLinks="HeaderNavLinks"
-        HeaderActions="HeaderActions"
-        SwitcherLinks="SwitcherLinks"
-        NavSections="Sections"
-        SideNavFixed="true">
-        <div class="bx--content">
-            @Body
-        </div>
-    </BxUIShell>
+<div id="root">
+    <ShellLayout>
+        @Body
+    </ShellLayout>
 </div>
+```
+
+ShellLayout.razor
+
+```html
+@using BxBlazor.Components.UIShell
+
+<BxUIShell
+    HeaderNavLinks="HeaderNavLinks"
+    HeaderActions="HeaderActions"
+    SwitcherLinks="SwitcherLinks"
+    NavSections="Sections"
+    SideNavFixed="true">
+    <div class="bx--content">
+        @ChildContent
+    </div>
+</BxUIShell>
 ```
 
 ```cs 
 @code {
+    [Parameter]
+    public RendreFragment ChildContent { get; set; }
+    
     IEnumerable<HeaderNavLink> HeaderNavLinks
         = new List<HeaderNavLink> {
             new HeaderNavLink
@@ -124,7 +138,7 @@ the next step is to use the UIShell in the main layout, since the components are
                     }
                 }
             }
-            };
+        };
 
     IEnumerable<SwitcherLink> SwitcherLinks;
 
