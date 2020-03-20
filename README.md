@@ -191,12 +191,70 @@ under the hood the shell it self is composed from three building blocks:
                   IsExpanded="false">
 </BxNavigationMenu>
 ```
+okey, now if you are using the blazor web assembly project template you have to make some changes:
+
+- Index.razor
+
+```html
+<BxGrid>
+    <BxRow>
+        <BxCol lg="10" offset="lg-1">
+            <h1>Hello, world!</h1>
+
+            Welcome to your new app.
+
+            <SurveyPrompt Title="How is Blazor working for you?" />
+        </BxCol>
+    </BxRow>
+</BxGrid>
+```
+
+- Counter.razor 
+
+```html
+<BxGrid>
+    <BxRow>
+        <BxCol lg="10" offset="lg-1">
+            <h1>Counter</h1>
+
+            <p>Current count: @currentCount</p>
+
+            <BxButton prefix="bx" Type="BxButton.ButtonType.Primary" OnClick="IncrementCount" Text="Click me"></BxButton>
+        </BxCol>
+    </BxRow>
+</BxGrid>
+```
+
+-FetchData.rzor 
+
+```html
+<BxGrid>
+    <BxRow>
+        <BxCol offset="lg-1" lg="10">
+            <h3>Weahther Forecasts</h3>
+            <p>This component demonstrates fetching data from the server.</p>
+            @if (forecasts == null)
+            {
+                <p><em>Loading...</em></p>
+            }
+            else
+            {
+                <BxDataTableV2 TItem="WeatherForecast" Items="forecasts" IsSelectable="true">
+                    <BatchActionsToolbar>
+                        <BxDataTableV2_Toolbar OnPrimaryButtonClick="@(() => Console.WriteLine("BxTable primary button clicked!"))" />
+                    </BatchActionsToolbar>
+                </BxDataTableV2>
+            }
+        </BxCol>
+    </BxRow>
+</BxGrid>
+```
 
 ## Running the project
 
 we can the project locally jsut using dotnet cli:
 ```bash 
-$: dotnet run
+$\> dotnet run
 ```
 
 also you can host your application whther on azure storage public websites "preview", or for example in gh-pages this article explains steps to publish your application on gh-pages:
