@@ -3,7 +3,7 @@
 [![Build Status](https://dev.azure.com/cherkaouimouad/BxBlazor/_apis/build/status/BxBlazor?branchName=develop)](https://dev.azure.com/cherkaouimouad/BxBlazor/_build/latest?definitionId=53&branchName=master)
 
 Blazor components using IBM's Carbon Design System components
-<p align="center"><img src="img/carbon_design_system_white.png" width="250"></p>
+<p align="center"><img src="https://github.com/mouadcherkaoui/bxblazor/raw/master/img/carbon_design_system_white.png" width="250"></p>
 
 ## Getting Started
 
