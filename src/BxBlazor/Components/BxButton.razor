@@ -76,7 +76,8 @@
                 ButtonType.Secondary => nameof(ButtonType.Secondary).ToLower(),
                 ButtonType.Tertiary => nameof(ButtonType.Tertiary).ToLower(),
                 ButtonType.Ghost => nameof(ButtonType.Ghost).ToLower(),
-                ButtonType.Danger => nameof(ButtonType.Danger).ToLower()
+                ButtonType.Danger => nameof(ButtonType.Danger).ToLower(),
+                _ => nameof(ButtonType.Secondary).ToLower()
             };        
     }
 }
