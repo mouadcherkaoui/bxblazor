@@ -1,0 +1,35 @@
+﻿<style type="text/css">
+    .component-example {
+        width: 100%;
+        max-width: 100%;
+        display: block;
+        color: #fff;
+        margin-bottom: 1.5rem;
+    }
+</style>
+<div class="component-example">
+    <div class="component-variation">
+        <div class="component-variation__name">
+            @Title
+        </div>
+        <div class="component-variation__desc">
+            @Description
+        </div>
+    </div>
+    <div class="component-example__live">
+        @Component
+    </div>
+</div>
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public RenderFragment Description { get; set; }
+    
+    [Parameter]
+    public RenderFragment Component { get; set; }
+
+    [Parameter]
+    public RenderFragment Code { get; set; }
+}

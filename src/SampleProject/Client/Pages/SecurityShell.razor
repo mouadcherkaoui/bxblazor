@@ -1,0 +1,542 @@
+﻿@layout EmptyLayout
+
+@page "/security-shell"
+
+<link href="css/carbon-security.css" rel="stylesheet" />
+
+<div id="root">
+    <div style="position: relative; z-index: 0;">
+        <div class="security--shell security--shell--active__header">
+            <div>
+                <nav class="security--toolbar">
+                    <ul class="security--toolbar__group">
+                        <li>
+                            <button class="security--button--icon security--toolbar__button security--button--icon--tooltip security--button--icon--tooltip--right"
+                                    aria-label="Toggle menu" aria-describedby="menu"
+                                    data-navigation-menu-target="#apps">
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet"
+                                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                     width="20" height="20" viewBox="0 0 20 20"
+                                     class="security--icon security--toolbar__icon"
+                                     style="will-change: transform;">
+                                    <path d="M2 14.8H18V16H2zM2 11.2H18V12.399999999999999H2zM2 7.6H18V8.799999999999999H2zM2 4H18V5.2H2z">
+                                    </path>
+                                </svg>
+
+                            </button>
+                        </li>
+                        <li>
+                            <button class="security--button--icon security--toolbar__button security--button--icon--tooltip security--button--icon--tooltip--right"
+                                    aria-label="Toggle settings" aria-describedby="settings"
+                                    data-navigation-menu-target="#settings">
+                                <svg focusable="false"
+                                     preserveAspectRatio="xMidYMid meet" aria-hidden="true"
+                                     xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                     viewBox="0 0 32 32"
+                                     class="security--icon security--toolbar__icon"
+                                     style="will-change: transform;">
+                                    <path d="M27,16.76c0-.25,0-.5,0-.76s0-.51,0-.77l1.92-1.68A2,2,0,0,0,29.3,11L26.94,7a2,2,0,0,0-1.73-1,2,2,0,0,0-.64.1l-2.43.82a11.35,11.35,0,0,0-1.31-.75l-.51-2.52a2,2,0,0,0-2-1.61H13.64a2,2,0,0,0-2,1.61l-.51,2.52a11.48,11.48,0,0,0-1.32.75L7.43,6.06A2,2,0,0,0,6.79,6,2,2,0,0,0,5.06,7L2.7,11a2,2,0,0,0,.41,2.51L5,15.24c0,.25,0,.5,0,.76s0,.51,0,.77L3.11,18.45A2,2,0,0,0,2.7,21L5.06,25a2,2,0,0,0,1.73,1,2,2,0,0,0,.64-.1l2.43-.82a11.35,11.35,0,0,0,1.31.75l.51,2.52a2,2,0,0,0,2,1.61h4.72a2,2,0,0,0,2-1.61l.51-2.52a11.48,11.48,0,0,0,1.32-.75l2.42.82a2,2,0,0,0,.64.1,2,2,0,0,0,1.73-1L29.3,21a2,2,0,0,0-.41-2.51ZM25.21,24l-3.43-1.16a8.86,8.86,0,0,1-2.71,1.57L18.36,28H13.64l-.71-3.55a9.36,9.36,0,0,1-2.7-1.57L6.79,24,4.43,20l2.72-2.4a8.9,8.9,0,0,1,0-3.13L4.43,12,6.79,8l3.43,1.16a8.86,8.86,0,0,1,2.71-1.57L13.64,4h4.72l.71,3.55a9.36,9.36,0,0,1,2.7,1.57L25.21,8,27.57,12l-2.72,2.4a8.9,8.9,0,0,1,0,3.13L27.57,20Z">
+                                    </path>
+                                    <path d="M16,22a6,6,0,1,1,6-6A5.94,5.94,0,0,1,16,22Zm0-10a3.91,3.91,0,0,0-4,4,3.91,3.91,0,0,0,4,4,3.91,3.91,0,0,0,4-4A3.91,3.91,0,0,0,16,12Z">
+                                    </path>
+                                </svg>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="security--button--icon security--toolbar__button security--button--icon--tooltip security--button--icon--tooltip--right"
+                                    aria-label="Toggle support" aria-describedby="support" data-navigation-menu-target="#support">
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet"
+                                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                     width="20" height="20" viewBox="0 0 32 32"
+                                     class="security--icon security--toolbar__icon"
+                                     style="will-change: transform;">
+                                    <path d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12,12,0,0,1,16,28Z">
+                                    </path>
+                                    <circle cx="16" cy="23.5" r="1.5"></circle>
+                                    <path d="M17,8H15.5A4.49,4.49,0,0,0,11,12.5V13h2v-.5A2.5,2.5,0,0,1,15.5,10H17a2.5,2.5,0,0,1,0,5H15v4.5h2V17a4.5,4.5,0,0,0,0-9Z">
+                                    </path>
+                                </svg>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+                <span class="security--transition">
+                    <span id="apps" class="security--transition" hidden>
+                        <aside class="security--toolbar__panel" role="menu">
+                            <span class="security--transition">
+                                <nav aria-label="My applications" class="security--nav">
+                                    <h1 class="security--nav__heading">My applications</h1>
+                                    <ul class="security--nav__wrapper" role="menubar">
+                                        <li class="security--nav__list" tabindex="0"
+                                            role="menuitem">
+                                            <div class="security--nav__list__item__link">
+                                                <svg focusable="false" preserveAspectRatio="xMidYMid meet"
+                                                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                     width="16" height="16" viewBox="0 0 16 16"
+                                                     class="security--icon security--nav__list__icon"
+                                                     style="will-change: transform;">
+                                                    <path d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z">
+                                                    </path>
+                                                </svg>
+                                                <div class="security--nav__list__item__content">
+                                                    Section
+                                                    1
+                                                </div>
+                                            </div>
+                                            <ul aria-label="Section 1" aria-hidden="true"
+                                                class="security--nav__list security--nav__list--nested"
+                                                role="menu">
+                                                <li class="security--nav__list__item" label=""
+                                                    role="menuitem" tabindex="-1">
+                                                    <a id="security--nav__list__item"
+                                                       class="security--nav__list__item__link"
+                                                       href="ibm-security.carbondesignsystem.com#8">Applications</a>
+                                                </li>
+                                                <li class="security--nav__list__item" label=""
+                                                    role="menuitem" tabindex="-1">
+                                                    <a id="security--nav__list__item"
+                                                       class="security--nav__list__item__link"
+                                                       href="ibm-security.carbondesignsystem.com#7">Plugins</a>
+                                                </li>
+                                                <li class="security--nav__list__item" label=""
+                                                    role="menuitem" tabindex="-1">
+                                                    <a id="security--nav__list__item"
+                                                       class="security--nav__list__item__link"
+                                                       href="ibm-security.carbondesignsystem.com#21">Users</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="security--nav__list__item" label=""
+                                            role="menuitem" tabindex="-1">
+                                            <a id="security--nav__list__item"
+                                               class="security--nav__list__item__link"
+                                               href="ibm-security.carbondesignsystem.com#1">
+                                                Section
+                                                2<img alt="Section 2"
+                                                      class="security--toolbar__nav__item__icon"
+                                                      src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+ICA8cGF0aCBmaWxsPSIjZmZmIiBkPSJNMTYgMThINmEyIDIgMCAwIDEtMi0yVjZhMiAyIDAgMCAxIDItMmgxMGEyIDIgMCAwIDEgMiAydjEwYTIgMiAwIDAgMS0yIDJ6TTYgNnYxMGgxMFY2em0yMCA2djRoLTR2LTRoNG0wLTJoLTRhMiAyIDAgMCAwLTIgMnY0YTIgMiAwIDAgMCAyIDJoNGEyIDIgMCAwIDAgMi0ydi00YTIgMiAwIDAgMC0yLTJ6bTAgMTJ2NGgtNHYtNGg0bTAtMmgtNGEyIDIgMCAwIDAtMiAydjRhMiAyIDAgMCAwIDIgMmg0YTIgMiAwIDAgMCAyLTJ2LTRhMiAyIDAgMCAwLTItMnptLTEwIDJ2NGgtNHYtNGg0bTAtMmgtNGEyIDIgMCAwIDAtMiAydjRhMiAyIDAgMCAwIDIgMmg0YTIgMiAwIDAgMCAyLTJ2LTRhMiAyIDAgMCAwLTItMnoiLz48L3N2Zz4=">
+                                            </a>
+                                        </li>
+                                        <li class="security--nav__list__item" label=""
+                                            role="menuitem" tabindex="-1">
+                                            <a id="security--nav__list__item"
+                                               class="security--nav__list__item__link"
+                                               href="ibm-security.carbondesignsystem.com#1">
+                                                Section
+                                                3<img alt="Section 3"
+                                                      class="security--toolbar__nav__item__icon"
+                                                      src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+ICA8cGF0aCBmaWxsPSIjZmZmIiBkPSJNMTYgMThINmEyIDIgMCAwIDEtMi0yVjZhMiAyIDAgMCAxIDItMmgxMGEyIDIgMCAwIDEgMiAydjEwYTIgMiAwIDAgMS0yIDJ6TTYgNnYxMGgxMFY2em0yMCA2djRoLTR2LTRoNG0wLTJoLTRhMiAyIDAgMCAwLTIgMnY0YTIgMiAwIDAgMCAyIDJoNGEyIDIgMCAwIDAgMi0ydi00YTIgMiAwIDAgMC0yLTJ6bTAgMTJ2NGgtNHYtNGg0bTAtMmgtNGEyIDIgMCAwIDAtMiAydjRhMiAyIDAgMCAwIDIgMmg0YTIgMiAwIDAgMCAyLTJ2LTRhMiAyIDAgMCAwLTItMnptLTEwIDJ2NGgtNHYtNGg0bTAtMmgtNGEyIDIgMCAwIDAtMiAydjRhMiAyIDAgMCAwIDIgMmg0YTIgMiAwIDAgMCAyLTJ2LTRhMiAyIDAgMCAwLTItMnoiLz48L3N2Zz4=">
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <nav aria-label="" class="security--nav">
+                                    <ul class="security--nav__wrapper" role="menubar">
+                                        <li class="security--nav__list__item" label=""
+                                            role="menuitem" tabindex="-1">
+                                            <a id="security--nav__list__item"
+                                               class="security--nav__list__item__link"
+                                               href="ibm-security.carbondesignsystem.com#17">
+                                                Section
+                                                4
+                                            </a>
+                                        </li>
+                                        <li class="security--nav__list__item" label=""
+                                            role="menuitem" tabindex="-1">
+                                            <a id="security--nav__list__item"
+                                               class="security--nav__list__item__link"
+                                               href="ibm-security.carbondesignsystem.com#28">
+                                                Section
+                                                5<img alt="Section 5"
+                                                      class="security--toolbar__nav__item__icon"
+                                                      src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+ICA8cGF0aCBmaWxsPSIjZmZmIiBkPSJNMTYgMThINmEyIDIgMCAwIDEtMi0yVjZhMiAyIDAgMCAxIDItMmgxMGEyIDIgMCAwIDEgMiAydjEwYTIgMiAwIDAgMS0yIDJ6TTYgNnYxMGgxMFY2em0yMCA2djRoLTR2LTRoNG0wLTJoLTRhMiAyIDAgMCAwLTIgMnY0YTIgMiAwIDAgMCAyIDJoNGEyIDIgMCAwIDAgMi0ydi00YTIgMiAwIDAgMC0yLTJ6bTAgMTJ2NGgtNHYtNGg0bTAtMmgtNGEyIDIgMCAwIDAtMiAydjRhMiAyIDAgMCAwIDIgMmg0YTIgMiAwIDAgMCAyLTJ2LTRhMiAyIDAgMCAwLTItMnptLTEwIDJ2NGgtNHYtNGg0bTAtMmgtNGEyIDIgMCAwIDAtMiAydjRhMiAyIDAgMCAwIDIgMmg0YTIgMiAwIDAgMCAyLTJ2LTRhMiAyIDAgMCAwLTItMnoiLz48L3N2Zz4=">
+                                            </a>
+                                        </li>
+                                        <li class="security--nav__list__item" label=""
+                                            role="menuitem" tabindex="-1">
+                                            <a id="security--nav__list__item"
+                                               class="security--nav__list__item__link"
+                                               href="ibm-security.carbondesignsystem.com#26">
+                                                Section
+                                                6
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </span>
+                        </aside>
+                    </span>
+
+                    <span id="settings" class="security--transition" data-navigation-menu hidden>
+                        <aside class="security--toolbar__panel" role="menu">
+                            <span class="security--transition">
+                                <nav aria-label="General settings" class="security--nav">
+                                    <h1 class="security--nav__heading">General settings</h1>
+                                    <ul class="security--nav__wrapper" role="menubar">
+                                        <li class="security--nav__list__item" label=""
+                                            role="menuitem" tabindex="-1">
+                                            <a id="security--nav__list__item"
+                                               class="security--nav__list__item__link"
+                                               href="ibm-security.carbondesignsystem.com#2">Account</a>
+                                        </li>
+                                        <li class="security--nav__list__item" label=""
+                                            role="menuitem" tabindex="-1">
+                                            <a id="security--nav__list__item"
+                                               class="security--nav__list__item__link"
+                                               href="ibm-security.carbondesignsystem.com#27">Permissions</a>
+                                        </li>
+                                        <li class="security--nav__list__item" label=""
+                                            role="menuitem" tabindex="-1">
+                                            <a id="security--nav__list__item"
+                                               class="security--nav__list__item__link"
+                                               href="ibm-security.carbondesignsystem.com#5">Teams</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <nav aria-label="Application settings" class="security--nav">
+                                    <h1 class="security--nav__heading">Application settings</h1>
+                                    <ul class="security--nav__wrapper" role="menubar">
+                                        <li class="security--nav__list__item" label=""
+                                            role="menuitem" tabindex="-1">
+                                            <a id="security--nav__list__item"
+                                               class="security--nav__list__item__link"
+                                               href="ibm-security.carbondesignsystem.com#20">
+                                                Application
+                                                1
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <nav aria-label="Legal" class="security--nav">
+                                    <h1 class="security--nav__heading">Legal</h1>
+                                    <ul class="security--nav__wrapper" role="menubar">
+                                        <li class="security--nav__list__item" label=""
+                                            role="menuitem" tabindex="-1">
+                                            <a id="security--nav__list__item"
+                                               class="security--nav__list__item__link security--nav__list__item__link--external"
+                                               href="https://www.ibm.com" rel="noopener noreferrer"
+                                               target="_blank">
+                                                Privacy<svg focusable="false"
+                                                            preserveAspectRatio="xMidYMid meet" aria-hidden="true"
+                                                            xmlns="http://www.w3.org/2000/svg" width="16"
+                                                            height="16" viewBox="0 0 16 16"
+                                                            class="security--icon security--nav__list__item__link--external__icon"
+                                                            style="will-change: transform;">
+                                                    <path d="M13,14H3c-0.6,0-1-0.4-1-1V3c0-0.6,0.4-1,1-1h5v1H3v10h10V8h1v5C14,13.6,13.6,14,13,14z">
+                                                    </path>
+                                                    <path d="M10 1L10 2 13.3 2 9 6.3 9.7 7 14 2.7 14 6 15 6 15 1z">
+                                                    </path>
+                                                </svg>
+                                            </a>
+                                        </li>
+                                        <li class="security--nav__list__item" label=""
+                                            role="menuitem" tabindex="-1">
+                                            <a id="security--nav__list__item"
+                                               class="security--nav__list__item__link"
+                                               href="ibm-security.carbondesignsystem.com#10">Terms</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </span>
+                        </aside>
+                    </span>
+                    <span id="support" class="security--transition" data-navigation-menu hidden>
+                        <aside class="security--toolbar__panel" role="menu">
+                            <span class="security--transition">
+                                <nav aria-label="Support" class="security--nav">
+                                    <h1 class="security--nav__heading">Support</h1>
+                                    <ul class="security--nav__wrapper" role="menubar">
+                                        <li class="security--nav__list__item" label=""
+                                            role="menuitem" tabindex="-1">
+                                            <a id="security--nav__list__item"
+                                               class="security--nav__list__item__link"
+                                               href="ibm-security.carbondesignsystem.com#11">Documentation</a>
+                                        </li>
+                                        <li class="security--nav__list__item" label=""
+                                            role="menuitem" tabindex="-1">
+                                            <div id="security--nav__list__item"
+                                                 class="security--nav__list__item__link" role="menuitem"
+                                                 tabindex="0">Learn about...</div>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </span>
+                        </aside>
+
+                    </span>
+                </span>
+            </div>
+            <div class="security--header__container">
+                <header class="security--header" role="banner">
+                    <a href="#"
+                       class="bx--link security--header__link">
+                        IBM <span class="security--header__link__title--domain">
+                            Security
+                        </span><span class="security--header__link__title--product">Application</span>
+                    </a>
+                    <ul class="security--header__group  security--header__group--active">
+                        <li class="security--header__list__item security--header__list__item--active"
+                            aria-expanded="false" aria-haspopup="true">
+                            <button class="security--button--icon security--header__button"
+                                    aria-label="Toggle notifications">
+                                <svg focusable="false"
+                                     preserveAspectRatio="xMidYMid meet" aria-hidden="true"
+                                     xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                     viewBox="0 0 32 32" class="security--icon"
+                                     style="will-change: transform;">
+                                    <path d="M28.7,20.3,26,17.6V13A10.07,10.07,0,0,0,17,3V1H15V3A10.15,10.15,0,0,0,6,13v4.6L3.3,20.3A.91.91,0,0,0,3,21v3a.94.94,0,0,0,1,1h7a5,5,0,0,0,10,0h7a.94.94,0,0,0,1-1V21A.91.91,0,0,0,28.7,20.3ZM16,28a3,3,0,0,1-3-3h6A3,3,0,0,1,16,28Zm11-5H5V21.4l2.7-2.7A.91.91,0,0,0,8,18V13a8,8,0,0,1,16,0v5a.91.91,0,0,0,.3.7L27,21.4Z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <span class="security--transition"></span>
+                        </li>
+                        <li class="security--header__list__item security--header__list__item--active"
+                            aria-expanded="false" aria-haspopup="true">
+                            <button aria-label="Toggle profile"
+                                    class="security--button--icon security--header__button">
+                                <span class="security--profile-image">SU</span>
+                            </button><span class="security--transition"></span>
+                        </li>
+                    </ul>
+                </header>
+            </div>
+        </div>
+        <div id="main" style="padding-left: 5rem;">
+            <button tabindex="0" class="security--button bx--btn bx--btn--primary"
+                    type="button" data-navigation-menu-target="#panel1">
+                Primary
+                and secondary action
+            </button>
+            <button tabindex="0" class="security--button bx--btn bx--btn--primary"
+                    type="button" data-navigation-menu-target="#panel2">
+                Primary
+                action
+            </button>
+            <button tabindex="0" class="security--button bx--btn bx--btn--primary"
+                    type="button" data-navigation-menu-target="#panel3">
+                Default
+            </button>
+        </div>
+    </div>
+    <button type="button" class="info__show-button"
+            style="font-family: sans-serif; font-size: 0.875rem; display: block; position: fixed; border: none; background: var(--interactive-01, #0f62fe); color: var(--text-04, #ffffff); padding: 0.75rem 1rem; cursor: pointer; font-weight: 400; line-height: 1.125rem; letter-spacing: 0.16px; top: auto; right: 0px; border-radius: 0px; left: 0px; bottom: 0px;">
+        Show Info
+    </button>
+</div>
+<span id="panel1" class="security--transition" hidden>
+    <section class="security--panelv2" role="dialog"
+             aria-label="Example aria-label" aria-modal="true">
+        <header class="security--panelv2__header">
+            <button class="security--button--icon security--panelv2__button--close"
+                    aria-label="Close">
+                <svg focusable="false"
+                     preserveAspectRatio="xMidYMid meet" aria-hidden="true"
+                     xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                     viewBox="0 0 32 32" class="security--icon"
+                     style="will-change: transform;">
+                    <path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z">
+                    </path>
+                </svg>
+            </button>
+            <div class="security--panelv2__header__container--title">
+                <h2 id="security--panelv2__title--panel-5"
+                    class="security--panelv2__header--title">
+                    Example title
+                </h2>
+                <div id="security--panelv2__subtitle--panel-5"
+                     class="security--panelv2__header--subtitle">Example subtitle</div>
+            </div>
+        </header>
+        <section class="security--panelv2__body"
+                 aria-labelledby="security--panelv2__title--panel-5"
+                 style="margin-top: 105px; margin-bottom: 48px;">
+            <div class="security--panel__body--content">
+                <p>
+                    Use the <button type="button"
+                                    class="bx--snippet bx--snippet--inline bx--snippet--light"
+                                    aria-describedby="id11">
+                        <code id="id11">PanelContent</code><span class="bx--assistive-text bx--copy-btn__feedback">Copied!</span>
+                    </button>
+                    component to apply the appropriate formatting to panel content.
+                </p>
+                <p>
+                    This example uses the<button type="button"
+                                                 class="bx--snippet bx--snippet--inline bx--snippet--light"
+                                                 aria-describedby="id12">
+                        <code id="id12">primaryButton</code><span class="bx--assistive-text bx--copy-btn__feedback">Copied!</span>
+                    </button>and<button type="button"
+                                        class="bx--snippet bx--snippet--inline bx--snippet--light"
+                                        aria-describedby="id13">
+                        <code id="id13">secondaryButton</code><span class="bx--assistive-text bx--copy-btn__feedback">Copied!</span>
+                    </button>props
+                    to render buttons in the footer.
+                </p>
+            </div>
+        </section>
+        <footer class="security--panelv2__footer">
+            <button tabindex="0"
+                    class="security--button security--panelv2__footer__button security--panelv2__footer__button--secondary bx--btn bx--btn--secondary"
+                    type="button">
+                Cancel
+            </button><button tabindex="0"
+                             class="security--button security--panelv2__footer__button bx--btn bx--btn--primary"
+                             type="button">
+                Add<svg focusable="false"
+                        preserveAspectRatio="xMidYMid meet" aria-label="Add"
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16"
+                        height="16" viewBox="0 0 16 16" role="img" class="bx--btn__icon"
+                        style="will-change: transform;">
+                    <path d="M9 7L9 3 7 3 7 7 3 7 3 9 7 9 7 13 9 13 9 9 13 9 13 7z">
+                    </path>
+                </svg>
+            </button>
+        </footer>
+    </section>
+
+</span>
+<span id="panel2" class="security--transition" hidden>
+    <section class="security--panelv2" role="dialog"
+             aria-label="Example aria-label" aria-modal="true">
+        <header class="security--panelv2__header">
+            <button class="security--button--icon security--panelv2__button--close"
+                    aria-label="Close">
+                <svg focusable="false"
+                     preserveAspectRatio="xMidYMid meet" aria-hidden="true"
+                     xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                     viewBox="0 0 32 32" class="security--icon"
+                     style="will-change: transform;">
+                    <path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z">
+                    </path>
+                </svg>
+            </button>
+            <div class="security--panelv2__header__container--title">
+                <h2 id="security--panelv2__title--panel-6"
+                    class="security--panelv2__header--title">
+                    Example title
+                </h2>
+                <div id="security--panelv2__subtitle--panel-6"
+                     class="security--panelv2__header--subtitle">Example subtitle</div>
+            </div>
+        </header>
+        <section class="security--panelv2__body security--panelv2__body--footer"
+                 aria-labelledby="security--panelv2__title--panel-6"
+                 style="margin-top: 105px; margin-bottom: 48px;">
+            <div class="security--panel__body--content">
+                <p>
+                    Use the <button type="button"
+                                    class="bx--snippet bx--snippet--inline bx--snippet--light"
+                                    aria-describedby="id29">
+                        <code id="id29">PanelContent</code><span class="bx--assistive-text bx--copy-btn__feedback">Copied!</span>
+                    </button>
+                    component to apply the appropriate formatting to panel content.
+                </p>
+                <p>
+                    This example uses the<button type="button"
+                                                 class="bx--snippet bx--snippet--inline bx--snippet--light"
+                                                 aria-describedby="id30">
+                        <code id="id30">renderFooter</code><span class="bx--assistive-text bx--copy-btn__feedback">Copied!</span>
+                    </button>prop
+                    to render a<button type="button"
+                                       class="bx--snippet bx--snippet--inline bx--snippet--light"
+                                       aria-describedby="id31">
+                        <code id="id31">ComboButton</code><span class="bx--assistive-text bx--copy-btn__feedback">Copied!</span>
+                    </button>in
+                    a custom footer.
+                </p>
+            </div>
+        </section>
+        <footer class="security--panelv2__footer">
+            <div class="security--combo-button" data-floating-menu-container="true">
+                <div class="security--combo-button__group">
+                    <button tabindex="0"
+                            class="security--button security--combo-button--primary bx--btn bx--btn--primary"
+                            type="button">
+                        <span class="bx--text-truncate--end"
+                              title="Item 1 (becomes primary button and text will be truncated)">
+                            Item
+                            1 (becomes primary button and text will be truncated)
+                        </span><svg focusable="false" preserveAspectRatio="xMidYMid meet"
+                                    aria-label="" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                    viewBox="0 0 20 20" class="bx--btn__icon"
+                                    style="will-change: transform;">
+                            <path d="M11.8 2.8L10.8 3.8 16.2 9.3 1 9.3 1 10.7 16.2 10.7 10.8 16.2 11.8 17.2 19 10z">
+                            </path>
+                        </svg>
+                    </button><button class="security--button bx--btn bx--btn--primary security--combo-button__button security--combo-button__overflow-menu bx--overflow-menu"
+                                     aria-haspopup="true" aria-expanded="false" aria-label="Menu"
+                                     tabindex="0">
+                        <svg focusable="false"
+                             preserveAspectRatio="xMidYMid meet"
+                             xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                             viewBox="0 0 16 16" aria-hidden="true"
+                             class="security--combo-button__icon"
+                             style="will-change: transform;">
+                            <path d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+</span>
+<span id="panel3" class="security--transition" hidden>
+    <section class="security--panelv2" role="dialog"
+             aria-label="Example aria-label" aria-modal="true">
+        <header class="security--panelv2__header">
+            <button class="security--button--icon security--panelv2__button--close"
+                    aria-label="Close">
+                <svg focusable="false"
+                     preserveAspectRatio="xMidYMid meet" aria-hidden="true"
+                     xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                     viewBox="0 0 32 32" class="security--icon"
+                     style="will-change: transform;">
+                    <path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z">
+                    </path>
+                </svg>
+            </button>
+            <div class="security--panelv2__header__container--title">
+                <h2 id="security--panelv2__title--panel-7"
+                    class="security--panelv2__header--title">
+                    Example title
+                </h2>
+                <div id="security--panelv2__subtitle--panel-7"
+                     class="security--panelv2__header--subtitle">Example subtitle</div>
+            </div>
+        </header>
+        <section class="security--panelv2__body"
+                 aria-labelledby="security--panelv2__title--panel-7"
+                 style="margin-top: 105px;">
+            <div class="security--panel__body--content">
+                <p>
+                    Use the <button type="button"
+                                    class="bx--snippet bx--snippet--inline bx--snippet--light"
+                                    aria-describedby="id20">
+                        <code id="id20">PanelContent</code><span class="bx--assistive-text bx--copy-btn__feedback">Copied!</span>
+                    </button>
+                    component to apply the appropriate formatting to panel content.
+                </p>
+                <p>
+                    This example intentially does not include the<button type="button"
+                                                                         class="bx--snippet bx--snippet--inline bx--snippet--light"
+                                                                         aria-describedby="id21">
+                        <code id="id21">renderFooter</code><span class="bx--assistive-text bx--copy-btn__feedback">Copied!</span>
+                    </button>or<button type="button"
+                                       class="bx--snippet bx--snippet--inline bx--snippet--light"
+                                       aria-describedby="id22">
+                        <code id="id22">primaryButton</code><span class="bx--assistive-text bx--copy-btn__feedback">Copied!</span>
+                    </button>props
+                    and therefore does not have a footer.
+                </p>
+            </div>
+        </section>
+    </section>
+
+</span>
+
+
+
+@code {
+
+}

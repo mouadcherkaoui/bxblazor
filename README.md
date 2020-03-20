@@ -31,14 +31,37 @@ Next we add tags to our index.html in web assembly project or _Host.cshtml in a 
 ```html
 .....
 <!-- in the page header -->
-<link href="_content/BxBlazor/carbon-custom.css" rel="stylesheet"/>
-<link href="_content/BxBlazor/carbon-components.min.css" rel="stylesheet"/>
+<link href="https://unpkg.com/carbon-components/css/carbon-components.min.css" rel="stylesheet" />
 ```
 
 ```html
 <!--  -->
-<script src="_content/BxBlazor/carbon-components.min.js"></script>
-<script src="_content/BxBlazor/carbon-init.js"></script>
+<script src="https://unpkg.com/carbon-components/scripts/carbon-components.min.js"></script>
+
+<!-- prismjs is used for code snippet highlighting -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/prism.min.js"></script>
+
+<script>
+    window.InitComponent = (component) => {
+        CarbonComponents[component].init();
+    };
+
+    window.highlightAll = function () {
+        Prism.highlightAll();
+    };
+
+    window.bxModal_show = function (id) {
+        var element = document.getElementById(id);
+        window.modal = CarbonComponents.Modal.create(element);
+        window.modal.show();
+    };
+
+    window.bxNotification_show = function (id) {    
+        var element = document.getElementById(id);
+        element.classList.add("show");
+        this.setTimeout(() => element.classList.remove("show"), 3000);    
+    };
+</script>
 <!-- this should be before _framework/blazor.server.js -->
 <script src="_framework/blazor.server.js"></script>
 
@@ -49,7 +72,7 @@ Finally adding the ```using``` sections to *_imports.razor*:
 ```csharp
 @using BxBlazor
 @using BxBlazor.Components
-@using BxBlazor.navigation
+@using BxBlazor.Components.UIShell
 @using BxBlazor.Models
 ```
 
@@ -60,79 +83,75 @@ the last step is to compose our layout page using header, navigation panel etc..
 @inject IJSRuntime jsRuntime
 
     <div id="root">
-        <Header>
-            <Content>
-                <LeftPanel Sections="NavigationSections"></LeftPanel>
-                <RightPanel></RightPanel>
-            </Content>
-        </Header>
-        <main class="bx--content">
-            @Body
-        </main>
+        <BxUIShell 
+                HeaderNavLinks="HeaderNavLinks"
+                HeaderActions="HeaderActions"
+                SwitcherLinks="SwitcherLinks"
+                NavSections="Sections"
+                NavMenuIdSuffix="primary"
+                SideNavFixed="true">
+            @ChildContent
+        </BxUIShell>
     </div>
 ```
 
 ```cs 
 @code {
-    private Dictionary<string, SidenavItem[]> NavigationSections = new Dictionary<string, SidenavItem[]>()
+    public class ShellState
     {
-        {
-            "Demos",
-            new SidenavItem[] {
-                new SidenavItem {
-                    DisplayText = "Home",
-                    Expanded = false,
-                    HasChilds = false,
-                    Link = "/"
-                },
-                new SidenavItem {
-                    DisplayText = "Fetch Data",
-                    Expanded = false,
-                    HasChilds = false,
-                    Link = "/fetchdata"
-                },
-                new SidenavItem {
-                    DisplayText = "Counter",
-                    Expanded = false,
-                    HasChilds = false,
-                    Link = "/counter"
-                },
-                new SidenavItem {
-                    DisplayText = "Components",
-                    Expanded = false,
-                    HasChilds = true,
-                    ChildItems = new SidenavItem[]
+        public IEnumerable<HeaderNavLink> HeaderNavLinks { get; set; }
+        public IEnumerable<SwitcherLink> SwitcherLinks { get; set; }
+        public IEnumerable<NavMenuSection> Sections { get; set; }
+        public IEnumerable<HeaderAction> HeaderActions { get; set; }
+
+    }
+    IEnumerable<HeaderNavLink> HeaderNavLinks
+        = new List<HeaderNavLink> {
+            new HeaderNavLink
+            {
+                Title = "test",
+                Uri = "/"
+            } ,
+            new HeaderNavLink
+            {
+                Title = "with child items",
+                ChildItems = new List<HeaderNavLink>
                 {
-                        new SidenavItem {
-                            DisplayText = "BxAccordion",
-                            Link = "components/bx-accordion"
-                        },
-                        new SidenavItem {
-                            DisplayText = "BxDataTable",
-                            Link = "components/bx-datatable"
-                        },
-                        new SidenavItem {
-                            DisplayText = "BxModal",
-                            Link = "components/bx-modal"
-                        },
-                        new SidenavItem {
-                            DisplayText = "BxTabs",
-                            Link = "components/bx-tabs"
-                        },
-                        new SidenavItem {
-                            DisplayText = "BxStructuredList",
-                            Link = "components/bx-structuredlist"
-                        }
+                    new HeaderNavLink
+                    {
+                        Title = "item1",
+                        Uri = "/"
                     }
                 }
             }
-        }
-    };
+        };
+    
+    IEnumerable<SwitcherLink> SwitcherLinks;
+    
+    IEnumerable<NavMenuSection> Sections
+        = new List<NavMenuSection> {
+            new NavMenuSection()
+            {
+                NavMenuItems = new List<NavMenuItem>
+                {
+                    new NavMenuItem
+                    {
+                        Title = "Home",
+                        Type = "link",
+                        Uri = "/"
+                    }
+                }
+            }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-    }
+        };
+
+    IEnumerable<HeaderAction> HeaderActions
+        = new List<HeaderAction> {
+            new HeaderAction {
+                Title = "Products",
+                SwitchIdSuffix = "products"
+            } };
+
 }
 ```
 ## Running the project

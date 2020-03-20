@@ -1,7 +1,7 @@
 ﻿@switch (ActionType)
 {
     case HeaderActionType.Search:
-        <button aria-label="Notifications" class="bx--header__action" type="button">
+        <button aria-label="Notifications" class="@prefix--header__action" type="button">
             <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"
                  width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"
                  style="will-change: transform;">
@@ -11,7 +11,7 @@
         </button>
         break;
     case HeaderActionType.Notifications:
-        <button aria-label="Search" class="bx--header__action" type="button">
+        <button aria-label="Search" class="@prefix--header__action" type="button">
             <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;">
                 <path d="M30 28.59L22.45 21A11 11 0 1 0 21 22.45L28.59 30zM5 14a9 9 0 1 1 9 9 9 9 0 0 1-9-9z">
                 </path>
@@ -19,14 +19,14 @@
         </button>
         break;
     case HeaderActionType.AppSwitcher:
-        <button aria-label="App Switcher" class="bx--header__action" type="button" data-product-switcher-target="#right-panel">
+        <button aria-label="App Switcher" class="@prefix--header__action" type="button" data-product-switcher-target="#right-panel">
             <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"
-                 width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" class="bx--navigation-menu-panel-expand-icon"
+                 width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" class="@prefix--navigation-menu-panel-expand-icon"
                  style="will-change: transform;">
                 <path d="M15.5 15.5H18V18h-2.5zm-6.75 0h2.5V18h-2.5zM2 15.5h2.5V18H2zm13.5-6.75H18v2.5h-2.5zm-6.75 0h2.5v2.5h-2.5zM2 8.75h2.5v2.5H2zM15.5 2H18v2.5h-2.5zM8.75 2h2.5v2.5h-2.5zM2 2h2.5v2.5H2z">
                 </path>
             </svg>
-            <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" class="bx--navigation-menu-panel-collapse-icon" style="will-change: transform;">
+            <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" class="@prefix--navigation-menu-panel-collapse-icon" style="will-change: transform;">
                 <path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4l6.6 6.6L8 22.6 9.4 24l6.6-6.6 6.6 6.6 1.4-1.4-6.6-6.6L24 9.4z"></path>
             </svg>
         </button>
@@ -40,6 +40,8 @@
         Notifications,
         AppSwitcher
     }
+    [Parameter]
+    public string prefix { get; set; } = "bx";
     [Parameter]
     public HeaderActionType ActionType { get; set; }
 }

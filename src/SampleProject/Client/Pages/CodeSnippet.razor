@@ -1,12 +1,14 @@
 ﻿@page "/components/bx-codesnippet"
 
-<h3>BxCodeSnippet</h3>
-<div class="bx--grid">
-    <div class="bx--row">
-        <div class="bx--offset-lg-2 bx--col-lg-10">
-            <BxCodeSnippet Code="@_code" />
-        </div>
-    </div>
+<div class="bx--content">
+    <BxGrid>
+        <BxRow>
+            <h3>BxCodeSnippet</h3>
+            <BxCol offset="1" lg="10">
+                <BxCodeSnippet Code="@_code" />
+            </BxCol>
+        </BxRow>
+    </BxGrid>
 </div>
 @code {
     string _code = 

@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
@@ -7,22 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\img\undraw_posting_photo.svg" />
-    <None Include="wwwroot\js\carbon-components.min.js" />
-    <None Include="wwwroot\js\carbon-components.min.js.map" />
-    <None Include="wwwroot\js\carbon-init.js" />
-    <None Include="wwwroot\js\carbon-init.js.map" />
-    <None Include="wwwroot\js\duallistbox-init.js" />
-    <None Include="wwwroot\js\duallistbox-init.min.js" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.2.0-preview1.20073.1" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="3.2.0-preview1.20073.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.2.0" />
   </ItemGroup>
-
-
-
 </Project>

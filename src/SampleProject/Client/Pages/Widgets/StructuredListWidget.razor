@@ -1,0 +1,29 @@
+﻿@using System.ComponentModel.DataAnnotations
+
+<Widget Title="BxStructuredList">
+    <BxStructuredList TItem="RepoItem" Items="items" IsSelectable="true">
+
+    </BxStructuredList>
+</Widget>
+@code {
+    public class RepoItem
+    {
+        public RepoItem(int id, string name, string description)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+        }
+        [Display(Name = "Id")]
+        public int Id { get; set; }
+        [Display(Name = "Repository Name")]
+        public string Name { get; set; }
+        public string Description { get; set; }
+    }
+    List<RepoItem> items = new List<RepoItem>()
+    {
+        new RepoItem (0, "Carbon Design Components", "simple description"),
+        new RepoItem(1, "aspnetcore-blazor", "simple description")
+    };
+
+}

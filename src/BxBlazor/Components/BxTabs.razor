@@ -1,20 +1,24 @@
-﻿@inject IJSInProcessRuntime js
+﻿@inject IJSRuntime js
 
-<div data-tabs class="bx--tabs bx--tabs--container" id="tabs" width="75%">
-    <div class="bx--tabs-trigger" tabindex="0">
-        <a href="javascript:void(0)" class="bx--tabs-trigger-text" tabindex="-1"></a>
+
+<div data-tabs class="@prefix--tabs @prefix--tabs--container" id="tabs" width="75%">
+    <div class="@prefix--tabs-trigger" tabindex="0">
+        <a href="javascript:void(0)" class="@prefix--tabs-trigger-text" tabindex="-1"></a>
         <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"></path></svg>
     </div>
-    <ul class="bx--tabs__nav bx--tabs__nav--hidden" role="tablist">
+    <ul class="@prefix--tabs__nav @prefix--tabs__nav--hidden" role="tablist">
         @Headers
     </ul>
 </div>
 <!-- The markup below is for demonstration purposes only -->
-<div class="bx--tab-content">
+<div class="@prefix--tab-content">
     @Items
 </div>
 
 @code {
+    [Parameter]
+    public string prefix { get; set; } = "bx";
+
     [Parameter]
     public RenderFragment Headers { get; set; }
 
@@ -28,7 +32,10 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await js.InvokeVoidAsync("bxTab_Init");
+        if(firstRender)
+        {
+            await js.InvokeVoidAsync("InitComponent", "Tab");
+        }
         await base.OnAfterRenderAsync(firstRender);
     }
 }

@@ -1,0 +1,63 @@
+﻿@inject IJSRuntime js
+<!--
+  Copyright IBM Corp. 2016, 2018
+
+  This source code is licensed under the Apache-2.0 license found in the
+  LICENSE file in the root directory of this source tree.
+-->
+
+@if (WithOverlay)
+{
+    <div class="@prefix--loading-overlay">
+        <div data-loading class="@(IsSmall ? $"{prefix}--loading {prefix}--loading--small": $"{prefix}--loading")">
+            <svg class="@prefix--loading__svg" viewBox="-75 -75 150 150">
+                <title>Loading</title>
+                @if (IsSmall)
+                {
+                    <circle class="@prefix--loading__background" cx="0" cy="0" r="26.8125" />
+                    <circle class="@prefix--loading__stroke" cx="0" cy="0" r="26.8125" />
+                }
+                else
+                {
+                    <circle class="@prefix--loading__stroke" cx="0" cy="0" r="37.5" />
+                }
+            </svg>
+        </div>
+    </div>
+}
+else
+{
+    <div data-loading class="@(IsSmall ? $"{prefix}--loading {prefix}--loading--small": $"{prefix}--loading")">
+        <svg class="@prefix--loading__svg" viewBox="-75 -75 150 150">
+            <title>Loading</title>
+            @if (IsSmall)
+            {
+                <circle class="@prefix--loading__background" cx="0" cy="0" r="26.8125" />
+                <circle class="@prefix--loading__stroke" cx="0" cy="0" r="26.8125" />
+            }
+            else
+            {
+                <circle class="@prefix--loading__stroke" cx="0" cy="0" r="37.5" />
+            }
+        </svg>
+    </div>
+}
+@code {
+    [Parameter]
+    public string prefix { get; set; } = "bx";
+
+    [Parameter]
+    public bool WithOverlay { get; set; }
+
+    [Parameter]
+    public bool IsSmall { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            await js.InvokeVoidAsync("InitComponent", "Loading");
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+}

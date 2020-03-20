@@ -1,0 +1,89 @@
+﻿@inherits BlazorStateComponent
+@using BlazorState
+@using MediatR
+
+@inject IJSRuntime jsRuntime
+@inject HttpClient http
+
+<BxUIShell prefix="bx"
+            HeaderNavLinks="HeaderNavLinks"
+            HeaderActions="HeaderActions"
+            SwitcherLinks="SwitcherLinks"
+            NavSections="Sections"
+           NavMenuIdSuffix="primary"
+           SideNavFixed="true">
+    @ChildContent
+</BxUIShell>
+@code {
+
+    public class ShellState
+    {
+        public IEnumerable<HeaderNavLink> HeaderNavLinks { get; set; }
+        public IEnumerable<SwitcherLink> SwitcherLinks { get; set; }
+        public IEnumerable<NavMenuSection> Sections { get; set; }
+        public IEnumerable<HeaderAction> HeaderActions { get; set; }
+
+    }
+    IEnumerable<HeaderNavLink> HeaderNavLinks;
+    IEnumerable<SwitcherLink> SwitcherLinks;
+    IEnumerable<NavMenuSection> Sections;
+    IEnumerable<HeaderAction> HeaderActions;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        // we create an announymous object that will hold the deserialized json to do so
+        // we will use an extension method through which we will act on the result
+
+        (new
+        {
+            Sections = Sections,
+            SwitcherLinks = SwitcherLinks,
+            HeaderNavLinks = HeaderNavLinks,
+            HeaderActions = HeaderActions
+        })
+            // next step is to deserialize the json to the type of the announymous object
+            .pipeTo(anonymousObject =>
+                Newtonsoft.Json.JsonConvert.DeserializeAnonymousType(Globals.UIShellStructure, anonymousObject))
+            // the we pipe the result to extract the shell structure as IEnumerables
+            .pipeTo(result =>
+            {
+                Sections = result.Sections;
+                HeaderNavLinks = result.HeaderNavLinks;
+                SwitcherLinks = result.SwitcherLinks;
+                HeaderActions = result.HeaderActions;
+            });
+        // we can continue f
+        //.pipeTo(toFile => {
+        //});
+
+
+        await base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    protected new T GetState<T>()
+    {
+        Type stateType = typeof(T);
+        Subscriptions.Add(stateType, this);
+
+        return base.GetState<T>();
+        //return Store.GetState<T>();
+    }
+
+    new IMediator Mediator { get => base.Mediator; set => base.Mediator = value; }
+    new IStore Store { get => base.Store; set => base.Store = value; }
+
+    new void ReRender()
+    {
+        base.ReRender();
+    }
+}

@@ -8,17 +8,17 @@
 @typeparam TItem  
 @inject IJSRuntime js
     
-<div class="bx--data-table-container" data-table>
-    <div class="bx--data-table-header">
-        <h4 class="bx--data-table-header__title">@Title</h4>
-        <p class="bx--data-table-header__description">@Description</p>
+<div class="@prefix--data-table-container" data-table>
+    <div class="@prefix--data-table-header">
+        <h4 class="@prefix--data-table-header__title">@Title</h4>
+        <p class="@prefix--data-table-header__description">@Description</p>
     </div>
     @if(BatchActionsToolbar != null)
     {
         @BatchActionsToolbar
     }
     <!-- Table -->
-    <table class="bx--data-table@(IsSortable ? " bx--data-table--sort" : "")">
+    <table class="@prefix--data-table@(IsSortable ? $" {prefix}--data-table--sort" : "")">
         <thead>
             <tr>
                 @if(ItemDetails != null)
@@ -28,10 +28,10 @@
                 }
                 @if (IsSelectable)
                 {
-                    <th class="bx--table-column-checkbox">
+                    <th class="@prefix--table-column-checkbox">
                         <!-- checkbox th -->
-                        <input data-event="select-all" id="bx--checkbox-20" class="bx--checkbox" type="checkbox" value="green" name="checkbox-20">
-                        <label for="bx--checkbox-20" class="bx--checkbox-label" aria-label="Label name"></label>
+                        <input data-event="select-all" id="@prefix--checkbox-20" class="@prefix--checkbox" type="checkbox" value="green" name="checkbox-20">
+                        <label for="@prefix--checkbox-20" class="@prefix--checkbox-label" aria-label="Label name"></label>
                     </th>
                 }
                 @foreach (var header in headers)
@@ -41,47 +41,47 @@
                         <th>
                             <!-- checkbox th -->
                             <!-- sortable th  -->
-                            <button class="bx--table-sort" data-event="sort" title="Name">
-                                <span class="bx--table-header-label">@header</span>
-                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--table-sort__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M12.3 9.3L8.5 13.1 8.5 1 7.5 1 7.5 13.1 3.7 9.3 3 10 8 15 13 10z"></path></svg>
-                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--table-sort__icon-unsorted" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.8 10.3L12 12.1 12 2 11 2 11 12.1 9.2 10.3 8.5 11 11.5 14 14.5 11zM4.5 2L1.5 5 2.2 5.7 4 3.9 4 14 5 14 5 3.9 6.8 5.7 7.5 5z"></path></svg>
+                            <button class="@prefix--table-sort" data-event="sort" title="Name">
+                                <span class="@prefix--table-header-label">@header</span>
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--table-sort__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M12.3 9.3L8.5 13.1 8.5 1 7.5 1 7.5 13.1 3.7 9.3 3 10 8 15 13 10z"></path></svg>
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--table-sort__icon-unsorted" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.8 10.3L12 12.1 12 2 11 2 11 12.1 9.2 10.3 8.5 11 11.5 14 14.5 11zM4.5 2L1.5 5 2.2 5.7 4 3.9 4 14 5 14 5 3.9 6.8 5.7 7.5 5z"></path></svg>
                             </button>
                             <!-- no sort th -->
                         </th>
                     }
                     else
                     {
-                        <th><span class="bx--table-header-label">@header</span></th>
+                        <th><span class="@prefix--table-header-label">@header</span></th>
                     }
                 }
                 @if (IsSelectable)
                 {
-                    <th class="bx--table-column-menu">
+                    <th class="@prefix--table-column-menu">
                         <!-- checkbox th -->
                     </th>
                 }
             </tr>
         </thead>
+        @{ var index = 0;}
+        @if (items != null) { 
         <tbody>
-            @{ var index = 0;}
-            @if (items != null)
-            @foreach (var item in items)
+                @foreach (var item in items)
             {
                 index++;
-            <tr class="bx--parent-row" @attributes="@(new Dictionary<string, object>{ { (ItemDetails != null ? "data-parent-row" : "data-row"), ""}})">
+            <tr class="@prefix--parent-row" @attributes="@(new Dictionary<string, object>{ { (ItemDetails != null ? "data-parent-row" : "data-row"), ""}})">
                 @if(ItemDetails != null)
                 {
-                    <td class="bx--table-expand" data-event="expand">
-                        <button class="bx--table-expand__button">
-                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--table-expand__svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"></path></svg>
+                    <td class="@prefix--table-expand" data-event="expand">
+                        <button class="@prefix--table-expand__button">
+                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--table-expand__svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"></path></svg>
                         </button>
                     </td>
                 }
                 @if (IsSelectable)
                 {
-                    <td class="bx--table-column-checkbox">
-                        <input data-event="select" id="bx--checkbox-@(index)" class="bx--checkbox" type="checkbox" value="green" name="checkbox-@(index)" @onselectionchange="OnSelectItemCallback">
-                        <label for="bx--checkbox-@(index)" class="bx--checkbox-label" aria-label="Label name"></label>
+                    <td class="@prefix--table-column-checkbox">
+                        <input data-event="select" id="@prefix--checkbox-@(index)" class="@prefix--checkbox" type="checkbox" value="green" name="checkbox-@(index)" @onselectionchange="OnSelectItemCallback">
+                        <label for="@prefix--checkbox-@(index)" class="@prefix--checkbox-label" aria-label="Label name"></label>
                     </td>
                 }
                 @foreach(var header in headers)
@@ -90,7 +90,7 @@
                         @item[header]
                     </td>
                 }
-                <td class="bx--table-column-menu">
+                <td class="@prefix--table-column-menu">
                     @if (ItemActionsMenu != null) {
                             @ItemActionsMenu
                     }
@@ -99,19 +99,26 @@
             </tr>
             @if (ItemDetails != null)
             {
-                <tr class="bx--expandable-row bx--expandable-row--hidden" data-child-row="">
+                <tr class="@prefix--expandable-row @prefix--expandable-row--hidden" data-child-row="">
                     <td colspan="@(headers.Count + 3)">
                         @ItemDetails
                     </td>
                 </tr>
             }
-        }
+        }            
         </tbody>
+        }else
+        {
+            <tr><BxLoading prefix="@prefix" IsSmall="true" WithOverlay="true"></BxLoading></tr>
+        }
     </table>
 
     <!-- Pagination -->
 </div>
 @code {
+    [Parameter]
+    public string prefix { get; set; } = "bx";
+
     [Parameter]
     public string Title { get; set; } = "";
 
@@ -159,13 +166,15 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await js.InvokeVoidAsync("bxDataTable_Init");
-        await js.InvokeVoidAsync("bxOverflowMenu_Init");
+        if(firstRender)
+        {
+            await js.InvokeVoidAsync("InitComponent", "DataTable");
+        }
         await base.OnAfterRenderAsync(firstRender);
     }
 
     private bool actionMenuOpen = false;
     private bool searchOpen = false;
-    private string actionMenuStateClass { get => actionMenuOpen ? "bx--overflow-menu--open" : ""; }
-    private string searchStateClass { get => searchOpen ? "bx--toolbar-search-container-active" : ""; }
+    private string actionMenuStateClass { get => actionMenuOpen ? $"{prefix}--overflow-menu--open" : ""; }
+    private string searchStateClass { get => searchOpen ? $"{prefix}--toolbar-search-container-active" : ""; }
 }

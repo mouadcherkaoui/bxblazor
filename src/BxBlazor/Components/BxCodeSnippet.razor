@@ -7,35 +7,47 @@
 -->
 
 
-<div class="bx--snippet bx--snippet--multi"
+<div class="@prefix--snippet @prefix--snippet--multi"
      data-code-snippet>
-    <div class="bx--snippet-container"
+    <div class="@prefix--snippet-container"
          aria-label="Code Snippet Text">
         <pre>
-            <code>@Code</code>
+            <code class="@CodeStyle">@Code</code>
         </pre>
     </div>
-    <button data-copy-btn class="bx--copy-btn" type="button" tabindex="0">
-        <span class="bx--assistive-text bx--copy-btn__feedback">Copied!</span>
-        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--snippet__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M14,5v9H5V5h9m0-1H5A1,1,0,0,0,4,5v9a1,1,0,0,0,1,1h9a1,1,0,0,0,1-1V5a1,1,0,0,0-1-1Z"></path><path d="M2,9H1V2A1,1,0,0,1,2,1H9V2H2Z"></path></svg>
+    <button data-copy-btn class="@prefix--copy-btn" type="button" tabindex="0">
+        <span class="@prefix--assistive-text @prefix--copy-btn__feedback">Copied!</span>
+        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--snippet__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M14,5v9H5V5h9m0-1H5A1,1,0,0,0,4,5v9a1,1,0,0,0,1,1h9a1,1,0,0,0,1-1V5a1,1,0,0,0-1-1Z"></path><path d="M2,9H1V2A1,1,0,0,1,2,1H9V2H2Z"></path></svg>
     </button>
-    <button class="bx--btn bx--btn--ghost bx--btn--sm bx--snippet-btn--expand"
+    <button class="@prefix--btn @prefix--btn--ghost @prefix--btn--sm @prefix--snippet-btn--expand"
             type="button">
-        <span class="bx--snippet-btn--text" data-show-more-text="Show more"
+        <span class="@prefix--snippet-btn--text" data-show-more-text="Show more"
               data-show-less-text="Show less">
             Show
             more
         </span>
-        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" aria-label="Show more icon" class="bx--icon-chevron--down bx--snippet__icon" width="16" height="16" viewBox="0 0 16 16" role="img"><path d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"></path></svg>
+        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" aria-label="Show more icon" class="@prefix--icon-chevron--down @prefix--snippet__icon" width="16" height="16" viewBox="0 0 16 16" role="img"><path d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"></path></svg>
     </button>
 </div>
 @code {
     [Parameter]
+    public string prefix { get; set; } = "bx";
+    [Parameter]
     public string Code { get; set; }
+
+    [Parameter]
+    public string CodeStyle { get; set; }
+
+    [Parameter]
+    public bool Multiline { get; set; } = false;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await js.InvokeVoidAsync("bxCodeSnippet_Init");
+        if(firstRender)
+        {
+            await js.InvokeVoidAsync("InitComponent", "CodeSnippet");
+            await js.InvokeVoidAsync("highlightAll");
+        }
         await base.OnAfterRenderAsync(firstRender);
     }
 }
