@@ -1,14 +1,14 @@
 ﻿@inject IJSRuntime js
-<ul data-accordion class="bx--accordion">
+<ul data-accordion class="@prefix--accordion">
     @foreach (var item in Items)
     {
-        <li data-accordion-item class="bx--accordion__item">
-            <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
-                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"></path></svg>
-                <div class="bx--accordion__title">@item.Title</div>
+        <li data-accordion-item class="@prefix--accordion__item">
+            <button class="@prefix--accordion__heading" aria-expanded="false" aria-controls="pane1">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"></path></svg>
+                <div class="@prefix--accordion__title">@item.Title</div>
                 
             </button>
-            <div id="pane1" class="bx--accordion__content">
+            <div id="pane1" class="@prefix--accordion__content">
                 <p>
                     @item.Content
                 </p>
@@ -21,9 +21,15 @@
 @code {      
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await js.InvokeVoidAsync("bxAccordion_Init");
+        if(firstRender)
+        {
+            await js.InvokeVoidAsync("InitComponent", "Accordion");
+        }
         await base.OnAfterRenderAsync(firstRender);
     }
+
+    [Parameter]
+    public string prefix { get; set; } = "bx";
     [Parameter]
     public IEnumerable<AccordionItem> Items { get; set; }
 }

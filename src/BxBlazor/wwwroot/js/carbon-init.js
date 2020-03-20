@@ -89,6 +89,10 @@ window.bxCodeSnippet_Init = function () {
     CarbonComponents.CodeSnippet.init();
 };
 
+window.bxSideNav_Init = function () {
+    CarbonComponents.SideNav.init();
+};
+
 window.bxModal_show = function (id) {
     var element = document.getElementById(id);
     window.modal = CarbonComponents.Modal.create(element);
@@ -99,4 +103,8 @@ window.bxNotification_show = function (id) {
     var element = document.getElementById(id);
     element.classList.add("show");
     this.setTimeout(() => element.classList.remove("show"), 3000);    
+};
+
+window.InitComponent = (component) => {
+    CarbonComponents[component].init();
 };

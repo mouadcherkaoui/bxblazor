@@ -1,3 +1,10 @@
+CarbonComponents.settings.disableAutoInit = false;
+
+window.highlightAll = function () {
+    Prism.highlightAll();
+};
+
+
 window.leftPanelFocus = function () {
     var panel = document.getElementById("navigation-menu");
     panel.focus();
@@ -87,6 +94,11 @@ window.bxPagination_Init = function () {
 
 window.bxCodeSnippet_Init = function () {
     CarbonComponents.CodeSnippet.init();
+};
+
+
+window.bxSideNav_Init = function () {
+    CarbonComponents.SideNav.init();
 };
 
 window.bxModal_show = function (id) {

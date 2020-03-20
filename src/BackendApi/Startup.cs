@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using NLayersApp.Persistence;
-using NLayersApp.CQRS;
+using NLayersApp.CQRS.DependencyInjection;
 using NLayersApp.Persistence.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using BackendApi.Models;
@@ -38,8 +38,10 @@ namespace BackendApi
                                 b.MigrationsAssembly("BackendApi");
                                 b.EnableRetryOnFailure(3);
                             }
-                        );
+                        );                   
                 }));
+            builder.Services.AddScoped<IContext, TDbContext>();
+            builder.Services.AddMediatRHandlers(_resolver);
         }
     }
 }

@@ -6,14 +6,23 @@
     <meta name="viewport" content="width=device-width" />
     <title>blazorwasm</title>
     <base href="/" />
+    <link href="css/bootstrap-duallistbox.min.css" rel="stylesheet" />
     <link href="css/carbon-custom.css" rel="stylesheet">
     <link href="css/carbon-components.min.css" rel="stylesheet" />
-    <link href="css/carbon-security.css" rel="stylesheet" />
-
+    <link href="css/prism (1).css" rel="stylesheet" />
 </head>
 
 <body>
-    <app>Loading...</app>
+    <app>
+        <div class="bx--loading-overlay">
+            <div data-loading class="bx--loading">
+                <svg class="bx--loading__svg" viewBox="-75 -75 150 150">
+                    <title>Loading</title>
+                    <circle class="bx--loading__stroke" cx="0" cy="0" r="37.5" />
+                </svg>
+            </div>
+        </div>
+    </app>
 
     <div id="blazor-error-ui" hidden>
         An unhandled error has occurred.
@@ -22,8 +31,29 @@
     </div>
     <!-- Carbon Design System Components javascript-->
     <script src="js/carbon-components.min.js"></script>
-    <script src="js/carbon-init.js"></script>
-    
+    <script src="js/prism.js"></script>
+    <script>
+        window.InitComponent = (component) => {
+            CarbonComponents[component].init();
+        };
+
+        window.highlightAll = function () {
+            Prism.highlightAll();
+        };
+
+        window.bxModal_show = function (id) {
+            var element = document.getElementById(id);
+            window.modal = CarbonComponents.Modal.create(element);
+            window.modal.show();
+        };
+
+        window.bxNotification_show = function (id) {    
+            var element = document.getElementById(id);
+            element.classList.add("show");
+            this.setTimeout(() => element.classList.remove("show"), 3000);    
+        };
+    </script>
+    <script src="_content/Blazor-State/blazorstate.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>
 </body>
 

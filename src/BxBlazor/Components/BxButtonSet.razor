@@ -1,0 +1,10 @@
+﻿<div class="@prefix--btn-set">
+    @ChildContent
+</div>
+@code {
+    [Parameter]
+    public string prefix { get; set; } = "bx";
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

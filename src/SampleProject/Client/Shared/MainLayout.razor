@@ -1,95 +1,61 @@
 ﻿@inherits LayoutComponentBase
 
+@using System.Linq
+@using System.IO
+@using BlazorState
+@using BlazorState.Services
+@using MediatR
+
 @inject IJSRuntime jsRuntime
+@inject HttpClient http
 
 <div id="root">
-    <Header>
-        <Content>
-            <LeftPanel Sections="NavigationSections"></LeftPanel>
-            <RightPanel></RightPanel>
-        </Content>
-    </Header>
-    <main class="bx--content">
+    <ShellLayout>
         @Body
-    </main>
+    </ShellLayout>
 </div>
-@*<LayoutWithHead>
-    <Head>
-
-    </Head>
-    <Body>
-    </Body>
-</LayoutWithHead>*@
 
 @code {
-    private Dictionary<string, SidenavItem[]> NavigationSections = new Dictionary<string, SidenavItem[]>()
-{
-        {
-            "Demos",
-            new SidenavItem[] {
-                new SidenavItem {
-                    DisplayText = "Home",
-                    Expanded = false,
-                    HasChilds = false,
-                    Link = "/"
-                },
-                new SidenavItem {
-                    DisplayText = "Fetch Data",
-                    Expanded = false,
-                    HasChilds = false,
-                    Link = "/fetchdata"
-                },
-                new SidenavItem {
-                    DisplayText = "Counter",
-                    Expanded = false,
-                    HasChilds = false,
-                    Link = "/counter"
-                },
-                new SidenavItem {
-                    DisplayText = "Components",
-                    Expanded = false,
-                    HasChilds = true,
-                    ChildItems = new SidenavItem[]
-            {
-                        new SidenavItem {
-                            DisplayText = "BxAccordion",
-                            Link = "components/bx-accordion"
-                        },
-                        new SidenavItem {
-                            DisplayText = "BxDataTable",
-                            Link = "components/bx-datatable"
-                        },
-                        new SidenavItem {
-                            DisplayText = "BxModal",
-                            Link = "components/bx-modal"
-                        },
-                        new SidenavItem {
-                            DisplayText = "BxTabs",
-                            Link = "components/bx-tabs"
-                        },
-                        new SidenavItem {
-                            DisplayText = "BxStructuredList",
-                            Link = "components/bx-structuredlist"
-                        },
-                        new SidenavItem {
-                            DisplayText = "BxCodeSnippet",
-                            Link = "components/bx-codesnippet"
-                        }
-                    }
-                }
-            }
-        }
-    };
+    IEnumerable<HeaderNavLink> HeaderNavLinks;
+    IEnumerable<SwitcherLink> SwitcherLinks;
+    IEnumerable<NavMenuSection> Sections;
+    IEnumerable<HeaderAction> HeaderActions;
 
-    private bool actionsPanelToggle = false;
+    protected override async Task OnInitializedAsync()
+    {
+
+        // we create an announymous object that will hold the deserialized json to do so
+        // we will use an extension method through which we will act on the result
+
+        (new
+        {
+            Sections = Sections,
+            SwitcherLinks = SwitcherLinks,
+            HeaderNavLinks = HeaderNavLinks,
+            HeaderActions = HeaderActions
+        })
+        // next step is to deserialize the json to the type of the announymous object
+            .pipeTo(anonymousObject =>
+                Newtonsoft.Json.JsonConvert.DeserializeAnonymousType(Globals.UIShellStructure, anonymousObject))
+        // the we pipe the result to extract the shell structure as IEnumerables             
+            .pipeTo(result =>
+            {
+                Sections = result.Sections;
+                HeaderNavLinks = result.HeaderNavLinks;
+                SwitcherLinks = result.SwitcherLinks;
+                HeaderActions = result.HeaderActions;
+            });
+        // we can continue f
+        //.pipeTo(toFile => {
+        //});
+
+
+        await base.OnInitializedAsync();
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await base.OnAfterRenderAsync(firstRender);
-    }
 
-    void toggleActionsPanelDisplay()
-    {
-        actionsPanelToggle = !actionsPanelToggle;
+        await base.OnAfterRenderAsync(firstRender);
     }
 }

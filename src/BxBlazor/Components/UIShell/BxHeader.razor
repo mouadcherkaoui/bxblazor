@@ -1,0 +1,80 @@
+﻿<!--
+  Copyright IBM Corp. 2016, 2018
+
+  This source code is licensed under the Apache-2.0 license found in the
+  LICENSE file in the root directory of this source tree.
+-->
+
+<header class="@(prefix)--header" role="banner" aria-label="IBM Platform Name" data-header>
+    <a class="@(prefix)--skip-to-content" href="#main-content" tabindex="0">Skip to main content</a>
+    <button class="@(prefix)--header__menu-trigger @(prefix)--header__action" aria-label="Open menu" title="Open menu"
+            data-navigation-menu-panel-label-expand="Open menu" data-navigation-menu-panel-label-collapse="Close menu"
+            data-navigation-menu-target="#navigation-menu-@(NavigationMenuIdSuffix)">
+        @(SvgIcons.Close20("bx--navigation-menu-panel-collapse-icon"))
+        @(SvgIcons.Menu20("bx--navigation-menu-panel-expand-icon"))
+    </button>
+    <a class="@(prefix)--header__name" href="javascript:void(0)" title="@(HeaderName)">
+        <span class="bx--header__name--prefix">
+            @(HeaderCompany)
+            &nbsp;
+        </span>
+        @(HeaderPlatform)
+    </a>
+
+    <BxHeaderNav HeaderNavLinks="HeaderNavLinks" prefix="@prefix" ></BxHeaderNav>
+
+    <div class="@(prefix)--header__global">
+        @if(HeaderActions != null)
+        {
+            @foreach(var action in HeaderActions){
+                <button class="@(prefix)--header__menu-trigger @(prefix)--header__action" aria-label="@(action.Title)"
+                        title="@(action.Title)" data-navigation-menu-panel-label-expand="@(action.Title)"
+                        data-navigation-menu-panel-label-collapse="Close menu" data-product-switcher-target="#switcher-@(action.SwitchIdSuffix)">
+                    @(SvgIcons.ProductSwitcher20($"{prefix}--navigation-menu-panel-expand-icon"))
+                    @(SvgIcons.Close20($"{prefix}--navigation-menu-panel-collapse-icon"))
+                </button>
+            }
+        }
+    </div>
+    <BxSidenav prefix="@prefix" IsFixed="SideNavFixed" IsUiFixed="UiSideNavFixed" NavigationSections="SideNavSections"></BxSidenav>
+</header>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+    }
+
+    [Parameter]
+    public string prefix { get; set; }
+
+    [Parameter]
+    public IEnumerable<HeaderAction> HeaderActions { get; set; }
+    
+    [Parameter]
+    public string HeaderCompany { get; set; } = "IBM";
+    
+    [Parameter]
+    public string HeaderName { get; set; }
+    
+    [Parameter]
+    public string HeaderPlatform { get; set; } = "Platform";
+    
+    [Parameter]
+    public string NavigationMenuIdSuffix { get; set; }
+    
+    [Parameter]
+    public string Title { get; set; }
+    
+    [Parameter]
+    public bool SideNavFixed { get; set; }
+
+    [Parameter]
+    public bool UiSideNavFixed { get; set; }
+    
+    [Parameter]
+    public IEnumerable<NavMenuSection> SideNavSections { get; set; }
+
+    [Parameter]
+    public IEnumerable<HeaderNavLink> HeaderNavLinks { get; set; }
+}

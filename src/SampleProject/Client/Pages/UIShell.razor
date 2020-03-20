@@ -1,0 +1,60 @@
+﻿@using System.IO;
+@page "/uishell"
+
+<BxContent>
+    <BxGrid>
+        <BxRow>
+            <BxCol offset="lg-1">
+                <h1>Heading</h1>
+                @for (var i = 0; i <= 10; i++)
+                {
+                    <h2>Sub-section</h2>
+                    <p>
+                        Elit odit veritatis repudiandae laboriosam amet. Dolore doloribus ut obcaecati harum ad Expedita hic atque quas
+                        repellat et sed Tempore similique laudantium autem quam commodi, temporibus. Minus voluptates reiciendis adipisci.
+                    </p>
+                    <p>
+                        Elit odit veritatis repudiandae laboriosam amet. Dolore doloribus ut obcaecati harum ad Expedita hic atque quas
+                        repellat et sed Tempore similique laudantium autem quam commodi, temporibus. Minus voluptates reiciendis adipisci.
+                    </p>
+                    <h3>Tertiary section</h3>
+                    <p>
+                        Adipisicing eius ea est ducimus nihil Sit modi quisquam tempore asperiores at Culpa omnis quasi a rem sapiente,
+                        illo Omnis aut maiores magnam perspiciatis at, rerum? Esse ullam veritatis debitis.
+                    </p>
+                }
+            </BxCol>
+        </BxRow>
+    </BxGrid>
+</BxContent>
+
+@code {
+
+    IEnumerable<HeaderNavLink> HeaderNavLinks;
+    IEnumerable<SwitcherLink> SwitcherLinks;
+    IEnumerable<NavMenuSection> Sections;
+    IEnumerable<HeaderAction> HeaderActions;
+    protected override async Task OnInitializedAsync()
+    {
+        var shell_structure = new { Sections = Sections, SwitcherLinks = SwitcherLinks, HeaderNavLinks = HeaderNavLinks, HeaderActions = HeaderActions };
+        var result = Newtonsoft.Json.JsonConvert.DeserializeAnonymousType(Globals.UIShellStructure, shell_structure);
+
+        Sections = result.Sections;
+        HeaderNavLinks = result.HeaderNavLinks;
+        SwitcherLinks = result.SwitcherLinks;
+        HeaderActions = result.HeaderActions;
+
+        using FileStream filestream = new FileStream("./uishell.json", FileMode.OpenOrCreate);
+        var writer = new System.IO.StreamWriter(filestream);
+        await writer.WriteAsync(Globals.UIShellStructure);
+        writer.Close();
+        filestream.Close();
+
+        using FileStream filestream1 = new FileStream("./uishell.json", FileMode.Open);
+
+        var json = File.ReadAllText("./uishell.json");
+
+        Console.WriteLine(json);
+        await base.OnInitializedAsync();
+    }
+}

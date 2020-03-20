@@ -1,31 +1,20 @@
 ﻿@page "/components/bx-accordion"
 
-<h3>Accordion</h3>
-<div class="bx--grid">
-    <div class="bx--row">
-        <div class="bx--offset-lg-2 bx--col-lg-10">
-            <BxAccordion Items="Items" />
-        </div>
-    </div>
+<div class="bx--content">
+    <BxGrid>
+        <BxRow>
+            <BxCol offset="lg-1" lg="10">
+                <h3>BxAccordion</h3>
+                <BxGrid>
+                    <BxRow>
+                        <BxCol lg="10">
+                            <AccordionWidget></AccordionWidget>
+                        </BxCol>
+                    </BxRow>
+                </BxGrid>
+            </BxCol>
+        </BxRow>
+    </BxGrid>
 </div>
 @code {
-    public IEnumerable<AccordionItem> Items { get; set; }
-        = new List<AccordionItem>
-        {
-            new AccordionItem
-            {
-                Title = "first pane",
-                Content = (tree) => tree.AddMarkupContent(0, "<p>a sample content with some tags in it, <strong>First item!</strong></p>")
-            },
-            new AccordionItem
-            {
-                Title = "second pane",
-                Content = (tree) => tree.AddMarkupContent(0, "<p>a sample content with some tags in it, <strong>First item!</strong></p>")
-            },
-            new AccordionItem
-            {
-                Title = "third pane",
-                Content = (tree) => tree.AddMarkupContent(0, "<p>a sample content with some tags in it, <strong>First item!</strong></p>")
-            }
-        };
 }

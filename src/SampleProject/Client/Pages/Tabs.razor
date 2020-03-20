@@ -1,36 +1,40 @@
 ﻿@page "/components/bx-tabs"
 
-<h3>BxTabs</h3>
-<div class="bx--row">
-    <div class="bx--offset-lg-2 bx--col-lg-10">
-        <!-- Copyright IBM Corp. 2016, 2018 This source code is licensed under the Apache-2.0 license found in the LICENSE file in the root directory of this source tree. -->
-        <BxTabs>
-            <Headers>
-                <li class="bx--tabs__nav-item bx--tabs__nav-item--selected" data-target="#description-tab" role="tab" aria-selected="false">
-                    <a tabindex="0" id="tab-link-1-default" class="bx--tabs__nav-link" href="javascript:void(0)" role="tab" aria-controls="tab-panel-1-default">Description</a>
-                </li>
-                <li class="bx--tabs__nav-item" data-target="#structured-tab" role="tab" aria-selected="false">
-                    <a tabindex="0" id="tab-link-1-default" class="bx--tabs__nav-link" href="javascript:void(0)" role="tab" aria-controls="tab-panel-1-default">User StructuredList</a>
-                </li>
-            </Headers>
-            <Items>
-                <BxTabItem Label="Description" Name="description-tab" IsSelected="true">
-                    <Content>
-                        <BxTile IsSelectable="true" Title="test tile">
-                            <TileContent>
-                                <p>test tile content</p>
-                            </TileContent>
-                        </BxTile>
-                    </Content>
-                </BxTabItem>
-                <BxTabItem Label="StructuredList" Name="structured-tab">
-                    <Content>
-                        <StructuredList></StructuredList>
-                    </Content>
-                </BxTabItem>
-            </Items>
-        </BxTabs>
-    </div>
+<div class="bx--content">
+    <BxGrid>
+        <BxRow>
+            <BxCol offset="lg-1" lg="10">
+                <!-- Copyright IBM Corp. 2016, 2018 This source code is licensed under the Apache-2.0 license found in the LICENSE file in the root directory of this source tree. -->
+                <h3>BxTabs</h3>
+                <BxTabs>
+                    <Headers>
+                        <li class="bx--tabs__nav-item bx--tabs__nav-item--selected" data-target="#description-tab" role="tab" aria-selected="false">
+                            <a tabindex="0" id="tab-link-1-default" class="bx--tabs__nav-link" href="javascript:void(0)" role="tab" aria-controls="tab-panel-1-default">Description</a>
+                        </li>
+                        <li class="bx--tabs__nav-item" data-target="#structured-tab" role="tab" aria-selected="false">
+                            <a tabindex="0" id="tab-link-1-default" class="bx--tabs__nav-link" href="javascript:void(0)" role="tab" aria-controls="tab-panel-1-default">User StructuredList</a>
+                        </li>
+                    </Headers>
+                    <Items>
+                        <BxTabItem Label="Description" Name="description-tab" IsSelected="true">
+                            <Content>
+                                <BxTile IsSelectable="true" Title="test tile">
+                                    <TileContent>
+                                        <p>test tile content</p>
+                                    </TileContent>
+                                </BxTile>
+                            </Content>
+                        </BxTabItem>
+                        <BxTabItem Label="StructuredList" Name="structured-tab">
+                            <Content>
+                                <StructuredList></StructuredList>
+                            </Content>
+                        </BxTabItem>
+                    </Items>
+                </BxTabs>
+            </BxCol>
+        </BxRow>
+    </BxGrid>
 </div>
 
 @code {
