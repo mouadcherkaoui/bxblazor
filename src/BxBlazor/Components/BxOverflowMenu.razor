@@ -25,10 +25,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if(firstRender)
-        {
-            await js.InvokeVoidAsync("InitComponent", "OverflowMenu");
-        }
+        await js.InvokeVoidAsync("InitComponent", "OverflowMenu");        
         await base.OnAfterRenderAsync(firstRender);
     }
 }

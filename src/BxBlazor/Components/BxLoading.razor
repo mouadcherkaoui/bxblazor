@@ -54,10 +54,7 @@ else
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if(firstRender)
-        {
-            await js.InvokeVoidAsync("InitComponent", "Loading");
-        }
+        await js.InvokeVoidAsync("InitComponent", "Loading");
         await base.OnAfterRenderAsync(firstRender);
     }
 }

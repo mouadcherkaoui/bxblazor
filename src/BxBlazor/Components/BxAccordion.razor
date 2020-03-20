@@ -21,10 +21,7 @@
 @code {      
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if(firstRender)
-        {
-            await js.InvokeVoidAsync("InitComponent", "Accordion");
-        }
+        await js.InvokeVoidAsync("InitComponent", "Accordion");
         await base.OnAfterRenderAsync(firstRender);
     }
 

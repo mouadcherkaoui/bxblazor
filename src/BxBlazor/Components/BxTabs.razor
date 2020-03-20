@@ -32,10 +32,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if(firstRender)
-        {
-            await js.InvokeVoidAsync("InitComponent", "Tab");
-        }
+        await js.InvokeVoidAsync("InitComponent", "Tab");
         await base.OnAfterRenderAsync(firstRender);
     }
 }

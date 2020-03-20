@@ -43,11 +43,8 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if(firstRender)
-        {
-            await js.InvokeVoidAsync("InitComponent", "CodeSnippet");
-            await js.InvokeVoidAsync("highlightAll");
-        }
+        await js.InvokeVoidAsync("InitComponent", "CodeSnippet");
+        await js.InvokeVoidAsync("highlightAll");
         await base.OnAfterRenderAsync(firstRender);
     }
 }

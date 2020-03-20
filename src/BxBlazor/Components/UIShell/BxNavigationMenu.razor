@@ -93,10 +93,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if(firstRender)
-        {
-            await js.InvokeVoidAsync("InitComponent", "NavigationMenu");
-        }
+        await js.InvokeVoidAsync("InitComponent", "NavigationMenu");
         await base.OnAfterRenderAsync(firstRender);
     }
 }

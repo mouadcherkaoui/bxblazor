@@ -23,7 +23,7 @@
                     @if(navitem.Type == "link")
                     {
                         <li class="@prefix--side-nav__item">
-                            <NavLink ActiveClass="@($"{prefix}--side-nav__link--current")" @attributes="@(new Dictionary<string, object> { {"class", $"{prefix}--side-nav__link"}, { "aria-current", "" } })" href="@(navitem.Uri)"
+                            <NavLink ActiveClass="@($"{prefix}--side-nav__link--current")" @attributes="@(new Dictionary<string, object> { {"class", $"{prefix}--side-nav__link"}})" href="@(navitem.Uri)"
                                >
                                 <div class="@prefix--side-nav__icon @prefix--side-nav__icon--small">
                                     @*<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
@@ -94,10 +94,7 @@
     
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if(firstRender)
-        {
-            await js.InvokeVoidAsync("InitComponent", "SideNav");
-        }
+        await js.InvokeVoidAsync("InitComponent", "SideNav");
         await base.OnAfterRenderAsync(firstRender);
     }
 }

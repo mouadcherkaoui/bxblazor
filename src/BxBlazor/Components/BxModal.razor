@@ -66,10 +66,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if(firstRender)
-        {
-            await js.InvokeVoidAsync("InitComponent", "Modal");
-        }
+        await js.InvokeVoidAsync("InitComponent", "Modal");
         await base.OnAfterRenderAsync(firstRender);
     }
 

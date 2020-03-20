@@ -89,10 +89,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if(firstRender)
-        {
-            await js.InvokeVoidAsync("InitComponent", "StructuredList");
-        }
+        await js.InvokeVoidAsync("InitComponent", "StructuredList");
         await base.OnAfterRenderAsync(firstRender);
     }
 }
