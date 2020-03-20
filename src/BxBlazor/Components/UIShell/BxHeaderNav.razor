@@ -60,7 +60,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await js.InvokeVoidAsync("bxHeaderNav_Init");
+        await js.InvokeVoidAsync("InitComponent", "HeaderNav");
         await base.OnAfterRenderAsync(firstRender);
     }
 }

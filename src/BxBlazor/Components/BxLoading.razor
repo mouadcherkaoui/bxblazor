@@ -1,4 +1,5 @@
-﻿<!--
+﻿@inject IJSRuntime js
+<!--
   Copyright IBM Corp. 2016, 2018
 
   This source code is licensed under the Apache-2.0 license found in the
@@ -50,4 +51,13 @@ else
 
     [Parameter]
     public bool IsSmall { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            await js.InvokeVoidAsync("InitComponent", "Loading");
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
 }

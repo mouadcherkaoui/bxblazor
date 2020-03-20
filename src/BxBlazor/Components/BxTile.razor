@@ -1,4 +1,6 @@
-﻿<label for="tile-id-2" aria-label="tile" class="@prefix--tile@(IsSelectable ? $" {prefix}--tile--selectable" : "")" data-tile="selectable" tabindex="0">
+﻿@inject IJSRuntime js
+
+<label for="tile-id-2" aria-label="tile" class="@prefix--tile@(IsSelectable ? $" {prefix}--tile--selectable" : "")" data-tile="selectable" tabindex="0">
     <input tabindex="-1" data-tile-input id="tile-id-2" class="@prefix--tile-input" value="tile" type="checkbox" name="tiles" title="@(Title)" />
     @if(IsSelectable)
     {
@@ -25,4 +27,13 @@
 
     [Parameter]
     public bool IsSelectable { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            await js.InvokeVoidAsync("InitComponent", "Tile");
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
 }

@@ -43,8 +43,11 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await js.InvokeVoidAsync("bxCodeSnippet_Init");
-        await js.InvokeVoidAsync("highlightAll");
+        if(firstRender)
+        {
+            await js.InvokeVoidAsync("InitComponent", "CodeSnippet");
+            await js.InvokeVoidAsync("highlightAll");
+        }
         await base.OnAfterRenderAsync(firstRender);
     }
 }

@@ -31,8 +31,27 @@
     </div>
     <!-- Carbon Design System Components javascript-->
     <script src="js/carbon-components.min.js"></script>
-    <script src="js/carbon-init.js"></script>
     <script src="js/prism.js"></script>
+    <script>
+        window.InitComponent = (component) => {
+            CarbonComponents[component].init();
+        };
+        window.highlightAll = function () {
+            Prism.highlightAll();
+        };
+
+        window.bxModal_show = function (id) {
+            var element = document.getElementById(id);
+            window.modal = CarbonComponents.Modal.create(element);
+            window.modal.show();
+        };
+
+        window.bxNotification_show = function (id) {    
+            var element = document.getElementById(id);
+            element.classList.add("show");
+            this.setTimeout(() => element.classList.remove("show"), 3000);    
+        };
+    </script>
     <script src="_content/Blazor-State/blazorstate.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>
 </body>

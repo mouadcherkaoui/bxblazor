@@ -104,3 +104,7 @@ window.bxNotification_show = function (id) {
     element.classList.add("show");
     this.setTimeout(() => element.classList.remove("show"), 3000);    
 };
+
+window.InitComponent = (component) => {
+    CarbonComponents[component].init();
+};

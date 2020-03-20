@@ -1,4 +1,5 @@
-﻿<!--
+﻿@inject IJSRuntime js
+<!--
   Copyright IBM Corp. 2016, 2018
 
   This source code is licensed under the Apache-2.0 license found in the
@@ -89,4 +90,13 @@
 
     public Dictionary<string, object> getAttributesDict(string key, string value)
         => new Dictionary<string, object>() { { key, value} };
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            await js.InvokeVoidAsync("InitComponent", "NavigationMenu");
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
 }
