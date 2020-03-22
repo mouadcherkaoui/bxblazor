@@ -1,16 +1,18 @@
 ﻿@page "/components/bx-datatable"
 @using blazorwasm.Shared
 @inject HttpClient Http
-
+@inject IJSRuntime  js
 <main id="main-content" class="bx--content">
     <BxGrid>
         <BxRow>
             <BxCol offset="lg-1" lg="10">
                 <h3>BxDataTable</h3>
                 <p>This component demonstrates fetching data from the server.</p>
-                    <BxDataTableV2 TItem="WeatherForecast" Items="forecasts" IsSelectable="true">
+                    <BxDataTableV2 TItem="WeatherForecast" Items="@(forecasts?.ToList())" IsSelectable="true" IsSortable="true">
                         <BatchActionsToolbar>
-                            <BxDataTableV2_Toolbar OnPrimaryButtonClick="toolbar_click" />
+                            <BxDataTableV2_Toolbar
+                                                   OnPrimaryButtonClick="toolbar_click" 
+                                                   OnSearchCallback="@(async (v) => { if(v.Key == "Enter") await js.InvokeVoidAsync("ShowAlert", v.SearchValue); })"/>
                         </BatchActionsToolbar>
                     </BxDataTableV2>
             </BxCol>

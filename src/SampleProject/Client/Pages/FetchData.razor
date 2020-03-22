@@ -14,7 +14,7 @@
                 }
                 else
                 {
-                    <BxDataTableV2 TItem="WeatherForecast" Items="forecasts" IsSelectable="true">
+                    <BxDataTableV2 TItem="WeatherForecast" Items="@(forecasts?.ToList())" IsSelectable="true">
                         <BatchActionsToolbar>
                             <BxDataTableV2_Toolbar OnPrimaryButtonClick="toolbar_click" />
                         </BatchActionsToolbar>

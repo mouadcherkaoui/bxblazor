@@ -3,15 +3,15 @@
     <!-- Batch actions -->
     <div class="@prefix--batch-actions" aria-label="Table Action Bar">
         <div class="@prefix--action-list">
-            <button class="@prefix--btn @prefix--btn--primary" type="button">
+            <button class="@prefix--btn @prefix--btn--primary" type="button" @onclick="OnDeleteCallback">
                 Delete
                 <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--btn__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 6H7V12H6zM9 6H10V12H9z"></path><path d="M2 3v1h1v10c0 .6.4 1 1 1h8c.6 0 1-.4 1-1V4h1V3H2zM4 14V4h8v10H4zM6 1H10V2H6z"></path></svg>
             </button>
-            <button class="@prefix--btn @prefix--btn--primary" type="button">
+            <button class="@prefix--btn @prefix--btn--primary" type="button" @onclick="OnSaveCallback">
                 Save
                 <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--btn__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.9,4.6l-2.5-2.5C11.3,2.1,11.1,2,11,2H3C2.4,2,2,2.4,2,3v10c0,0.6,0.4,1,1,1h10c0.6,0,1-0.4,1-1V5	C14,4.9,13.9,4.7,13.9,4.6z M6,3h4v2H6V3z M10,13H6V9h4V13z M11,13V9c0-0.6-0.4-1-1-1H6C5.4,8,5,8.4,5,9v4H3V3h2v2c0,0.6,0.4,1,1,1	h4c0.6,0,1-0.4,1-1V3.2l2,2V13H11z"></path></svg>
             </button>
-            <button class="@prefix--btn @prefix--btn--primary" type="button">
+            <button class="@prefix--btn @prefix--btn--primary" type="button" @onclick="OnDownloadCallback">
                 Download
                 <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--btn__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 7L12.3 6.3 8.5 10.1 8.5 1 7.5 1 7.5 10.1 3.7 6.3 3 7 8 12zM13 12v2H3v-2H2v2l0 0c0 .6.4 1 1 1h10c.6 0 1-.4 1-1l0 0v-2H13z"></path></svg>
             </button>
@@ -32,7 +32,7 @@
                     <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--toolbar-action__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M15,14.3L10.7,10c1.9-2.3,1.6-5.8-0.7-7.7S4.2,0.7,2.3,3S0.7,8.8,3,10.7c2,1.7,5,1.7,7,0l4.3,4.3L15,14.3z M2,6.5	C2,4,4,2,6.5,2S11,4,11,6.5S9,11,6.5,11S2,9,2,6.5z"></path></svg>
                 </div>
                 <label id="search-input-label-1" class="@prefix--label" for="search__input-2">Search</label>
-                <input class="@prefix--search-input" type="text" id="search__input-2" role="search" placeholder="Search" aria-labelledby="search-input-label-1">
+                <input @bind="SearchValue" class="@prefix--search-input" type="text" id="search__input-2" role="search" placeholder="Search" aria-labelledby="search-input-label-1" @onkeypress="@(async (v) => await OnSearchCallback.InvokeAsync(new SearchEventArgs(v, SearchValue)))">
                 <button class="@prefix--search-close @prefix--search-close--hidden" title="Clear search input" aria-label="Clear search input">
                     <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M12 4.7L11.3 4 8 7.3 4.7 4 4 4.7 7.3 8 4 11.3 4.7 12 8 8.7 11.3 12 12 11.3 8.7 8z"></path></svg>
                 </button>
@@ -81,9 +81,35 @@
 </section>
 <!-- End Toolbar Content -->
 @code {
+    public class SearchEventArgs: KeyboardEventArgs
+    {
+        public SearchEventArgs(KeyboardEventArgs args, string searchValue)
+        {
+            this.Key = args.Key;
+            this.Location = args.Location;
+            this.MetaKey = args.MetaKey;
+            this.Repeat = this.Repeat;
+            this.SearchValue = searchValue;
+        }
+        public string SearchValue { get; set; }
+    }
+
     [Parameter]
     public string prefix { get; set; } = "bx";
     [Parameter]
     public EventCallback OnPrimaryButtonClick { get; set; }
 
+    [Parameter]
+    public EventCallback<SearchEventArgs> OnSearchCallback { get; set; }
+
+    [Parameter]
+    public EventCallback OnDownloadCallback { get; set; }
+
+    [Parameter]
+    public EventCallback OnDeleteCallback { get; set; }
+
+    [Parameter]
+    public EventCallback OnSaveCallback { get; set; }
+
+    public string SearchValue { get; set; }
 }

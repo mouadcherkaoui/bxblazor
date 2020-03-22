@@ -7,7 +7,8 @@
 <!-- v10 Data Table -->
 @typeparam TItem  
 @inject IJSRuntime js
-    
+@using System.Linq
+
 <div class="@prefix--data-table-container" data-table>
     <div class="@prefix--data-table-header">
         <h4 class="@prefix--data-table-header__title">@Title</h4>
@@ -41,7 +42,7 @@
                         <th>
                             <!-- checkbox th -->
                             <!-- sortable th  -->
-                            <button class="@prefix--table-sort" data-event="sort" title="Name">
+                            <button class="@prefix--table-sort" data-event="sort" title="Name" @onclick="@(() => OnSort(header))">
                                 <span class="@prefix--table-header-label">@header</span>
                                 <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--table-sort__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M12.3 9.3L8.5 13.1 8.5 1 7.5 1 7.5 13.1 3.7 9.3 3 10 8 15 13 10z"></path></svg>
                                 <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--table-sort__icon-unsorted" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.8 10.3L12 12.1 12 2 11 2 11 12.1 9.2 10.3 8.5 11 11.5 14 14.5 11zM4.5 2L1.5 5 2.2 5.7 4 3.9 4 14 5 14 5 3.9 6.8 5.7 7.5 5z"></path></svg>
@@ -63,9 +64,9 @@
             </tr>
         </thead>
         @{ var index = 0;}
-        @if (items != null) { 
+        @if (ordered_items != null) { 
         <tbody>
-                @foreach (var item in items)
+                @foreach (var item in ordered_items)
             {
                 index++;
             <tr class="@prefix--parent-row" @attributes="@(new Dictionary<string, object>{ { (ItemDetails != null ? "data-parent-row" : "data-row"), ""}})">
@@ -87,7 +88,7 @@
                 @foreach(var header in headers)
                 {
                     <td>
-                        @item[header]
+                        @typeof(TItem).GetProperty(header).GetValue(item)
                     </td>
                 }
                 <td class="@prefix--table-column-menu">
@@ -126,7 +127,7 @@
     public string Description { get; set; } = "";
 
     [Parameter]
-    public IEnumerable<TItem> Items { get; set; }
+    public List<TItem> Items { get; set; }
 
     [Parameter]
     public bool IsSortable { get; set; }
@@ -151,11 +152,25 @@
     [Parameter]
     public EventCallback OnPrimaryButtonClick { get; set; }
 
-    public List<Dictionary<string, string>> items
+    bool? orderDesc;
+    string orderProperty;
+
+    public IEnumerable<TItem> ordered_items
     {
         get
         {
-            return Items?.Select(i => i.GetType().GetProperties().ToDictionary(kv => kv.Name, kv => kv.GetValue(i)?.ToString() ?? "")).ToList();
+            orderProperty = orderProperty ?? headers[0];
+            var values = !orderDesc.HasValue ?
+                Items : 
+                (orderDesc.Value 
+                    ? Items?.OrderByDescending(i => i.GetType().GetProperty(orderProperty).GetValue(i))
+                    : Items?.OrderBy(i => i.GetType().GetProperty(orderProperty).GetValue(i))).ToList();
+            if (values != null) foreach (var v in values)
+                {
+                    var p = typeof(TItem).GetProperty(orderProperty); 
+                    Console.WriteLine($"{p.Name}: {p.GetValue(v)}");
+                }
+            return values;
         }
     }
 
@@ -171,6 +186,14 @@
             await js.InvokeVoidAsync("InitComponent", "DataTable");
         }
         await base.OnAfterRenderAsync(firstRender);
+    }
+
+    void OnSort(string column)
+    {
+        orderProperty = column;       
+        orderDesc = !(orderDesc == null) ? (orderDesc.Value ? !orderDesc : null) : true;
+
+        Console.WriteLine(column);
     }
 
     private bool actionMenuOpen = false;

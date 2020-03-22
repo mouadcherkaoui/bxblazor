@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>blazorwasm</title>
+    <title>BxBlazor - Demo</title>
     <base href="/" />
     <link href="css/bootstrap-duallistbox.min.css" rel="stylesheet" />
     <link href="css/carbon-custom.css" rel="stylesheet">
@@ -51,6 +51,10 @@
             var element = document.getElementById(id);
             element.classList.add("show");
             this.setTimeout(() => element.classList.remove("show"), 3000);    
+        };
+
+        window.ShowAlert = function (message) {
+            alert(message);
         };
     </script>
     <script src="_content/Blazor-State/blazorstate.js"></script>
