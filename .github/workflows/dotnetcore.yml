@@ -1,0 +1,42 @@
+name: .NET Core
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+  
+    # Runs a single command using the runners shell
+    - name: Restore Packages
+      run: |
+        cd src/SampleProject/Client
+        dotnet restore
+        dotnet build blazorwasm.Client.csproj -o ../../../dist        
+    - name: Build with dotnet
+      run: |
+        cd src/SampleProject/Client
+        dotnet build blazorwasm.Client.csproj -o ../../../dist              
+        
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Azure CLI script
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.0.72
+        inlineScript: |
+          az storage blob upload-batch --account-name bxblazor --destination ‘$web’ --source dist
