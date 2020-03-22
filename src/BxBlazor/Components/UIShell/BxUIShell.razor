@@ -10,7 +10,7 @@
           NavigationMenuIdSuffix="@NavMenuIdSuffix" 
           HeaderNavLinks="@HeaderNavLinks" 
           HeaderActions="@HeaderActions" 
-          SideNavSections="@NavSections">
+          SideNavSections="@SideNavSections">
 </BxHeader>
 
 
@@ -21,7 +21,7 @@
 
 <BxNavigationMenu prefix="bx" 
                   NavMenuIdSuffix="@NavMenuIdSuffix" 
-                  NavMenuSections="@NavSections" 
+                  NavMenuSections="@NavMenuSections" 
                   IsExpanded="false">
 </BxNavigationMenu>
 @ChildContent
@@ -46,7 +46,10 @@
     public IEnumerable<SwitcherLink> SwitcherLinks { get; set; }
 
     [Parameter]
-    public IEnumerable<NavMenuSection> NavSections { get; set; }
+    public IEnumerable<NavMenuSection> SideNavSections { get; set; }
+
+    [Parameter]
+    public IEnumerable<NavMenuSection> NavMenuSections { get; set; }
 
     [Parameter]
     public IEnumerable<HeaderAction> HeaderActions { get; set; }
