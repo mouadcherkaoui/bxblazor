@@ -9,113 +9,169 @@
 @inject IJSRuntime js
 @using System.Linq
 
-<div class="@prefix--data-table-container" data-table>
-    <div class="@prefix--data-table-header">
-        <h4 class="@prefix--data-table-header__title">@Title</h4>
-        <p class="@prefix--data-table-header__description">@Description</p>
-    </div>
-    @if(BatchActionsToolbar != null)
-    {
-        @BatchActionsToolbar
-    }
-    <!-- Table -->
-    <table class="@prefix--data-table@(IsSortable ? $" {prefix}--data-table--sort" : "")">
-        <thead>
-            <tr>
-                @if(ItemDetails != null)
-                {
-                    <th>
-                    </th>
-                }
-                @if (IsSelectable)
-                {
-                    <th class="@prefix--table-column-checkbox">
-                        <!-- checkbox th -->
-                        <input data-event="select-all" id="@prefix--checkbox-20" class="@prefix--checkbox" type="checkbox" value="green" name="checkbox-20">
-                        <label for="@prefix--checkbox-20" class="@prefix--checkbox-label" aria-label="Label name"></label>
-                    </th>
-                }
-                @foreach (var header in headers)
-                {
-                    @if (IsSortable)
+    <div class="@prefix--data-table-container" data-table>
+        <div class="@prefix--data-table-header">
+            <h4 class="@prefix--data-table-header__title">@Title</h4>
+            <p class="@prefix--data-table-header__description">@Description</p>
+        </div>
+        @if (BatchActionsToolbar != null)
+        {
+            @BatchActionsToolbar
+        }
+        <!-- Table -->
+        <table class="@prefix--data-table@(IsSortable ? $" {prefix}--data-table--sort" : "")">
+            <thead>
+                <tr>
+                    @if (ItemDetails != null)
                     {
                         <th>
-                            <!-- checkbox th -->
-                            <!-- sortable th  -->
-                            <button class="@prefix--table-sort" data-event="sort" title="Name" @onclick="@(() => OnSort(header))">
-                                <span class="@prefix--table-header-label">@header</span>
-                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--table-sort__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M12.3 9.3L8.5 13.1 8.5 1 7.5 1 7.5 13.1 3.7 9.3 3 10 8 15 13 10z"></path></svg>
-                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--table-sort__icon-unsorted" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.8 10.3L12 12.1 12 2 11 2 11 12.1 9.2 10.3 8.5 11 11.5 14 14.5 11zM4.5 2L1.5 5 2.2 5.7 4 3.9 4 14 5 14 5 3.9 6.8 5.7 7.5 5z"></path></svg>
-                            </button>
-                            <!-- no sort th -->
                         </th>
                     }
-                    else
+                    @if (IsSelectable)
                     {
-                        <th><span class="@prefix--table-header-label">@header</span></th>
+                        <th class="@prefix--table-column-checkbox">
+                            <!-- checkbox th -->
+                            <input data-event="select-all" id="@prefix--checkbox-20" class="@prefix--checkbox" type="checkbox" value="green" name="checkbox-20">
+                            <label for="@prefix--checkbox-20" class="@prefix--checkbox-label" aria-label="Label name"></label>
+                        </th>
                     }
-                }
-                @if (IsSelectable)
-                {
-                    <th class="@prefix--table-column-menu">
-                        <!-- checkbox th -->
-                    </th>
-                }
-            </tr>
-        </thead>
-        @{ var index = 0;}
-        @if (ordered_items != null) { 
-        <tbody>
-                @foreach (var item in ordered_items)
-            {
-                index++;
-            <tr class="@prefix--parent-row" @attributes="@(new Dictionary<string, object>{ { (ItemDetails != null ? "data-parent-row" : "data-row"), ""}})">
-                @if(ItemDetails != null)
-                {
-                    <td class="@prefix--table-expand" data-event="expand">
-                        <button class="@prefix--table-expand__button">
-                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--table-expand__svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"></path></svg>
-                        </button>
-                    </td>
-                }
-                @if (IsSelectable)
-                {
-                    <td class="@prefix--table-column-checkbox">
-                        <input data-event="select" id="@prefix--checkbox-@(index)" class="@prefix--checkbox" type="checkbox" value="green" name="checkbox-@(index)" @onselectionchange="OnSelectItemCallback">
-                        <label for="@prefix--checkbox-@(index)" class="@prefix--checkbox-label" aria-label="Label name"></label>
-                    </td>
-                }
-                @foreach(var header in headers)
-                {
-                    <td>
-                        @typeof(TItem).GetProperty(header).GetValue(item)
-                    </td>
-                }
-                <td class="@prefix--table-column-menu">
-                    @if (ItemActionsMenu != null) {
-                            @ItemActionsMenu
+                    @foreach (var header in headers)
+                    {
+                        @if (IsSortable)
+                        {
+                            <th>
+                                <!-- checkbox th -->
+                                <!-- sortable th  -->
+                                <button class="@prefix--table-sort" data-event="sort" title="Name" @onclick="@(() => OnSort(header))">
+                                    <span class="@prefix--table-header-label">@header</span>
+                                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--table-sort__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M12.3 9.3L8.5 13.1 8.5 1 7.5 1 7.5 13.1 3.7 9.3 3 10 8 15 13 10z"></path></svg>
+                                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--table-sort__icon-unsorted" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.8 10.3L12 12.1 12 2 11 2 11 12.1 9.2 10.3 8.5 11 11.5 14 14.5 11zM4.5 2L1.5 5 2.2 5.7 4 3.9 4 14 5 14 5 3.9 6.8 5.7 7.5 5z"></path></svg>
+                                </button>
+                                <!-- no sort th -->
+                            </th>
+                        }
+                        else
+                        {
+                            <th><span class="@prefix--table-header-label">@header</span></th>
+                        }
                     }
-                </td>                
-                <!-- inline edit tds -->
-            </tr>
-            @if (ItemDetails != null)
-            {
-                <tr class="@prefix--expandable-row @prefix--expandable-row--hidden" data-child-row="">
-                    <td colspan="@(headers.Count + 3)">
-                        @ItemDetails
-                    </td>
+                    @if (IsSelectable)
+                    {
+                        <th class="@prefix--table-column-menu">
+                            <!-- checkbox th -->
+                        </th>
+                    }
                 </tr>
+            </thead>
+            @{ var index = 0;}
+            @if (ordered_items != null)
+            {
+                <tbody>
+                    @foreach (var item in ordered_items)
+                    {
+                        index++;
+                        <tr class="@prefix--parent-row" @attributes="@(new Dictionary<string, object>{ { (ItemDetails != null ? "data-parent-row" : "data-row"), ""}})">
+                            @if (ItemDetails != null)
+                            {
+                                <td class="@prefix--table-expand" data-event="expand">
+                                    <button class="@prefix--table-expand__button">
+                                        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--table-expand__svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"></path></svg>
+                                    </button>
+                                </td>
+                            }
+                            @if (IsSelectable)
+                            {
+                                <td class="@prefix--table-column-checkbox">
+                                    <input data-event="select" id="@prefix--checkbox-@(index)" class="@prefix--checkbox" type="checkbox" value="green" name="checkbox-@(index)" @onselectionchange="OnSelectItemCallback">
+                                    <label for="@prefix--checkbox-@(index)" class="@prefix--checkbox-label" aria-label="Label name"></label>
+                                </td>
+                            }
+                            @foreach (var header in headers)
+                            {
+                                <td>
+                                    @typeof(TItem).GetProperty(header).GetValue(item)
+                                </td>
+                            }
+                            <td class="@prefix--table-column-menu">
+                                @if (ItemActionsMenu != null)
+                                {
+                                    @ItemActionsMenu
+                                }
+                            </td>
+                            <!-- inline edit tds -->
+                        </tr>
+                        @if (ItemDetails != null)
+                        {
+                            <tr class="@prefix--expandable-row @prefix--expandable-row--hidden" data-child-row="">
+                                <td colspan="@(headers.Count + 3)">
+                                    @ItemDetails
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
             }
-        }            
-        </tbody>
-        }else
-        {
-            <tr><BxLoading prefix="@prefix" IsSmall="true" WithOverlay="true"></BxLoading></tr>
-        }
-    </table>
-
-    <!-- Pagination -->
-</div>
+            else
+            {
+                <tr><BxLoading prefix="@prefix" IsSmall="true" WithOverlay="true"></BxLoading></tr>
+            }
+        </table>
+        @*<div class="@prefix--pagination" data-pagination>
+            <div class="@prefix--pagination__left">
+                <label id="select-id-pagination-count-label"
+                       class="@prefix--pagination__text"
+                       for="select-id-pagination-count">
+                    Items per page:
+                </label>
+                <div class="@prefix--select @prefix--select--inline @prefix--select__item-count">
+                    <select class="@prefix--select-input"
+                            id="select-id-pagination-count"
+                            aria-label="select number of items per page"
+                            tabindex="0"
+                            data-items-per-page>
+                        <option class="@prefix--select-option" value="10" selected>10</option>
+                        <option class="@prefix--select-option" value="20">20</option>
+                        <option class="@prefix--select-option" value="30">30</option>
+                        <option class="@prefix--select-option" value="40">40</option>
+                        <option class="@prefix--select-option" value="50">50</option>
+                    </select>
+                    {{ carbon-icon 'ChevronDownGlyph' class=(add @@prefix '--select__arrow') }}
+                </div>
+                <span class="@prefix--pagination__text">
+                    <span data-displayed-item-range>1-10</span> of
+                    <span data-total-items>50</span> items
+                </span>
+            </div>
+            <div class="@prefix--pagination__right">
+                <div class="@prefix--select @prefix--select--inline @prefix--select__page-number">
+                    <select class="@prefix--select-input"
+                            id="select-id-pagination-page"
+                            aria-label="select page number to view"
+                            tabindex="0"
+                            data-page-number-input>
+                        <option class="@prefix--select-option" value="1" selected>1</option>
+                        <option class="@prefix--select-option" value="2">2</option>
+                        <option class="@prefix--select-option" value="3">3</option>
+                        <option class="@prefix--select-option" value="4">4</option>
+                        <option class="@prefix--select-option" value="5">5</option>
+                    </select>
+                    {{ carbon-icon 'ChevronDownGlyph' class=(add @@prefix '--select__arrow')}}
+                </div>
+                <label id="select-id-pagination-page-label"
+                       class="@prefix--pagination__text"
+                       for="select-id-pagination-page">
+                    of 5 pages
+                </label>
+                <button class="@prefix--pagination__button @prefix--pagination__button--backward" tabindex="0" data-page-backward aria-label="Backward button">
+                    {{ carbon-icon 'CaretLeft20' class=(add @@prefix '--pagination__nav-arrow')}}
+                </button>
+                <button class="@prefix--pagination__button @prefix--pagination__button--forward" tabindex="0" data-page-forward aria-label="Forward button">
+                    {{ carbon-icon 'CaretRight20' class=(add @@prefix '--pagination__nav-arrow')}}
+                </button>
+            </div>
+        </div>*@
+        <!-- Pagination -->
+    </div>
 @code {
     [Parameter]
     public string prefix { get; set; } = "bx";
@@ -127,7 +183,7 @@
     public string Description { get; set; } = "";
 
     [Parameter]
-    public List<TItem> Items { get; set; }
+    public IQueryable<TItem> Items { get; set; }
 
     [Parameter]
     public bool IsSortable { get; set; }
@@ -155,7 +211,7 @@
     bool? orderDesc;
     string orderProperty;
 
-    public IEnumerable<TItem> ordered_items
+    public IQueryable<TItem> ordered_items
     {
         get
         {
@@ -163,8 +219,9 @@
             var values = !orderDesc.HasValue ?
                 Items : 
                 (orderDesc.Value 
-                    ? Items?.OrderByDescending(i => i.GetType().GetProperty(orderProperty).GetValue(i))
-                    : Items?.OrderBy(i => i.GetType().GetProperty(orderProperty).GetValue(i))).ToList();
+                    ? Items.OrderByDescending(i => i.GetType().GetProperty(orderProperty).GetValue(i))
+                    : Items.OrderBy(i => i.GetType().GetProperty(orderProperty).GetValue(i)));
+
             if (values != null) foreach (var v in values)
                 {
                     var p = typeof(TItem).GetProperty(orderProperty); 
