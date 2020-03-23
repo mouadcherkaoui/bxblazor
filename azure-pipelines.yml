@@ -55,6 +55,13 @@ steps:
     command: push
     publishVstsFeed: '000f425a-ccb5-4b06-8458-0a352978d151/84a32888-ceea-438a-b74b-ea0998a1d69b'
 
+- task: NuGetCommand@2
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'external'
+    publishFeedCredentials: 'nuget.org'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: publish
