@@ -1,4 +1,5 @@
-﻿    <!-- Toolbar Content -->
+﻿@inject IJSRuntime js
+    <!-- Toolbar Content -->
 <section class="@prefix--table-toolbar">
     <!-- Batch actions -->
     <div class="@prefix--batch-actions" aria-label="Table Action Bar">
@@ -32,7 +33,7 @@
                     <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--toolbar-action__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M15,14.3L10.7,10c1.9-2.3,1.6-5.8-0.7-7.7S4.2,0.7,2.3,3S0.7,8.8,3,10.7c2,1.7,5,1.7,7,0l4.3,4.3L15,14.3z M2,6.5	C2,4,4,2,6.5,2S11,4,11,6.5S9,11,6.5,11S2,9,2,6.5z"></path></svg>
                 </div>
                 <label id="search-input-label-1" class="@prefix--label" for="search__input-2">Search</label>
-                <input @bind-value="SearchValue" class="@prefix--search-input" type="text" id="search__input-2" role="search" placeholder="Search" aria-labelledby="search-input-label-1" @onkeypress="@(async (v) => await OnSearchCallback.InvokeAsync(new SearchEventArgs(v, SearchValue)))">
+                <input @bind-value="@SearchValue" @bind-value:event="oninput" class="@prefix--search-input" type="text" id="search__input-2" role="search" placeholder="Search" aria-labelledby="search-input-label-1" @onkeyup="@((args) => OnSearchCallback.InvokeAsync(new SearchEventArgs(args, SearchValue)))">
                 <button class="@prefix--search-close @prefix--search-close--hidden" title="Clear search input" aria-label="Clear search input">
                     <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M12 4.7L11.3 4 8 7.3 4.7 4 4 4.7 7.3 8 4 11.3 4.7 12 8 8.7 11.3 12 12 11.3 8.7 8z"></path></svg>
                 </button>
@@ -81,18 +82,6 @@
 </section>
 <!-- End Toolbar Content -->
 @code {
-    public class SearchEventArgs: KeyboardEventArgs
-    {
-        public SearchEventArgs(KeyboardEventArgs args, string searchValue)
-        {
-            this.Key = args.Key;
-            this.Location = args.Location;
-            this.MetaKey = args.MetaKey;
-            this.Repeat = this.Repeat;
-            this.SearchValue = searchValue;
-        }
-        public string SearchValue { get; set; }
-    }
 
     [Parameter]
     public string prefix { get; set; } = "bx";
@@ -112,4 +101,11 @@
     public EventCallback OnSaveCallback { get; set; }
 
     public string SearchValue { get; set; }
+
+    private async Task onSearchInputKeyUp (KeyboardEventArgs args)
+    {
+        var result = await js.InvokeAsync<string>("InvokeAsync", "() => document.getElementById('search__input-2').value");
+        Console.WriteLine(result);
+        await OnSearchCallback.InvokeAsync(new SearchEventArgs(args, result));
+    }
 }

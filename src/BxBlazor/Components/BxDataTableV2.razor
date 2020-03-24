@@ -42,7 +42,7 @@
                             <th>
                                 <!-- checkbox th -->
                                 <!-- sortable th  -->
-                                <button class="@prefix--table-sort" data-event="sort" title="Name" @onclick="@(() => OnSort(header))">
+                                <button class="@prefix--table-sort" data-event="sort" title="Name" @onclick="@(() => ToggleSort(header))">
                                     <span class="@prefix--table-header-label">@header</span>
                                     <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--table-sort__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M12.3 9.3L8.5 13.1 8.5 1 7.5 1 7.5 13.1 3.7 9.3 3 10 8 15 13 10z"></path></svg>
                                     <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="@prefix--table-sort__icon-unsorted" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.8 10.3L12 12.1 12 2 11 2 11 12.1 9.2 10.3 8.5 11 11.5 14 14.5 11zM4.5 2L1.5 5 2.2 5.7 4 3.9 4 14 5 14 5 3.9 6.8 5.7 7.5 5z"></path></svg>
@@ -55,12 +55,9 @@
                             <th><span class="@prefix--table-header-label">@header</span></th>
                         }
                     }
-                    @if (IsSelectable)
-                    {
-                        <th class="@prefix--table-column-menu">
-                            <!-- checkbox th -->
-                        </th>
-                    }
+                    <th class="@prefix--table-column-menu">
+                        <!-- checkbox th -->
+                    </th>
                 </tr>
             </thead>
             @{ var index = 0;}
@@ -217,16 +214,11 @@
         {
             orderProperty = orderProperty ?? headers[0];
             var values = !orderDesc.HasValue ?
-                Items : 
-                (orderDesc.Value 
-                    ? Items.OrderByDescending(i => i.GetType().GetProperty(orderProperty).GetValue(i))
-                    : Items.OrderBy(i => i.GetType().GetProperty(orderProperty).GetValue(i)));
+                Items :
+                (orderDesc.Value
+                    ? Items.OrderByDescending(item => typeof(TItem).GetProperty(orderProperty).GetValue(item))
+                    : Items.OrderBy(item => typeof(TItem).GetProperty(orderProperty).GetValue(item)));
 
-            if (values != null) foreach (var v in values)
-                {
-                    var p = typeof(TItem).GetProperty(orderProperty); 
-                    Console.WriteLine($"{p.Name}: {p.GetValue(v)}");
-                }
             return values;
         }
     }
@@ -238,19 +230,16 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if(firstRender)
-        {
-            await js.InvokeVoidAsync("InitComponent", "DataTable");
-        }
+        await js.InvokeVoidAsync("InitComponent", "DataTable");
+        await js.InvokeVoidAsync("InitComponent", "OverflowMenu");
+
         await base.OnAfterRenderAsync(firstRender);
     }
 
-    void OnSort(string column)
+    void ToggleSort(string column)
     {
-        orderProperty = column;       
+        orderProperty = column;
         orderDesc = !(orderDesc == null) ? (orderDesc.Value ? !orderDesc : null) : true;
-
-        Console.WriteLine(column);
     }
 
     private bool actionMenuOpen = false;

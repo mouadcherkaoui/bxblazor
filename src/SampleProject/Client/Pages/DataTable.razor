@@ -8,11 +8,11 @@
             <BxCol offset="lg-1" lg="10">
                 <h3>BxDataTable</h3>
                 <p>This component demonstrates fetching data from the server.</p>
-                    <BxDataTableV2 TItem="WeatherForecast" Items="@(forecasts?.AsQueryable())" IsSelectable="true" IsSortable="true">
+                    <BxDataTableV2 TItem="WeatherForecast" Items="forecastsQueryable()" IsSelectable="true" IsSortable="true">
                         <BatchActionsToolbar>
                             <BxDataTableV2_Toolbar
-                                                   OnPrimaryButtonClick="toolbar_click" 
-                                                   OnSearchCallback="@(async (v) => { if(v.Key == "Enter") await js.InvokeVoidAsync("ShowAlert", v.SearchValue); })"/>
+                                OnPrimaryButtonClick="toolbar_click" 
+                                OnSearchCallback="SearchKeyupCallback"/>
                         </BatchActionsToolbar>
                     </BxDataTableV2>
             </BxCol>
@@ -26,13 +26,15 @@
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetJsonAsync<WeatherForecast[]>("WeatherForecast").ContinueWith<WeatherForecast[]>(t => t.IsFaulted ? get_forcasts() : null);
+        forecasts = await Http.GetJsonAsync<WeatherForecast[]>("WeatherForecast")
+                .ContinueWith<WeatherForecast[]>(t => t.IsFaulted ? get_forcasts() : null);
     }
+
     private readonly string[] Summaries = new[]
     {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
-
+    
     WeatherForecast[] get_forcasts()
     {
         Random rng = new Random();
@@ -44,9 +46,21 @@
         })
         .ToArray();
     }
-
+    
+    private IQueryable<WeatherForecast> forecastsQueryable() { 
+        return forecasts?.Where(f => f.Summary.ToLower().Contains(searchValue ?? ""))?.AsQueryable(); 
+        }
+    
     void toolbar_click()
     {
 
+    }
+
+    string searchValue = "";
+    async Task SearchKeyupCallback(SearchEventArgs args) {
+        if(args.Key == "Enter") 
+            await js.InvokeVoidAsync("ShowAlert", args.SearchValue);
+        searchValue = args.SearchValue;
+        Console.WriteLine(searchValue);
     }
 }
