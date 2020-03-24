@@ -1,7 +1,7 @@
 # BxBlazor (Carbon Design System) Components
 
 [![Build Status](https://dev.azure.com/cherkaouimouad/BxBlazor/_apis/build/status/BxBlazor?branchName=develop)](https://dev.azure.com/cherkaouimouad/BxBlazor/_build/latest?definitionId=53&branchName=master)
-
+![Github Actions .NET Core](https://github.com/mouadcherkaoui/bxblazor/workflows/.NET%20Core/badge.svg)
 Blazor components using IBM's Carbon Design System components
 <p align="center"><img src="https://github.com/mouadcherkaoui/bxblazor/raw/master/img/carbon_design_system_white.png" width="250"></p>
 
