@@ -216,7 +216,7 @@
     [Parameter]
     public IEnumerable<string> Headers { get; set; }
 
-    public List<string> headers { get => Headers.ToList() ?? typeof(TItem).GetProperties().Select(p => p.Name).ToList(); }
+    public List<string> headers { get => Headers?.ToList() ?? typeof(TItem).GetProperties().Select(p => p.Name).ToList(); }
 
     [Parameter]
     public EventCallback OnPrimaryButtonClick { get; set; }
