@@ -8,7 +8,7 @@
                 <BxGrid>
                     <BxRow>
                         <BxCol lg="10">
-                            <AccordionWidget></AccordionWidget>
+                            <BxAccordion Items="Items"></BxAccordion>
                         </BxCol>
                     </BxRow>
                 </BxGrid>
@@ -16,5 +16,27 @@
         </BxRow>
     </BxGrid>
 </div>
+
 @code {
-}
+    public IEnumerable<AccordionItem>
+    Items { get; set; }
+    = new List<AccordionItem>
+        {
+        new AccordionItem
+        {
+        Title = "first pane",
+        Content = (tree) => tree.AddMarkupContent(0, "<p>a sample content with some tags in it, <strong>First item!</strong></p>")
+        },
+        new AccordionItem
+        {
+        Title = "second pane",
+        Content = (tree) => tree.AddMarkupContent(0, "<p>a sample content with some tags in it, <strong>First item!</strong></p>")
+        },
+        new AccordionItem
+        {
+        Title = "third pane",
+        Content = (tree) => tree.AddMarkupContent(0, "<p>a sample content with some tags in it, <strong>First item!</strong></p>")
+        }
+        };
+
+        }

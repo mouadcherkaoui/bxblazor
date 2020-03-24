@@ -1,7 +1,22 @@
-﻿<div class="bx--grid">
+﻿<div class="@_class">
     @ChildContent
 </div>
 @code {
+        string _class {
+            get
+            =>
+            (String.IsNullOrEmpty(Class)
+                ? (FullWidth ? $"{prefix}--grid bx--grid-full-width" : $"{prefix}--grid")
+                : (FullWidth ? $"{prefix}--grid bx--grid-full-width {Class}" : $"{prefix}--grid {Class}"));
+        }
+
+    [Parameter]
+    public string prefix { get; set; } = "bx";
+    [Parameter]
+    public bool FullWidth { get; set; }
+
+    [Parameter]
+    public string Class { get; set; }
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }

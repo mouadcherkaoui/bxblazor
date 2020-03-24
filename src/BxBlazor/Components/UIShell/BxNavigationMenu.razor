@@ -10,10 +10,10 @@
 <div class="@(prefix)--navigation" id="navigation-menu-@NavMenuIdSuffix" @attributes="@(!IsExpanded ? new Dictionary<string, object>{{"hidden", "hidden" }} : new Dictionary<string, object>())" data-navigation-menu>
     @if (NavMenuSections != null)
     {
-        @foreach (var section in NavMenuSections)
-        {
-            <div class="@(prefix)--navigation-section">
-                <span><h4><strong>@(section.Title)</strong></h4></span>
+        <div class="@(prefix)--navigation-section">
+            @foreach (var section in NavMenuSections)
+            {
+                <h5><span><strong>@(section.Title)</strong></span></h5>
                 <ul class="@(prefix)--navigation-items">
                     @if (section.NavMenuItems != null)
                     {
@@ -77,8 +77,8 @@
                         }
                     }
                 </ul>
-            </div>
-        }
+            }
+        </div>
     }
 </div>
 

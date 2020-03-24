@@ -33,6 +33,8 @@
     <script src="js/carbon-components.min.js"></script>
     <script src="js/prism.js"></script>
     <script>
+        window.InvokeAsync = (func, arg) => eval(func)(arg);
+            
         window.InitComponent = (component) => {
             CarbonComponents[component].init();
         };
