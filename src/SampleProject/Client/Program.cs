@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using BxBlazor.Services;
-using Microsoft.AspNetCore.Blazor.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
 using BlazorState;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 namespace blazorwasm.Client
 {
     public class Program

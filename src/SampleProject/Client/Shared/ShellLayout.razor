@@ -13,8 +13,12 @@
         SideNavSections="Sections"
         NavMenuSections="Sections"
         NavMenuIdSuffix="primary"
-        SideNavFixed="true">
-    @ChildContent
+        SideNavFixed="false">
+<BxGrid>
+    <BxCol offset="2">
+        @ChildContent
+    </BxCol>
+</BxGrid>
 </BxUIShell>
 @code {
 
