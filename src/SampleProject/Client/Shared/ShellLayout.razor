@@ -1,8 +1,4 @@
-﻿@inherits BlazorStateComponent
-@using BlazorState
-@using MediatR
-
-@inject IJSRuntime jsRuntime
+﻿@inject IJSRuntime jsRuntime
 @inject HttpClient http
 
 <BxUIShell prefix="bx"
@@ -15,7 +11,7 @@
         NavMenuIdSuffix="primary"
         SideNavFixed="false">
 <BxGrid>
-    <BxCol offset="2">
+    <BxCol>
         @ChildContent
     </BxCol>
 </BxGrid>
@@ -44,16 +40,15 @@
         // we create an announymous object that will hold the deserialized json to do so
         // we will use an extension method through which we will act on the result
 
-        (new
-        {
-            Sections = Sections,
-            SwitcherLinks = SwitcherLinks,
-            HeaderNavLinks = HeaderNavLinks,
-            HeaderActions = HeaderActions
-        })
             // next step is to deserialize the json to the type of the announymous object
-            .pipeTo(anonymousObject =>
-                Newtonsoft.Json.JsonConvert.DeserializeAnonymousType(Globals.UIShellStructure, anonymousObject))
+            
+                Newtonsoft.Json.JsonConvert.DeserializeAnonymousType(Globals.UIShellStructure, new
+                {
+                    Sections = Sections,
+                    SwitcherLinks = SwitcherLinks,
+                    HeaderNavLinks = HeaderNavLinks,
+                    HeaderActions = HeaderActions
+                })
             // the we pipe the result to extract the shell structure as IEnumerables
             .pipeTo(result =>
             {
@@ -76,20 +71,20 @@
         await base.OnAfterRenderAsync(firstRender);
     }
 
-    protected new T GetState<T>()
-    {
-        Type stateType = typeof(T);
-        Subscriptions.Add(stateType, this);
+    // protected new T GetState<T>()
+    // {
+    //     Type stateType = typeof(T);
+    //     Subscriptions.Add(stateType, this);
 
-        return base.GetState<T>();
-        //return Store.GetState<T>();
-    }
+    //     return base.GetState<T>();
+    //     //return Store.GetState<T>();
+    // }
 
-    new IMediator Mediator { get => base.Mediator; set => base.Mediator = value; }
-    new IStore Store { get => base.Store; set => base.Store = value; }
+    // new IMediator Mediator { get => base.Mediator; set => base.Mediator = value; }
+    // new IStore Store { get => base.Store; set => base.Store = value; }
 
-    new void ReRender()
-    {
-        base.ReRender();
-    }
+    // new void ReRender()
+    // {
+    //     base.ReRender();
+    // }
 }

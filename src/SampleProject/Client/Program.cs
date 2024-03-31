@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using BxBlazor.Services;
 using Microsoft.Extensions.DependencyInjection;
-using MediatR;
-using BlazorState;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using System.Net.Http;
+using System;
 namespace blazorwasm.Client
 {
     public class Program
@@ -11,12 +11,11 @@ namespace blazorwasm.Client
         public static async Task Main(string[] args)
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
-
-            builder.Services.AddMediatR(typeof(App).Assembly);
-            builder.Services.AddBlazorState(o =>
+            builder.Services.AddScoped(http => new HttpClient
             {
-                o.UseReduxDevToolsBehavior = true;
+                BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
             });
+
             builder.RootComponents.Add<App>("app");
 
             await builder.Build().RunAsync();

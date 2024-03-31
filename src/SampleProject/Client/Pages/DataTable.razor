@@ -1,5 +1,6 @@
 ﻿@page "/components/bx-datatable"
 @using blazorwasm.Shared
+
 @inject HttpClient Http
 @inject IJSRuntime  js
 <main id="main-content" class="bx--content">
@@ -26,7 +27,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetJsonAsync<WeatherForecast[]>("WeatherForecast")
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast")
                 .ContinueWith<WeatherForecast[]>(t => t.IsFaulted ? get_forcasts() : null);
     }
 

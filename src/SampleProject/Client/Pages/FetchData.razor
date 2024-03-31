@@ -31,7 +31,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetJsonAsync<WeatherForecast[]>("WeatherForecast").ContinueWith<WeatherForecast[]>(t => t.IsFaulted ? get_forcasts() : null);
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast").ContinueWith<WeatherForecast[]>(t => t.IsFaulted ? get_forcasts() : null);
     }
     private readonly string[] Summaries = new[]
     {
