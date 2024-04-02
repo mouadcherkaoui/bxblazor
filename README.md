@@ -2,7 +2,9 @@
 
 [![Build Status](https://dev.azure.com/cherkaouimouad/BxBlazor/_apis/build/status/BxBlazor?branchName=develop)](https://dev.azure.com/cherkaouimouad/BxBlazor/_build/latest?definitionId=53&branchName=master)
 ![Github Actions .NET Core](https://github.com/mouadcherkaoui/bxblazor/workflows/.NET%20Core/badge.svg)
+
 Blazor components using IBM's Carbon Design System components
+
 <p align="center"><img src="https://github.com/mouadcherkaoui/bxblazor/raw/master/img/carbon_design_system_white.png" width="250"></p>
 
 ## Getting Started
@@ -11,8 +13,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-- dotnetcore 3.1 sdk
-- aspnetcore 3.1 runtime
+- Net 8.0 sdk
 
 ### Installing
 
@@ -21,7 +22,7 @@ A step by step series of examples that tell you how to get a development env run
 First we need to install the BxBlazor component in our project:
 
 ```
-$: dotnet add package BxBlazor
+$: dotnet add package BxBlazor --version 1.1.0-pre-01
 ```
 
 Next we add tags to our index.html in web assembly project or _Host.cshtml in a server project:
@@ -240,7 +241,7 @@ all is fine, now if you are using the blazor web assembly project template you h
     </BxGrid>
     ```
 
-- FetchData.rzor 
+- FetchData.rqzor 
 
     ```html
     <BxGrid>
@@ -341,11 +342,12 @@ azure-pipelines.yml
 ## Built With
 
 * [Carbon Design System Components](https://www.carbondesignsystem.com/) - Used for components and styling.
-* [AspNetCore Blazor](https://nestjs.com/) - for the code behind.
+* [ASP.NET Core 8.0](https://learn.microsoft.com/en-us/aspnet/core/release-notes/aspnetcore-8.0?view=aspnetcore-8.0#blazor) - for the code behind.
 
 ## Authors
 
 * **Mouad Cherkaoui** - *Initial work* - [mouadcherkaoui](https://github.com/mouadcherkaoui)
+* **Github BxBlazor** - *Project Github repo* - [https://github.com/mouadcherkaoui/bxblazor](https://github.com/mouadcherkaoui/bxblazor)
 
 ## License
 
